@@ -67,27 +67,19 @@ export default function About() {
           backgroundAttachment: 'fixed'
         }}
       >
-        {/* Transparent Overlay for better text readability */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/85 via-purple-800/80 to-pink-900/85" />
+        {/* Transparent Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/85 via-purple-800/80 to-purple-900/85" />
         
         {/* Animated elements */}
         <div className="absolute inset-0 opacity-20">
           <motion.div
             className="absolute top-20 left-10 w-72 h-72 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
-            animate={{ 
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, 30, 0]
-            }}
+            animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, 30, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
           <motion.div
             className="absolute bottom-20 right-10 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl"
-            animate={{ 
-              scale: [1.2, 1, 1.2],
-              x: [0, -50, 0],
-              y: [0, -30, 0]
-            }}
+            animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, -30, 0] }}
             transition={{ duration: 8, repeat: Infinity, delay: 1 }}
           />
         </div>
@@ -115,14 +107,14 @@ export default function About() {
             >
               <Button 
                 onClick={() => window.location.href = '#leadership'}
-                className="bg-white text-purple-900 hover:bg-gray-100 px-8 py-3 font-bold text-lg shadow-xl"
+                className="bg-white text-purple-900 px-8 py-3 font-bold text-lg shadow-xl hover:bg-white"
               >
                 Meet Our Leaders
               </Button>
               <Button 
                 onClick={() => window.location.href = '#contact'}
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-white/10 px-8 py-3 font-bold text-lg backdrop-blur-sm"
+                className="bg-white text-purple-900 px-8 py-3 font-bold text-lg shadow-xl hover:bg-white"
               >
                 Join Our Family
               </Button>
@@ -166,7 +158,6 @@ export default function About() {
               transition={{ duration: 0.6 }}
             >
               <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300">
-                {/* Image */}
                 <div className="relative h-64 md:h-80 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
                     <div className="text-center p-8">
@@ -175,24 +166,17 @@ export default function About() {
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/90 to-transparent" />
-                  
-                  {/* Icon Badge */}
                   <div className="absolute top-6 left-6">
                     <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-xl">
                       <Eye className="w-8 h-8 text-white" />
                     </div>
                   </div>
                 </div>
-
-                {/* Content */}
                 <CardContent className="p-6 md:p-8 bg-gradient-to-br from-white to-blue-50">
-                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
-                    Our Vision
-                  </h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">Our Vision</h3>
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                     To be a spiritual home where relationships and gifts are nurtured to serve God and mankind.
                   </p>
-                  
                   <div className="mt-6 pt-6 border-t border-blue-200">
                     <p className="text-sm font-semibold text-blue-600 italic">
                       "And the Word became flesh and dwelt among us, and we beheld His glory." - John 1:14
@@ -211,7 +195,6 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300">
-                {/* Image */}
                 <div className="relative h-64 md:h-80 overflow-hidden">
                   <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                     <div className="text-center p-8">
@@ -220,24 +203,17 @@ export default function About() {
                     </div>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 to-transparent" />
-                  
-                  {/* Icon Badge */}
                   <div className="absolute top-6 left-6">
                     <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-xl">
                       <Target className="w-8 h-8 text-white" />
                     </div>
                   </div>
                 </div>
-
-                {/* Content */}
                 <CardContent className="p-6 md:p-8 bg-gradient-to-br from-white to-purple-50">
-                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">
-                    Our Mission
-                  </h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4">Our Mission</h3>
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                     To teach God's people the biblical truth so that they become effective fishers of men for Jesus Christ.
                   </p>
-                  
                   <div className="mt-6 pt-6 border-t border-purple-200">
                     <p className="text-sm font-semibold text-purple-600 italic">
                       "Go therefore and make disciples of all nations..." - Matthew 28:19
@@ -324,19 +300,16 @@ export default function About() {
 
             <Card className="border-0 shadow-xl">
               <CardContent className="p-6 md:p-10">
-                <div className="space-y-4 text-base md:text-lg text-gray-700 leading-relaxed">
-                  <p className="text-gray-700 leading-relaxed">
-                    We believe in Jesus Christ as the Son of God and Savior of the world. We believe in the authority of the Bible as the inspired Word of God, and in the work of the Holy Spirit in the life of every believer.
+                <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                  We believe in Jesus Christ as the Son of God and Savior of the world. We believe in the authority of the Bible as the inspired Word of God, and in the work of the Holy Spirit in the life of every believer.
+                </p>
+                <div className="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-600 mt-6">
+                  <p className="italic text-base text-gray-700">
+                    "For no other foundation can anyone lay than that which is laid, which is Jesus Christ."
                   </p>
-                  
-                  <div className="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-600 mt-6">
-                    <p className="italic text-base text-gray-700">
-                      "For no other foundation can anyone lay than that which is laid, which is Jesus Christ."
-                    </p>
-                    <p className="text-sm text-purple-600 font-semibold mt-2">
-                      — 1 Corinthians 3:11
-                    </p>
-                  </div>
+                  <p className="text-sm text-purple-600 font-semibold mt-2">
+                    — 1 Corinthians 3:11
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -362,8 +335,6 @@ export default function About() {
           </p>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            
-            {/* Bishop */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -381,12 +352,8 @@ export default function About() {
                     <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <div className="p-6 md:p-8 text-center bg-gradient-to-br from-white to-purple-50">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">
-                      Bishop Elijah Mutua
-                    </h3>
-                    <p className="text-base md:text-lg text-purple-600 font-bold mt-2 mb-4">
-                      Lead Pastor
-                    </p>
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">Bishop Elijah Mutua</h3>
+                    <p className="text-base md:text-lg text-purple-600 font-bold mt-2 mb-4">Lead Pastor</p>
                     <p className="text-base text-gray-700 leading-relaxed">
                       Serving with a heart for God's people, grounded in prayer, humility, and biblical truth.
                     </p>
@@ -395,7 +362,6 @@ export default function About() {
               </Card>
             </motion.div>
 
-            {/* Reverend */}
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -413,12 +379,8 @@ export default function About() {
                     <div className="absolute inset-0 bg-gradient-to-t from-pink-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <div className="p-6 md:p-8 text-center bg-gradient-to-br from-white to-pink-50">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">
-                      Reverend Ruth Mutua
-                    </h3>
-                    <p className="text-base md:text-lg text-pink-600 font-bold mt-2 mb-4">
-                      Co-Pastor
-                    </p>
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">Reverend Ruth Mutua</h3>
+                    <p className="text-base md:text-lg text-pink-600 font-bold mt-2 mb-4">Co-Pastor</p>
                     <p className="text-base text-gray-700 leading-relaxed">
                       Passionate about nurturing faith, family, and spiritual growth within the church community.
                     </p>
@@ -426,7 +388,6 @@ export default function About() {
                 </CardContent>
               </Card>
             </motion.div>
-
           </div>
         </motion.div>
       </section>
@@ -442,15 +403,13 @@ export default function About() {
           className="max-w-5xl mx-auto text-center"
         >
           <Users className="w-16 h-16 mx-auto mb-6 text-purple-600" />
-          <h2 className="text-3xl md:text-4xl font-black mb-6 text-slate-900">
-            Our Church Family
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-black mb-6 text-slate-900">Our Church Family</h2>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
             We are more than a congregation. We are a family united by faith, worship, and love, with ministries that allow everyone to grow, serve, and belong.
           </p>
           <Button 
             onClick={() => window.location.href = '#contact'}
-            className="bg-purple-700 hover:bg-purple-800 text-white px-10 py-4 font-bold text-lg shadow-xl"
+            className="bg-purple-700 text-white px-10 py-4 font-bold text-lg shadow-xl hover:bg-purple-700"
           >
             Become Part of Our Family
           </Button>
@@ -502,13 +461,13 @@ export default function About() {
           >
             <Button 
               onClick={() => window.location.href = '#contact'}
-              className="bg-white text-purple-900 hover:bg-gray-100 px-10 py-4 font-bold text-lg shadow-2xl"
+              className="bg-white text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
               Plan Your Visit
             </Button>
             <Button 
               variant="outline" 
-              className="border-2 border-white text-white hover:bg-white/10 px-10 py-4 font-bold text-lg"
+              className="border-2 border-white text-white px-10 py-4 font-bold text-lg hover:bg-transparent hover:text-white"
             >
               Contact Us
             </Button>
