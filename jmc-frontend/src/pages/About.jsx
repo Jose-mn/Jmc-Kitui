@@ -506,7 +506,7 @@ export default function About() {
             </Button>
             <Button
               variant="outline"
-              className="border-2 border-white text-white px-10 py-4 font-bold text-lg hover:bg-transparent hover:text-white"
+              className="bg-white text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
               Contact Us
             </Button>
