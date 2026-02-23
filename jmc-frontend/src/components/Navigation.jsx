@@ -26,15 +26,18 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3" onClick={closeMenu}>
+          <div className="flex items-center gap-3">
             <img src={logo} alt="Logo" className="h-10" />
             <span className="font-bold text-slate-900 hidden sm:block text-sm md:text-base">
               Jesus Manifestation Church
             </span>
-          </Link>
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center gap-6 text-sm">
+            <Link to="/" className="text-slate-700 hover:text-purple-700 font-medium transition">
+              HOME
+            </Link>
             <Link to="/about" className="text-slate-700 hover:text-purple-700 font-medium transition">
               ABOUT US
             </Link>
@@ -78,55 +81,54 @@ export default function Navigation() {
             </Link>
           </div>
 
-          {/* CTA Buttons - Hidden on small screens */}
           {/* CTA Buttons */}
-<div className="hidden md:flex items-center gap-3">
-  {/* Animated LIVE STREAM Button */}
- <motion.div
-  animate={{
-    boxShadow: [
-      "0 0 0px rgba(239, 68, 68, 0.5)",
-      "0 0 20px rgba(239, 68, 68, 0.8)",
-      "0 0 0px rgba(239, 68, 68, 0.5)",
-    ],
-  }}
-  transition={{
-    duration: 2,
-    repeat: Infinity,
-  }}
-  className="rounded-lg"
->
-  <Button
-    onClick={() => window.open('https://www.youtube.com/@JMCKITUI', '_blank')}
-    className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 font-semibold text-sm"
-  >
-    <motion.span
-      className="inline-block w-2 h-2 bg-white rounded-full mr-2"
-      animate={{
-        opacity: [1, 0.3, 1],
-      }}
-      transition={{
-        duration: 1,
-        repeat: Infinity,
-      }}
-    />
-    LIVE STREAM
-  </Button>
-</motion.div>
+          <div className="hidden md:flex items-center gap-3">
+            {/* Animated LIVE STREAM Button */}
+            <motion.div
+              animate={{
+                boxShadow: [
+                  "0 0 0px rgba(239, 68, 68, 0.5)",
+                  "0 0 20px rgba(239, 68, 68, 0.8)",
+                  "0 0 0px rgba(239, 68, 68, 0.5)",
+                ],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+              }}
+              className="rounded-lg"
+            >
+              <Button
+                onClick={() => window.open('https://www.youtube.com/@JMCKITUI', '_blank')}
+                className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 font-semibold text-sm"
+              >
+                <motion.span
+                  className="inline-block w-2 h-2 bg-white rounded-full mr-2"
+                  animate={{
+                    opacity: [1, 0.3, 1],
+                  }}
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                  }}
+                />
+                LIVE STREAM
+              </Button>
+            </motion.div>
 
-  {/* GIVE ONLINE Button */}
-  <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <Button
-      onClick={() => window.open('/give', '_blank')}
-      className="bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 font-semibold text-sm"
-    >
-      GIVE ONLINE
-    </Button>
-  </motion.div>
-</div>
+            {/* GIVE ONLINE Button */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                onClick={() => window.open('/give', '_blank')}
+                className="bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 font-semibold text-sm"
+              >
+                GIVE ONLINE
+              </Button>
+            </motion.div>
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -149,6 +151,13 @@ export default function Navigation() {
               className="lg:hidden overflow-hidden"
             >
               <div className="py-4 space-y-3">
+                <Link
+                  to="/"
+                  className="block py-2 text-slate-700 hover:text-purple-700 font-medium transition"
+                  onClick={closeMenu}
+                >
+                  HOME
+                </Link>
                 <Link
                   to="/about"
                   className="block py-2 text-slate-700 hover:text-purple-700 font-medium transition"
@@ -215,7 +224,7 @@ export default function Navigation() {
                 </div>
 
                 <Link
-                  to="/contact us"
+                  to="/contacts"
                   className="block py-2 text-slate-700 hover:text-purple-700 font-medium transition"
                   onClick={closeMenu}
                 >
@@ -226,7 +235,7 @@ export default function Navigation() {
                 <div className="pt-4 space-y-3 border-t border-slate-200">
                   <Button
                     onClick={() => {
-                      window.open('/live', '_blank');
+                      window.open('https://www.youtube.com/@JMCKITUI', '_blank');
                       closeMenu();
                     }}
                     className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold"

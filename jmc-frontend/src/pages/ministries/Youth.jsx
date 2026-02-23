@@ -62,11 +62,11 @@ export default function Youth() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section 
-        className="relative pt-20 md:pt-24 pb-24 md:pb-32 px-4 md:px-6 overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
         style={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&auto=format&fit=crop)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'center top',
           backgroundAttachment: 'fixed'
         }}
       >
@@ -87,31 +87,31 @@ export default function Youth() {
           />
         </div>
 
-        <div className="max-w-7xl mx-auto relative z-10 text-white text-center">
+        <div className="max-w-7xl mx-auto relative z-10 text-white text-center w-full">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={fadeUp}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-8 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
               Youth Ministry
             </h1>
 
-            <p className="text-lg md:text-xl text-white max-w-3xl mx-auto leading-relaxed mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+            <p className="text-xl md:text-2xl text-white max-w-4xl mx-auto leading-relaxed mb-10 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
               Empowering young people to grow in faith, leadership, and purpose. You are not the church of tomorrow—you are the church of today!
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => window.location.href = '#contact'}
-                className="bg-white text-slate-900 px-8 py-3 font-bold text-lg shadow-xl hover:bg-white"
+                className="bg-white text-slate-900 px-10 py-4 font-bold text-xl shadow-xl hover:bg-white"
               >
                 Join the Community
               </Button>
               <Button
                 onClick={() => window.location.href = '#events'}
-                className="bg-yellow-400 text-slate-900 px-8 py-3 font-bold text-lg shadow-xl hover:bg-yellow-400"
+                className="bg-yellow-400 text-slate-900 px-10 py-4 font-bold text-xl shadow-xl hover:bg-yellow-400"
               >
                 See Events
               </Button>
