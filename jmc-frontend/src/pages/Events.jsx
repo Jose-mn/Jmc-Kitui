@@ -1,12 +1,13 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Users, 
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
   ChevronRight,
   Heart,
   BookOpen,
@@ -26,6 +27,7 @@ import childrenSundaySchoolImage from "../assets/events/children-sunday-school.j
 import nightOfWorshipImage from "../assets/events/night-of-worship.jpg";
 
 export default function Events() {
+  const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("all");
 
   const categories = [
@@ -118,8 +120,8 @@ export default function Events() {
     }
   ];
 
-  const filteredEvents = activeFilter === "all" 
-    ? upcomingEvents 
+  const filteredEvents = activeFilter === "all"
+    ? upcomingEvents
     : upcomingEvents.filter(event => event.category === activeFilter);
 
   const featuredEvent = upcomingEvents.find(event => event.featured);
@@ -139,7 +141,7 @@ export default function Events() {
         <div className="absolute inset-0 opacity-20">
           <motion.div
             className="absolute top-20 left-10 w-72 h-72 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
-            animate={{ 
+            animate={{
               scale: [1, 1.2, 1],
               x: [0, 50, 0],
               y: [0, 30, 0]
@@ -148,7 +150,7 @@ export default function Events() {
           />
           <motion.div
             className="absolute bottom-20 right-10 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl"
-            animate={{ 
+            animate={{
               scale: [1.2, 1, 1.2],
               x: [0, -50, 0],
               y: [0, -30, 0]
@@ -172,11 +174,11 @@ export default function Events() {
             >
               <Calendar className="w-16 h-16 md:w-20 md:h-20 text-yellow-400" />
             </motion.div>
-            
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6">
               Upcoming Events
             </h1>
-            
+
             <p className="text-lg md:text-xl text-purple-100 max-w-3xl mx-auto leading-relaxed">
               Join us for life-changing gatherings, powerful worship, and transformative teaching at Jesus Manifestation Church.
             </p>
@@ -195,11 +197,10 @@ export default function Events() {
                 <motion.button
                   key={category.id}
                   onClick={() => setActiveFilter(category.id)}
-                  className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${
-                    activeFilter === category.id
+                  className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${activeFilter === category.id
                       ? "bg-white text-purple-900 shadow-xl scale-105"
                       : "bg-white/20 text-white hover:bg-white/30"
-                  }`}
+                    }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, y: 20 }}
@@ -240,7 +241,7 @@ export default function Events() {
                       className="absolute inset-0 w-full h-full object-cover"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${featuredEvent.color} opacity-40`} />
-                    
+
                     {/* Featured Badge */}
                     <div className="absolute top-4 left-4 md:top-6 md:left-6">
                       <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm md:text-base shadow-lg flex items-center gap-2">
@@ -291,14 +292,14 @@ export default function Events() {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
-                      <Button 
-                        onClick={() => window.location.href = '#contact'}
+                      <Button
+                        onClick={() => navigate('/contact')}
                         className={`bg-gradient-to-r ${featuredEvent.color} hover:opacity-90 text-white px-6 md:px-8 py-3 md:py-4 font-bold text-base md:text-lg shadow-xl w-full sm:w-auto`}
                       >
                         Register Now
                         <ChevronRight className="ml-2 w-5 h-5" />
                       </Button>
-                      <Button variant="outline" className="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 px-6 md:px-8 py-3 md:py-4 font-semibold text-base md:text-lg w-full sm:w-auto">
+                      <Button onClick={() => navigate('/about')} variant="outline" className="border-2 border-purple-600 text-purple-600 hover:bg-purple-50 px-6 md:px-8 py-3 md:py-4 font-semibold text-base md:text-lg w-full sm:w-auto">
                         Learn More
                       </Button>
                     </div>
@@ -345,7 +346,7 @@ export default function Events() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className={`absolute inset-0 bg-gradient-to-t ${event.color} opacity-30 group-hover:opacity-40 transition-opacity`} />
-                    
+
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
                       <span className={`px-3 py-1 rounded-full bg-gradient-to-r ${event.color} text-white text-xs md:text-sm font-semibold shadow-lg`}>
@@ -391,8 +392,8 @@ export default function Events() {
                     </div>
 
                     {/* Action Button */}
-                    <Button 
-                      onClick={() => window.location.href = '#contact'}
+                    <Button
+                      onClick={() => navigate('/contact')}
                       className={`w-full bg-gradient-to-r ${event.color} hover:opacity-90 text-white font-semibold text-sm md:text-base shadow-lg`}
                     >
                       Register for Event

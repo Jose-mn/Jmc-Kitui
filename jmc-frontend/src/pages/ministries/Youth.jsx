@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Users, Heart, Zap, Target, Calendar, Music, BookOpen, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
 
@@ -11,6 +12,7 @@ const fadeUp = {
 };
 
 export default function Youth() {
+  const navigate = useNavigate();
   const activities = [
     {
       icon: Music,
@@ -61,7 +63,7 @@ export default function Youth() {
       <Navigation />
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
-      <section 
+      <section
         className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
         style={{
           backgroundImage: 'url(https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&auto=format&fit=crop)',
@@ -72,7 +74,7 @@ export default function Youth() {
       >
         {/* More Transparent Overlay - No Blue Tint */}
         <div className="absolute inset-0 bg-black/40" />
-        
+
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">
           <motion.div
@@ -104,13 +106,13 @@ export default function Youth() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={() => window.location.href = '#contact'}
+                onClick={() => navigate('/contact')}
                 className="bg-white text-slate-900 px-10 py-4 font-bold text-xl shadow-xl hover:bg-white"
               >
                 Join the Community
               </Button>
               <Button
-                onClick={() => window.location.href = '#events'}
+                onClick={() => navigate('/events')}
                 className="bg-yellow-400 text-slate-900 px-10 py-4 font-bold text-xl shadow-xl hover:bg-yellow-400"
               >
                 See Events
@@ -124,7 +126,7 @@ export default function Youth() {
       <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#f0f9ff" }}>
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            
+
             {/* Content */}
             <motion.div
               initial="hidden"
@@ -140,7 +142,7 @@ export default function Youth() {
                 </h2>
               </div>
               <div className="w-16 h-1 bg-blue-600 mb-6 rounded-full" />
-              
+
               <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
                 The Youth Ministry brings together young believers through fellowship, worship, mentorship, and outreach programs. We create a safe space where young people can ask questions, grow spiritually, and discover their God-given purpose.
               </p>
@@ -332,12 +334,13 @@ export default function Youth() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button
-              onClick={() => window.location.href = '#contact'}
+              onClick={() => navigate('/contact')}
               className="bg-yellow-400 text-blue-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-yellow-400"
             >
               Join the Youth Ministry
             </Button>
             <Button
+              onClick={() => navigate('/about')}
               className="bg-white text-blue-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
               Learn More
