@@ -1,15 +1,36 @@
 import express from "express";
 import pool from "../config/db.js";
+import nodemailer from "nodemailer";
 
 const router = express.Router();
+
+// Create a reusable transporter if SMTP config is provided
+let transporter;
+if (process.env.SMTP_HOST && process.env.SMTP_USER) {
+  transporter = nodemailer.createTransport({
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : 587,
+    secure: process.env.SMTP_PORT === "465",
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+}
 
 
 // ✅ POST: Save contact message
 router.post("/", async (req, res) => {
   const { full_name, email, phone, message } = req.body;
 
-  if (!full_name || !email || !message) {
-    return res.status(400).json({ error: "Required fields missing" });
+  // Basic server-side validation
+  const errors = [];
+  if (!full_name || full_name.trim().length < 2) errors.push("Full name is required (min 2 chars)");
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("Valid email is required");
+  if (!message || message.trim().length < 10) errors.push("Message is required (min 10 chars)");
+
+  if (errors.length) {
+    return res.status(400).json({ errors });
   }
 
   try {
@@ -18,13 +39,32 @@ router.post("/", async (req, res) => {
       VALUES (?, ?, ?, ?)
     `;
 
-    await pool.execute(sql, [full_name, email, phone, message]);
+    const [result] = await pool.execute(sql, [full_name.trim(), email.trim(), phone || null, message.trim()]);
 
-    res.status(201).json({ message: "Message received" });
+    // Send notification email to admin if transporter available
+    if (transporter && (process.env.EMAIL_TO || process.env.SMTP_USER)) {
+      const to = process.env.EMAIL_TO || process.env.SMTP_USER;
+      const subject = `New contact message from ${full_name}`;
+      const text = `Name: ${full_name}\nEmail: ${email}\nPhone: ${phone || "N/A"}\n\nMessage:\n${message}`;
+      const html = `<p><strong>Name:</strong> ${full_name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Phone:</strong> ${phone || "N/A"}</p><hr/><p>${message.replace(/\n/g, '<br/>')}</p>`;
+
+      transporter.sendMail({
+        from: process.env.EMAIL_FROM || process.env.SMTP_USER,
+        to,
+        subject,
+        text,
+        html,
+      }).then(info => {
+        console.log('Contact notification sent:', info.messageId || info.response);
+      }).catch(mailErr => {
+        console.error('Failed to send contact notification:', mailErr);
+      });
+    }
+
+    res.status(201).json({ message: "Message received", id: result.insertId });
   } catch (err) {
     console.error("POST /api/contact error:", err);
-    // Return success in development mode
-    res.status(201).json({ message: "Message received (offline mode)" });
+    res.status(500).json({ error: "Failed to save message" });
   }
 });
 
