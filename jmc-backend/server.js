@@ -7,6 +7,8 @@ import devotionsRoutes from "./routes/devotionsRoutes.js";
 import sermonsRoutes from "./routes/sermonsRoutes.js";
 import leadershipRoutes from "./routes/leadershipRoutes.js";
 import authRoutes from "./routes/auth.js";
+// payment routes removed (Mpesa integration undone)
+
 
 dotenv.config();
 
@@ -23,6 +25,7 @@ app.use("/api/devotions", devotionsRoutes);
 app.use("/api/sermons", sermonsRoutes);
 app.use("/api/leadership", leadershipRoutes);
 app.use("/api/auth", authRoutes);
+// app.use("/api/pay", paymentsRoutes);  // disabled
 
 app.get("/", (req, res) => {
   res.send("JMC Backend is running");

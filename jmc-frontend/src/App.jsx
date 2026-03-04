@@ -7,6 +7,7 @@ import Pastorate from "./pages/Pastorate";
 import Devotionals from "./pages/Devotionals";
 import DevotionalDetail from './pages/devotionaldetail';
 import Events from "./pages/Events";
+import Give from "./pages/Give";
 import Contacts from "./pages/Contact";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Youth from "./pages/ministries/Youth";
@@ -31,6 +32,7 @@ function App() {
         <Route path="/devotionals/:id" element={<DevotionalDetail />} />
         
         <Route path="/events" element={<Events />} />
+        <Route path="/give" element={<Give />} />
         
         {/* Ministries Routes */}
         <Route path="/ministries/youth" element={<Youth />} />
