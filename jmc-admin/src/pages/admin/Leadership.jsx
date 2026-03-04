@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { api } from "../../lib/api";
 
 export default function Leadership() {
   const [leaders, setLeaders] = useState([]);
@@ -11,13 +12,70 @@ export default function Leadership() {
     position: "",
     bio: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    fetchLeaders();
+  }, []);
+
+  const fetchLeaders = async () => {
+    try {
+      const response = await api.leadership.getAll();
+      const data = await response.json();
+      setLeaders(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("Error fetching leaders:", err);
+      setError("Failed to load leaders");
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.position) return;
 
-    setLeaders([...leaders, form]);
-    setForm({ name: "", position: "", bio: "" });
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setError("Not authenticated. Please login again.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await api.leadership.create(form);
+      const data = await response.json();
+
+      if (response.ok) {
+        setLeaders([data.leader || { ...form }, ...leaders]);
+        setForm({ name: "", position: "", bio: "" });
+      } else {
+        console.error("Create leader error:", data);
+        setError(data.error || "Failed to create leader");
+      }
+    } catch (err) {
+      console.error("Error creating leader:", err);
+      setError("Connection error. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this leader?")) return;
+
+    try {
+      const response = await api.leadership.delete(id);
+      if (response.ok) {
+        setLeaders(leaders.filter(l => l.leader_id !== id && l.id !== id));
+      } else {
+        setError("Failed to delete leader");
+      }
+    } catch (err) {
+      console.error("Error deleting leader:", err);
+      setError("Connection error. Please try again.");
+    }
   };
 
   return (
@@ -25,6 +83,12 @@ export default function Leadership() {
       <h1 className="text-3xl font-bold text-jmcPrimary mb-6">
         Leadership Management
       </h1>
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-100 text-red-700 rounded-lg">
+          {error}
+        </div>
+      )}
 
       <Card className="mb-8">
         <CardContent className="p-6 space-y-4">
@@ -46,9 +110,10 @@ export default function Leadership() {
           />
           <Button
             onClick={handleSubmit}
-            className="bg-jmcPrimary hover:bg-jmcPrimary/90"
+            disabled={loading}
+            className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
-            Add Leader
+            {loading ? "Adding..." : "Add Leader"}
           </Button>
         </CardContent>
       </Card>
@@ -58,16 +123,22 @@ export default function Leadership() {
           {leaders.length === 0 && (
             <p className="text-gray-500">No leaders added yet.</p>
           )}
-          {leaders.map((leader, index) => (
+          {leaders.map((leader) => (
             <div
-              key={index}
-              className="flex justify-between items-center border-b pb-2"
+              key={leader.leader_id || leader.id}
+              className="flex justify-between items-start border-b pb-4 last:border-b-0"
             >
-              <div>
-                <p className="font-semibold">{leader.name}</p>
-                <p className="text-sm text-gray-500">{leader.position}</p>
-                <p className="text-xs text-gray-400">{leader.bio}</p>
+              <div className="flex-1">
+                <p className="font-semibold text-jmcPrimary">{leader.name}</p>
+                <p className="text-sm text-gray-600">{leader.position}</p>
+                <p className="text-xs text-gray-500 mt-1">{leader.bio}</p>
               </div>
+              <button
+                onClick={() => handleDelete(leader.leader_id || leader.id)}
+                className="ml-4 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+              >
+                Delete
+              </button>
             </div>
           ))}
         </CardContent>
