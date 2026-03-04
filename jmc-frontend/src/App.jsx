@@ -5,7 +5,7 @@ import Sermons from "./pages/Sermons";
 import Contact from "./pages/Contact";
 import Pastorate from "./pages/Pastorate";
 import Devotionals from "./pages/Devotionals";
-import DevotionalDetail from './pages/devotionaldetail';
+import DevotionalDetail from "./pages/DevotionalDetail";
 import Events from "./pages/Events";
 import Give from "./pages/Give";
 import Contacts from "./pages/Contact";
@@ -40,7 +40,6 @@ function App() {
         <Route path="/ministries/ushers" element={<Ushers />} />
         <Route path="/ministries/media" element={<Media />} />
         
-        <Route path="/contacts" element={<Contacts />} />
         <Route path="/contact" element={<Contact />} />
         
         {/* Admin Routes */}

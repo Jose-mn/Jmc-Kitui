@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { getDevotionalById } from "../data/devotionals";
+import { getDevotionalById } from "../Data/Devotionals";
 import { Calendar, User, BookOpen, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "../components/Navigation";

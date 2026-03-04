@@ -24,15 +24,35 @@ export default function Contacts() {
     setError("");
     setSuccess(false);
 
+    // Client-side validation
+    if (!name.trim() || name.trim().length < 2) {
+      setError("Please enter your full name (at least 2 characters)");
+      setLoading(false);
+      return;
+    }
+
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+
+    if (!message.trim() || message.trim().length < 10) {
+      setError("Message must be at least 10 characters long");
+      setLoading(false);
+      return;
+    }
+
     const payload = {
-      full_name: name,
-      email,
-      phone,
-      message,
+      full_name: name.trim(),
+      email: email.trim(),
+      phone: phone.trim() || null,
+      message: message.trim(),
     };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`, {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/api/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,8 +60,15 @@ export default function Contacts() {
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error("Failed to send message");
+        if (data.errors && Array.isArray(data.errors)) {
+          setError(data.errors.join(", "));
+        } else {
+          setError(data.error || "Failed to send message");
+        }
+        return;
       }
 
       setSuccess(true);
@@ -51,8 +78,8 @@ export default function Contacts() {
       setPhone("");
       setMessage("");
     } catch (err) {
-      
-      setError("Something went wrong. Please try again.");
+      console.error("Contact form error:", err);
+      setError("Something went wrong. Please check your connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -113,14 +140,34 @@ export default function Contacts() {
 
         <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="bg-white rounded-xl shadow-sm p-8">
           <form className="space-y-6" onSubmit={handleSubmit}>
+            {error && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-red-50 border border-red-200 rounded-lg"
+              >
+                <p className="text-red-700 font-medium text-sm">{error}</p>
+              </motion.div>
+            )}
+
+            {submitted && success && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="p-4 bg-green-50 border border-green-200 rounded-lg"
+              >
+                <p className="text-green-700 font-medium text-sm">✓ Thank you for reaching out! We will get back to you soon.</p>
+              </motion.div>
+            )}
+
             <div>
               <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name <span className="text-red-500">*</span></label>
-              <Input id="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" />
+              <Input id="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required />
             </div>
 
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address <span className="text-red-500">*</span></label>
-              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
             </div>
 
             <div>
@@ -129,16 +176,11 @@ export default function Contacts() {
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-sm font-medium mb-1">Message <span className="text-red-500">*</span></label>
-              <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Write your message here..." className="min-h-[120px]" />
+              <label htmlFor="message" className="block text-sm font-medium mb-1">Message <span className="text-red-500">*</span> (min 10 chars)</label>
+              <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Write your message here..." className="min-h-[120px]" required />
             </div>
 
-            <Button type="submit" disabled={loading} 
-            className="w-full bg-primary text-white">{loading ? "Sending..." : "Send Message"}</Button>
-
-            {submitted && (
-              <p className="text-green-600 text-center mt-4">Thank you for reaching out! We will get back to you soon.</p>
-            )}
+            <Button type="submit" disabled={loading} className="w-full bg-primary text-white">{loading ? "Sending..." : "Send Message"}</Button>
           </form>
         </motion.div>
 

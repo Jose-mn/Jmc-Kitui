@@ -76,7 +76,7 @@ export default function Navigation() {
               </motion.div>
             </div>
 
-            <Link to="/contacts" className="text-slate-700 hover:text-purple-700 font-medium transition">
+            <Link to="/contact" className="text-slate-700 hover:text-purple-700 font-medium transition">
               CONTACT US
             </Link>
           </div>
@@ -122,10 +122,10 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
             >
               <Button
-                onClick={() => window.open('/give', '_blank')}
+                onClick={() => window.location.href = '/give'}
                 className="bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 font-semibold text-sm"
               >
-                GIVE ONLINE
+                GIVE
               </Button>
             </motion.div>
           </div>
@@ -224,7 +224,7 @@ export default function Navigation() {
                 </div>
 
                 <Link
-                  to="/contacts"
+                  to="/contact"
                   className="block py-2 text-slate-700 hover:text-purple-700 font-medium transition"
                   onClick={closeMenu}
                 >
@@ -244,12 +244,12 @@ export default function Navigation() {
                   </Button>
                   <Button
                     onClick={() => {
-                      window.open('/give', '_blank');
+                      window.location.href = '/give';
                       closeMenu();
                     }}
                     className="w-full bg-purple-700 hover:bg-purple-800 text-white font-semibold"
                   >
-                    GIVE ONLINE
+                    GIVE
                   </Button>
                 </div>
               </div>

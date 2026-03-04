@@ -14,15 +14,32 @@ export default function AdminLogin() {
     setError("");
     setLoading(true);
 
-    // Simple authentication (replace with backend call when available)
-    if (email === "admin@jmc.com" && password === "admin123") {
-      localStorage.setItem("token", "admin-token-" + Date.now());
-      navigate("/admin");
-    } else {
-      setError("Invalid email or password");
-    }
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    setLoading(false);
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      // Store token in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Navigate to admin dashboard
+      navigate("/admin");
+    } catch (err) {
+      setError(err.message || "Invalid credentials. Please try again.");
+      console.error("Login error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

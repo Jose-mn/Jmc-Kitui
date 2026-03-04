@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getLatestDevotionals } from "../data/devotionals";
+import { getLatestDevotionals } from "../Data/Devotionals";
 import { Calendar, BookOpen, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 

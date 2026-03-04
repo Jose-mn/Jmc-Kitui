@@ -30,7 +30,8 @@ router.post("/", async (req, res) => {
   if (!message || message.trim().length < 10) errors.push("Message is required (min 10 chars)");
 
   if (errors.length) {
-    return res.status(400).json({ errors });
+    console.warn('Contact form validation errors:', errors, '| Received:', { full_name, email, message: message?.length });
+    return res.status(400).json({ error: errors[0], errors });
   }
 
   try {

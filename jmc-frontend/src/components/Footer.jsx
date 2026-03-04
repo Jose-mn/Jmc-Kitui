@@ -15,9 +15,9 @@ export default function Footer(){
           <h4 className="text-lg font-bold text-white mb-3">Quick Links</h4>
           <ul className="text-sm space-y-2">
             <li><a href="/give" className="hover:underline">Give Online</a></li>
-            <li><a href="/live" className="hover:underline">Live Stream</a></li>
+            <li><a href="https://www.youtube.com/@JMCKITUI" target="_blank" rel="noreferrer" className="hover:underline">Live Stream</a></li>
             <li><a href="/devotionals" className="hover:underline">Devotionals</a></li>
-            <li><a href="/branches" className="hover:underline">Locate Branch</a></li>
+            <li><a href="https://maps.google.com/?q=Jesus+Manifestation+Church,+Kitui" target="_blank" rel="noreferrer" className="hover:underline">Locate Branch</a></li>
           </ul>
         </div>
 

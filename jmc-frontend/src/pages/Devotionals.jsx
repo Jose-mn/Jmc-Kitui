@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { devotionals } from "../data/devotionals";
+import { devotionals } from "../Data/Devotionals";
 import { Calendar, User, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "../components/Navigation";
