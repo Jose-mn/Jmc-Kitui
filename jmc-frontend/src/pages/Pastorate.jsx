@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Quote, Mail, Phone, User } from "lucide-react";
@@ -94,6 +95,7 @@ const leaders = [
 ];
 
 export default function Pastorate() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col bg-stone-50">
       <Navigation />
@@ -429,12 +431,13 @@ export default function Pastorate() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                onClick={() => window.location.href = '#contact'}
+                onClick={() => navigate('/contact')}
                 className="bg-amber-400 text-slate-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-amber-400"
               >
                 Get In Touch
               </Button>
               <Button
+                onClick={() => navigate('/contact')}
                 variant="outline"
                 className="border-2 border-white text-white px-10 py-4 font-bold text-lg bg-transparent hover:text-white"
               >

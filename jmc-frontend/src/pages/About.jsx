@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles, Quote } from "lucide-react";
@@ -16,6 +17,7 @@ const fadeUp = {
 };
 
 export default function About() {
+  const navigate = useNavigate();
   const coreValues = [
     {
       icon: Heart,
@@ -110,7 +112,7 @@ export default function About() {
                 Meet Our Leaders
               </Button>
               <Button
-                onClick={() => window.location.href = '#contact'}
+                onClick={() => navigate('/contact')}
                 variant="outline"
                 className="bg-white text-purple-900 px-8 py-3 font-bold text-lg shadow-xl hover:bg-white"
               >
@@ -447,7 +449,7 @@ export default function About() {
             We are more than a congregation. We are a family united by faith, worship, and love, with ministries that allow everyone to grow, serve, and belong.
           </p>
           <Button
-            onClick={() => window.location.href = '#contact'}
+            onClick={() => navigate('/contact')}
             className="bg-purple-700 text-white px-10 py-4 font-bold text-lg shadow-xl hover:bg-purple-700"
           >
             Become Part of Our Family
@@ -499,12 +501,13 @@ export default function About() {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <Button
-              onClick={() => window.location.href = '#contact'}
+              onClick={() => navigate('/contact')}
               className="bg-white text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
               Plan Your Visit
             </Button>
             <Button
+              onClick={() => navigate('/contact')}
               variant="outline"
               className="bg-white text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
