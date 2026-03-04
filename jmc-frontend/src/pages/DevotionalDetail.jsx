@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 export default function DevotionalDetail() {
   const { id } = useParams();
   console.log("URL ID:", id); // DEBUG
-  
+
   const devotional = getDevotionalById(id);
   console.log("Found devotional:", devotional); // DEBUG
 
@@ -42,8 +42,8 @@ export default function DevotionalDetail() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
-      
-      <div className="flex-1 px-4 sm:px-6 py-20 bg-gradient-to-b from-purple-50 to-white">
+
+      <div className="flex-1 px-4 sm:px-6 py-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1,6 +1,6 @@
 import { Play, Instagram, Facebook } from "lucide-react";
 
-export default function Footer(){
+export default function Footer() {
   return (
     <footer className="bg-slate-900 text-slate-200 py-12 mt-12">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
@@ -15,7 +15,7 @@ export default function Footer(){
           <h4 className="text-lg font-bold text-white mb-3">Quick Links</h4>
           <ul className="text-sm space-y-2">
             <li><a href="/give" className="hover:underline">Give Online</a></li>
-            <li><a href="https://www.youtube.com/@JMCKITUI" target="_blank" rel="noreferrer" className="hover:underline">Live Stream</a></li>
+            <li><a href="https://www.youtube.com/@JMCKITUI/streams" target="_blank" rel="noopener noreferrer" className="hover:underline">Live Stream</a></li>
             <li><a href="/devotionals" className="hover:underline">Devotionals</a></li>
             <li><a href="https://maps.google.com/?q=Jesus+Manifestation+Church,+Kitui" target="_blank" rel="noreferrer" className="hover:underline">Locate Branch</a></li>
           </ul>

@@ -23,37 +23,37 @@ export default function About() {
       icon: Heart,
       title: "Love & Unity",
       description: "Building a community rooted in God's love and united in purpose.",
-      color: "from-purple-600 to-white-600"
+      color: "bg-purple-600"
     },
     {
       icon: BookOpen,
       title: "Biblical Teaching",
       description: "Committed to sound doctrine and the clear teaching of God's Word.",
-      color: "from-cyan-600 to-blue-600"
+      color: "bg-purple-700"
     },
     {
       icon: Users,
       title: "Community",
       description: "Creating a family atmosphere where everyone belongs and grows.",
-      color: "from-stone-600 to-stone-700"
+      color: "bg-purple-500"
     },
     {
       icon: Globe,
       title: "Global Impact",
       description: "Reaching our community and beyond with the Gospel of Jesus Christ.",
-      color: "from-green-600 to-emerald-600"
+      color: "bg-purple-600"
     },
     {
       icon: Award,
       title: "Excellence",
       description: "Pursuing excellence in worship, ministry, and service to God.",
-      color: "from-yellow-600 to-orange-600"
+      color: "bg-purple-700"
     },
     {
       icon: Sparkles,
       title: "Spirit-Led",
       description: "Moving in the power and guidance of the Holy Spirit.",
-      color: "from-indigo-600 to-purple-600"
+      color: "bg-purple-500"
     }
   ];
 
@@ -71,7 +71,7 @@ export default function About() {
           backgroundAttachment: 'fixed'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-600/80 via-purple-600/80 to-purple-600/80" />
+        <div className="absolute inset-0 bg-purple-600/80" />
 
         <div className="absolute inset-0 opacity-20">
           <motion.div
@@ -126,7 +126,6 @@ export default function About() {
       {/* WHO WE ARE SECTION */}
       <section
         className="py-12 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#f9f6f1" }}
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -150,8 +149,7 @@ export default function About() {
 
       {/* VISION & MISSION WITH IMAGE CARDS */}
       <section
-        className="py-12 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#eef2f7" }}
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -254,7 +252,6 @@ export default function About() {
       {/* CORE VALUES */}
       <section
         className="py-12 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#f9f6f1" }}
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -288,7 +285,7 @@ export default function About() {
                 >
                   <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
                     <CardContent className="p-6">
-                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${value.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl ${value.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         <Icon className="text-white w-8 h-8 md:w-10 md:h-10" />
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
@@ -304,12 +301,11 @@ export default function About() {
             })}
           </div>
         </div>
-      </section>
+      </section >
 
       {/* WHAT WE BELIEVE */}
-      <section
-        className="py-12 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#eef2f7" }}
+      < section
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
       >
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -347,13 +343,12 @@ export default function About() {
             </Card>
           </motion.div>
         </div>
-      </section>
+      </section >
 
       {/* LEADERSHIP */}
-      <section
+      < section
         id="leadership"
         className="py-16 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#f9f6f1" }}
       >
         <motion.div
           initial="hidden"
@@ -386,7 +381,7 @@ export default function About() {
                       alt="Bishop Elijah Mutua"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <div className="p-6 md:p-8 text-center bg-white">
                     <h3 className="text-2xl md:text-3xl font-black text-slate-900">Bishop Elijah Mutua</h3>
@@ -413,11 +408,11 @@ export default function About() {
                       alt="Reverend Ruth Mutua"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-pink-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
                   <div className="p-6 md:p-8 text-center bg-white">
                     <h3 className="text-2xl md:text-3xl font-black text-slate-900">Reverend Ruth Mutua</h3>
-                    <p className="text-base md:text-lg text-pink-600 font-bold mt-2 mb-4">Co-Pastor</p>
+                    <p className="text-base md:text-lg text-purple-600 font-bold mt-2 mb-4">Co-Pastor</p>
                     <p className="text-base text-gray-700 leading-relaxed">
                       Passionate about nurturing faith, family, and spiritual growth within the church community.
                     </p>
@@ -427,12 +422,11 @@ export default function About() {
             </motion.div>
           </div>
         </motion.div>
-      </section>
+      </section >
 
       {/* COMMUNITY */}
-      <section
-        className="py-12 md:py-20 px-4 md:px-6"
-        style={{ backgroundColor: "#eef2f7" }}
+      < section
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
       >
         <motion.div
           initial="hidden"
@@ -455,10 +449,10 @@ export default function About() {
             Become Part of Our Family
           </Button>
         </motion.div>
-      </section>
+      </section >
 
       {/* CTA SECTION */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 text-white text-center relative overflow-hidden">
+      < section className="py-16 md:py-24 px-4 md:px-6 bg-purple-900 text-white text-center relative overflow-hidden" >
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div
             className="absolute top-10 left-1/4 w-96 h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
@@ -515,9 +509,9 @@ export default function About() {
             </Button>
           </motion.div>
         </div>
-      </section>
+      </section >
 
       <Footer />
-    </div>
+    </div >
   );
 }

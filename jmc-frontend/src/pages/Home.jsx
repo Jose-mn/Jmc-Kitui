@@ -17,7 +17,7 @@ export default function Home() {
       <Navigation />
 
       {/* HERO SECTION */}
-      <section className="pt-24 pb-20 px-6 bg-white">
+      <section className="pt-24 pb-20 px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           {/* Left Column - Image */}
           <motion.div
@@ -29,9 +29,9 @@ export default function Home() {
             <div className="relative">
               {/* Decorative dots */}
               <div className="absolute -top-6 -left-6 flex gap-2 z-20">
-                <div className="w-3 h-3 rounded-full bg-red-600" />
-                <div className="w-3 h-3 rounded-full bg-red-600" />
-                <div className="w-3 h-3 rounded-full bg-red-600" />
+                <div className="w-3 h-3 rounded-full bg-purple-600" />
+                <div className="w-3 h-3 rounded-full bg-purple-600" />
+                <div className="w-3 h-3 rounded-full bg-purple-600" />
               </div>
 
               {/* Image Carousel */}
@@ -83,7 +83,7 @@ export default function Home() {
               </Button>
               <Button
                 onClick={() => window.open('https://www.youtube.com/@JMCKITUI', '_blank')}
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 font-semibold text-lg"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 font-semibold text-lg"
               >
                 WATCH LIVE
               </Button>
@@ -93,7 +93,7 @@ export default function Home() {
       </section>
 
       {/* MESSAGE FROM PASTORS SECTION */}
-      <section className="py-20 px-6 bg-gray-50">
+      <section className="py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="flex items-start gap-2 mb-8"
@@ -103,9 +103,9 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <div className="flex gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-600" />
-              <div className="w-3 h-3 rounded-full bg-red-600" />
-              <div className="w-3 h-3 rounded-full bg-red-600" />
+              <div className="w-3 h-3 rounded-full bg-purple-600" />
+              <div className="w-3 h-3 rounded-full bg-purple-600" />
+              <div className="w-3 h-3 rounded-full bg-purple-600" />
             </div>
             <h3 className="text-3xl font-bold text-purple-700">Message from our Pastors</h3>
           </motion.div>
@@ -152,29 +152,7 @@ export default function Home() {
       </section>
 
       {/* SERVICE TIMES */}
-      <section className="py-20 px-6 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"></div>
-        <div className="absolute inset-0 opacity-30">
-          <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              x: [0, 50, 0],
-              y: [0, 30, 0]
-            }}
-            transition={{ duration: 8, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              x: [0, -50, 0],
-              y: [0, -30, 0]
-            }}
-            transition={{ duration: 8, repeat: Infinity, delay: 1 }}
-          />
-        </div>
+      <section className="py-20 px-6 relative overflow-hidden bg-purple-50/30">
 
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div
@@ -192,11 +170,11 @@ export default function Home() {
             >
               <Calendar className="w-16 h-16 mx-auto mb-4 text-purple-600" />
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
               Join Us for Worship
             </h2>
             <p className="text-gray-600 text-lg">We can't wait to see you!</p>
-            <div className="h-1 w-24 mx-auto bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-4" />
+            <div className="h-1 w-24 mx-auto bg-purple-600 rounded-full mt-4" />
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -204,21 +182,21 @@ export default function Home() {
               {
                 title: "Sunday Service",
                 time: "8:45 AM - 12:00 PM",
-                color: "from-blue-500 to-cyan-500",
+                color: "bg-purple-600",
                 icon: Church,
                 description: "Main worship service"
               },
               {
                 title: "Prayer Meetings",
                 time: "Tue & Thu 5:00 - 7:00 PM",
-                color: "from-purple-500 to-pink-500",
+                color: "bg-purple-700",
                 icon: HeartHandshake,
                 description: "Join us in prayer"
               },
               {
                 title: "Friday Nights",
                 time: "As Announced",
-                color: "from-yellow-400 to-orange-500",
+                color: "bg-purple-500",
                 icon: PlayCircle,
                 description: "Special prayer services"
               },
@@ -233,11 +211,11 @@ export default function Home() {
                   viewport={{ once: true }}
                   whileHover={{ y: -10 }}
                 >
-                  <Card className="border-0 shadow-xl overflow-hidden h-full bg-white/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-300">
-                    <div className={`h-2 bg-gradient-to-r ${service.color}`} />
+                  <Card className="border-0 shadow-xl overflow-hidden h-full bg-white hover:shadow-2xl transition-all duration-300">
+                    <div className={`h-2 ${service.color}`} />
                     <CardContent className="p-8 text-center">
                       <motion.div
-                        className={`w-20 h-20 rounded-full bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 shadow-lg mx-auto`}
+                        className={`w-20 h-20 rounded-full ${service.color} flex items-center justify-center mb-6 shadow-lg mx-auto`}
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         transition={{ duration: 0.3 }}
                       >
@@ -247,7 +225,7 @@ export default function Home() {
                       <h3 className="font-bold text-2xl text-slate-900 mb-2">{service.title}</h3>
                       <p className="text-sm text-gray-500 mb-4">{service.description}</p>
 
-                      <div className={`inline-block px-6 py-3 rounded-full bg-gradient-to-r ${service.color} bg-opacity-10 mb-4`}>
+                      <div className={`inline-block px-6 py-3 rounded-full ${service.color} bg-opacity-10 mb-4`}>
                         <p className="text-slate-800 font-bold text-lg">{service.time}</p>
                       </div>
 
@@ -258,10 +236,7 @@ export default function Home() {
                         <Button
                           variant="outline"
                           onClick={() => navigate('/about')}
-                          className={`mt-4 border-2 hover:text-white transition-all ${i === 0 ? 'border-blue-500 text-blue-600 hover:bg-blue-500' :
-                              i === 1 ? 'border-purple-500 text-purple-600 hover:bg-purple-500' :
-                                'border-orange-500 text-orange-600 hover:bg-orange-500'
-                            }`}
+                          className="mt-4 border-2 border-purple-500 text-purple-600 hover:bg-purple-500 hover:text-white transition-all"
                         >
                           Learn More
                         </Button>
@@ -285,7 +260,7 @@ export default function Home() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button
                 onClick={() => window.open('https://maps.app.goo.gl/A6gZZLv9NwqAsMh5A', '_blank')}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-10 py-4 font-bold text-lg shadow-xl"
+                className="bg-purple-700 hover:bg-purple-800 text-white px-10 py-4 font-bold text-lg shadow-xl"
               >
                 Plan Your Visit
               </Button>
@@ -294,7 +269,7 @@ export default function Home() {
         </div>
       </section>
       {/* DEVOTIONALS/BLOG SECTION */}
-      <section className="py-20 px-4 bg-gradient-to-br from-slate-50 to-blue-50">
+      <section className="py-20 px-4 bg-purple-50/30">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -302,7 +277,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700">
               Latest Devotionals
             </h2>
             <p className="text-gray-600 text-lg">
@@ -375,7 +350,7 @@ export default function Home() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">
+                    <h3 className="text-xl font-bold mb-3 group-hover:text-purple-600 transition-colors">
                       {post.title}
                     </h3>
 
@@ -389,7 +364,7 @@ export default function Home() {
                       <span className="text-sm text-gray-700 font-medium">
                         {post.author}
                       </span>
-                      <span className="text-blue-600 font-semibold text-sm inline-flex items-center gap-1">
+                      <span className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1">
                         Read More →
                       </span>
                     </div>
@@ -409,7 +384,7 @@ export default function Home() {
             <Button
               onClick={() => navigate('/devotionals')}
               variant="outline"
-              className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 font-semibold text-lg"
+              className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 font-semibold text-lg"
             >
               View All Devotionals
             </Button>
@@ -417,7 +392,7 @@ export default function Home() {
         </div>
       </section>
       {/* LATEST SERMON */}
-      <section className="py-20 bg-gradient-to-b from-slate-50 to-white px-6">
+      <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
             className="text-center mb-12"
@@ -426,10 +401,10 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-900 to-purple-900 bg-clip-text text-transparent mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
               Latest Sermon
             </h2>
-            <div className="h-1 w-20 mx-auto bg-yellow-500 rounded-full" />
+            <div className="h-1 w-20 mx-auto bg-purple-500 rounded-full" />
           </motion.div>
 
           <motion.div
@@ -439,7 +414,7 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow">
-              <div className="h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+              <div className="h-2 bg-purple-600" />
 
               {/* YouTube Video Embed */}
               <div className="relative w-full pt-[56.25%] bg-black">
@@ -453,7 +428,7 @@ export default function Home() {
                 ></iframe>
               </div>
 
-              <CardContent className="p-10 bg-gradient-to-br from-white to-slate-50">
+              <CardContent className="p-10">
                 <h3 className="text-2xl font-bold text-slate-900 text-center mb-2">
                   The assurance of our Faith
                 </h3>
@@ -467,7 +442,7 @@ export default function Home() {
                 >
                   <Button
                     onClick={() => window.open('https://www.youtube.com/live/RX8k09Gz-rc?si=YyJSmhXnv9njcYRz')}
-                    className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black px-10 py-3 font-bold text-lg shadow-lg"
+                    className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-3 font-bold text-lg shadow-lg"
                   >
                     Watch Full Sermon
                   </Button>

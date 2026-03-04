@@ -18,25 +18,25 @@ export default function Youth() {
       icon: Music,
       title: "Worship Nights",
       description: "Powerful worship sessions where young people encounter God's presence through music and prayer.",
-      color: "from-blue-600 to-cyan-600"
+      color: "bg-purple-600"
     },
     {
       icon: BookOpen,
       title: "Bible Study",
       description: "Interactive sessions diving deep into God's Word, relevant to the challenges young people face today.",
-      color: "from-purple-600 to-pink-600"
+      color: "bg-purple-700"
     },
     {
       icon: Coffee,
       title: "Fellowship & Hangouts",
       description: "Building genuine friendships and community through fun activities, game nights, and social gatherings.",
-      color: "from-green-600 to-teal-600"
+      color: "bg-purple-500"
     },
     {
       icon: Target,
       title: "Leadership Training",
       description: "Equipping young leaders with skills to serve in church and make an impact in their communities.",
-      color: "from-yellow-600 to-orange-600"
+      color: "bg-purple-600"
     }
   ];
 
@@ -83,7 +83,7 @@ export default function Youth() {
             transition={{ duration: 8, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-20 right-10 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, -30, 0] }}
             transition={{ duration: 8, repeat: Infinity, delay: 1 }}
           />
@@ -123,7 +123,7 @@ export default function Youth() {
       </section>
 
       {/* WHAT WE DO SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#f0f9ff" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
@@ -136,12 +136,12 @@ export default function Youth() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <Zap className="w-8 h-8 text-blue-600" />
+                <Zap className="w-8 h-8 text-purple-600" />
                 <h2 className="text-3xl md:text-4xl font-black text-slate-900">
                   What We Do
                 </h2>
               </div>
-              <div className="w-16 h-1 bg-blue-600 mb-6 rounded-full" />
+              <div className="w-16 h-1 bg-purple-600 mb-6 rounded-full" />
 
               <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
                 The Youth Ministry brings together young believers through fellowship, worship, mentorship, and outreach programs. We create a safe space where young people can ask questions, grow spiritually, and discover their God-given purpose.
@@ -152,7 +152,7 @@ export default function Youth() {
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-500" />
+                  <Heart className="w-5 h-5 text-purple-500" />
                   <span className="text-sm font-semibold text-gray-600">Faith</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -175,7 +175,7 @@ export default function Youth() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative rounded-2xl overflow-hidden shadow-2xl"
             >
-              <div className="w-full h-80 md:h-96 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+              <div className="w-full h-80 md:h-96 bg-purple-600 flex items-center justify-center">
                 <div className="text-center p-8">
                   <Users className="w-24 h-24 text-white/40 mx-auto mb-4" />
                   <p className="text-white/70 font-semibold text-lg">Youth Ministry Image</p>
@@ -188,7 +188,7 @@ export default function Youth() {
       </section>
 
       {/* ACTIVITIES SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#dbeafe" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -200,7 +200,7 @@ export default function Youth() {
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
               Youth Activities
             </h2>
-            <div className="w-20 h-1 bg-blue-600 mx-auto mb-4 rounded-full" />
+            <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
               Discover the exciting ways we grow together in faith and community
             </p>
@@ -220,7 +220,7 @@ export default function Youth() {
                 >
                   <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
                     <CardContent className="p-6 text-center">
-                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:bg-gradient-to-br group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
+                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
                         <Icon className="text-gray-400 group-hover:text-white w-8 h-8 md:w-10 md:h-10 transition-colors duration-300" />
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
@@ -239,7 +239,7 @@ export default function Youth() {
       </section>
 
       {/* EVENTS SCHEDULE */}
-      <section id="events" className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#f0f9ff" }}>
+      <section id="events" className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -248,11 +248,11 @@ export default function Youth() {
             variants={fadeUp}
             className="text-center mb-12"
           >
-            <Calendar className="w-16 h-16 mx-auto mb-4 text-blue-600" />
+            <Calendar className="w-16 h-16 mx-auto mb-4 text-purple-600" />
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
               Upcoming Events
             </h2>
-            <div className="w-20 h-1 bg-blue-600 mx-auto mb-4 rounded-full" />
+            <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
             <p className="text-base md:text-lg text-gray-600">
               Mark your calendar and join us for these exciting gatherings
             </p>
@@ -270,13 +270,13 @@ export default function Youth() {
               >
                 <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
                   <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
                       <Calendar className="w-6 h-6" />
                     </div>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">
                       {event.title}
                     </h3>
-                    <p className="text-blue-600 font-semibold mb-3">
+                    <p className="text-purple-600 font-semibold mb-3">
                       {event.time}
                     </p>
                     <p className="text-gray-600 text-sm">
@@ -291,7 +291,7 @@ export default function Youth() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="py-16 md:py-24 px-4 md:px-6 text-white text-center relative overflow-hidden" style={{ backgroundColor: "#1e40af" }}>
+      <section className="py-16 md:py-24 px-4 md:px-6 text-white text-center relative overflow-hidden" style={{ backgroundColor: "#7c3aed" }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
           <motion.div
             className="absolute top-10 left-1/4 w-96 h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
@@ -299,7 +299,7 @@ export default function Youth() {
             transition={{ duration: 10, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-10 right-1/4 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ y: [0, -40, 0], x: [0, -40, 0] }}
             transition={{ duration: 10, repeat: Infinity, delay: 2 }}
           />
@@ -321,7 +321,7 @@ export default function Youth() {
             viewport={{ once: true }}
             variants={fadeUp}
             transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl mb-8 text-blue-100 leading-relaxed"
+            className="text-lg md:text-xl mb-8 text-purple-100 leading-relaxed"
           >
             Whether you're looking for community, spiritual growth, or a place to belong—you're welcome here. Come as you are and discover your purpose!
           </motion.p>
@@ -335,13 +335,13 @@ export default function Youth() {
           >
             <Button
               onClick={() => navigate('/contact')}
-              className="bg-yellow-400 text-blue-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-yellow-400"
+              className="bg-yellow-400 text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-yellow-400"
             >
               Join the Youth Ministry
             </Button>
             <Button
               onClick={() => navigate('/about')}
-              className="bg-white text-blue-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
+              className="bg-white text-purple-900 px-10 py-4 font-bold text-lg shadow-2xl hover:bg-white"
             >
               Learn More
             </Button>

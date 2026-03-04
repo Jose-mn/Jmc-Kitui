@@ -18,25 +18,25 @@ export default function Media() {
       icon: Video,
       title: "Livestreaming",
       description: "Broadcasting services live to reach believers and seekers beyond the church walls through digital platforms.",
-      color: "from-orange-600 to-red-600"
+      color: "bg-purple-600"
     },
     {
       icon: Camera,
       title: "Photography & Video",
       description: "Capturing church moments, events, and testimonials to document God's work in our community.",
-      color: "from-blue-600 to-cyan-600"
+      color: "bg-purple-700"
     },
     {
       icon: Monitor,
       title: "Visual Presentations",
       description: "Creating and managing worship slides, sermon visuals, and multimedia content for impactful services.",
-      color: "from-green-600 to-teal-600"
+      color: "bg-purple-500"
     },
     {
       icon: Radio,
       title: "Sound Engineering",
       description: "Managing audio systems to ensure clear, balanced, and excellent sound for every church gathering.",
-      color: "from-purple-600 to-pink-600"
+      color: "bg-purple-600"
     }
   ];
 
@@ -78,12 +78,12 @@ export default function Media() {
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">
           <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-orange-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute top-20 left-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ scale: [1, 1.2, 1], x: [0, 50, 0], y: [0, 30, 0] }}
             transition={{ duration: 8, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-20 right-10 w-72 h-72 bg-red-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, -30, 0] }}
             transition={{ duration: 8, repeat: Infinity, delay: 1 }}
           />
@@ -123,7 +123,7 @@ export default function Media() {
       </section>
 
       {/* WHAT WE DO SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#fff7ed" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
@@ -136,12 +136,12 @@ export default function Media() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <Camera className="w-8 h-8 text-orange-600" />
+                <Camera className="w-8 h-8 text-purple-600" />
                 <h2 className="text-3xl md:text-4xl font-black text-slate-900">
                   What We Handle
                 </h2>
               </div>
-              <div className="w-16 h-1 bg-orange-600 mb-6 rounded-full" />
+              <div className="w-16 h-1 bg-purple-600 mb-6 rounded-full" />
 
               <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
                 The Media Team manages audio, video, photography, livestreams, and digital communication platforms. We are the bridge between the pulpit and the world, ensuring the gospel reaches beyond the church walls.
@@ -152,7 +152,7 @@ export default function Media() {
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-500" />
+                  <Heart className="w-5 h-5 text-purple-500" />
                   <span className="text-sm font-semibold text-gray-600">Service</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -160,7 +160,7 @@ export default function Media() {
                   <span className="text-sm font-semibold text-gray-600">Technology</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-green-500" />
+                  <Users className="w-5 h-5 text-purple-500" />
                   <span className="text-sm font-semibold text-gray-600">Outreach</span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export default function Media() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative rounded-2xl overflow-hidden shadow-2xl"
             >
-              <div className="w-full h-80 md:h-96 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center">
+              <div className="w-full h-80 md:h-96 bg-purple-600 flex items-center justify-center">
                 <div className="text-center p-8">
                   <Camera className="w-24 h-24 text-white/40 mx-auto mb-4" />
                   <p className="text-white/70 font-semibold text-lg">Media Team Image</p>
@@ -188,7 +188,7 @@ export default function Media() {
       </section>
 
       {/* ACTIVITIES SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#fed7aa" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -200,7 +200,7 @@ export default function Media() {
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
               Media Activities
             </h2>
-            <div className="w-20 h-1 bg-orange-600 mx-auto mb-4 rounded-full" />
+            <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
             <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
               Discover the exciting ways our team serves through media and technology
             </p>
@@ -220,7 +220,7 @@ export default function Media() {
                 >
                   <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
                     <CardContent className="p-6 text-center">
-                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:bg-gradient-to-br group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
+                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
                         <Icon className="text-gray-400 group-hover:text-white w-8 h-8 md:w-10 md:h-10 transition-colors duration-300" />
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
@@ -239,7 +239,7 @@ export default function Media() {
       </section>
 
       {/* EVENTS SCHEDULE */}
-      <section id="events" className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#fff7ed" }}>
+      <section id="events" className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -248,11 +248,11 @@ export default function Media() {
             variants={fadeUp}
             className="text-center mb-12"
           >
-            <Calendar className="w-16 h-16 mx-auto mb-4 text-orange-600" />
+            <Calendar className="w-16 h-16 mx-auto mb-4 text-purple-600" />
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
               Upcoming Events
             </h2>
-            <div className="w-20 h-1 bg-orange-600 mx-auto mb-4 rounded-full" />
+            <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
             <p className="text-base md:text-lg text-gray-600">
               Join us for training, planning, and fellowship
             </p>
@@ -270,13 +270,13 @@ export default function Media() {
               >
                 <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
                   <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
                       <Calendar className="w-6 h-6" />
                     </div>
                     <h3 className="text-xl font-bold text-slate-900 mb-2">
                       {event.title}
                     </h3>
-                    <p className="text-orange-600 font-semibold mb-3">
+                    <p className="text-purple-600 font-semibold mb-3">
                       {event.time}
                     </p>
                     <p className="text-gray-600 text-sm">
@@ -291,7 +291,7 @@ export default function Media() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="py-16 md:py-24 px-4 md:px-6 text-white text-center relative overflow-hidden" style={{ backgroundColor: "#ea580c" }}>
+      <section className="py-16 md:py-24 px-4 md:px-6 text-white text-center relative overflow-hidden" style={{ backgroundColor: "#7c3aed" }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
           <motion.div
             className="absolute top-10 left-1/4 w-96 h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"

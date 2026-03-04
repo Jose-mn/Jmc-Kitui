@@ -27,8 +27,8 @@ export default function Devotionals() {
     <div className="min-h-screen flex flex-col">
       {/* NAVIGATION - This should appear at the top */}
       <Navigation />
-      
-      <div className="flex-1 px-4 sm:px-6 py-20 bg-gradient-to-b from-purple-50 to-white">
+
+      <div className="flex-1 px-4 sm:px-6 py-20">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
@@ -75,7 +75,7 @@ export default function Devotionals() {
                       className="w-full h-48 object-cover"
                     />
                   )}
-                  
+
                   <div className="p-6">
                     <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
                       <span className="flex items-center gap-1">

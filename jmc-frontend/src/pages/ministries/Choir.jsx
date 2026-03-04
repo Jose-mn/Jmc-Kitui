@@ -18,25 +18,25 @@ export default function Choir() {
       icon: Mic,
       title: "Sunday Worship",
       description: "Leading the congregation into God's presence through anointed praise and worship every Sunday service.",
-      color: "from-purple-600 to-pink-600"
+      color: "bg-purple-600"
     },
     {
       icon: Headphones,
       title: "Choir Rehearsals",
       description: "Weekly practice sessions to sharpen our musical skills and prepare spiritually for ministry through song.",
-      color: "from-blue-600 to-cyan-600"
+      color: "bg-purple-700"
     },
     {
       icon: BookOpen,
       title: "Music Workshops",
       description: "Training members in music theory, vocal techniques, and instrument playing to enhance worship excellence.",
-      color: "from-green-600 to-teal-600"
+      color: "bg-purple-500"
     },
     {
       icon: Star,
       title: "Special Performances",
       description: "Ministering at conferences, weddings, community events, and special church celebrations with powerful songs.",
-      color: "from-yellow-600 to-orange-600"
+      color: "bg-purple-600"
     }
   ];
 
@@ -83,7 +83,7 @@ export default function Choir() {
             transition={{ duration: 8, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-20 right-10 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute bottom-20 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ scale: [1.2, 1, 1.2], x: [0, -50, 0], y: [0, -30, 0] }}
             transition={{ duration: 8, repeat: Infinity, delay: 1 }}
           />
@@ -123,7 +123,7 @@ export default function Choir() {
       </section>
 
       {/* WHAT WE DO SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#faf5ff" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
@@ -152,7 +152,7 @@ export default function Choir() {
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <Heart className="w-5 h-5 text-red-500" />
+                  <Heart className="w-5 h-5 text-purple-500" />
                   <span className="text-sm font-semibold text-gray-600">Worship</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -160,7 +160,7 @@ export default function Choir() {
                   <span className="text-sm font-semibold text-gray-600">Music</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Users className="w-5 h-5 text-green-500" />
+                  <Users className="w-5 h-5 text-purple-500" />
                   <span className="text-sm font-semibold text-gray-600">Unity</span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export default function Choir() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative rounded-2xl overflow-hidden shadow-2xl"
             >
-              <div className="w-full h-80 md:h-96 bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+              <div className="w-full h-80 md:h-96 bg-purple-600 flex items-center justify-center">
                 <div className="text-center p-8">
                   <Music className="w-24 h-24 text-white/40 mx-auto mb-4" />
                   <p className="text-white/70 font-semibold text-lg">Choir Ministry Image</p>
@@ -188,7 +188,7 @@ export default function Choir() {
       </section>
 
       {/* ACTIVITIES SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#e9d5ff" }}>
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -220,7 +220,7 @@ export default function Choir() {
                 >
                   <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
                     <CardContent className="p-6 text-center">
-                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:bg-gradient-to-br group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
+                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
                         <Icon className="text-gray-400 group-hover:text-white w-8 h-8 md:w-10 md:h-10 transition-colors duration-300" />
                       </div>
                       <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
@@ -239,7 +239,7 @@ export default function Choir() {
       </section>
 
       {/* EVENTS SCHEDULE */}
-      <section id="events" className="py-12 md:py-20 px-4 md:px-6" style={{ backgroundColor: "#faf5ff" }}>
+      <section id="events" className="py-12 md:py-20 px-4 md:px-6">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -299,7 +299,7 @@ export default function Choir() {
             transition={{ duration: 10, repeat: Infinity }}
           />
           <motion.div
-            className="absolute bottom-10 right-1/4 w-96 h-96 bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute bottom-10 right-1/4 w-96 h-96 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{ y: [0, -40, 0], x: [0, -40, 0] }}
             transition={{ duration: 10, repeat: Infinity, delay: 2 }}
           />

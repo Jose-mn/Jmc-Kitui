@@ -12,14 +12,14 @@ const fadeUp = {
 
 export default function Give() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
 
       {/* HERO SECTION */}
-      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-gradient-to-br from-red-900 via-pink-900 to-purple-900 text-white overflow-hidden">
+      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-purple-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <motion.div
-            className="absolute top-20 left-10 w-72 h-72 bg-red-400 rounded-full mix-blend-multiply filter blur-3xl"
+            className="absolute top-20 left-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl"
             animate={{
               scale: [1, 1.2, 1],
               x: [0, 50, 0],
@@ -52,14 +52,14 @@ export default function Give() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="inline-block mb-4"
             >
-              <Heart className="w-16 h-16 md:w-20 md:h-20 text-red-300 fill-red-300" />
+              <Heart className="w-16 h-16 md:w-20 md:h-20 text-purple-300 fill-purple-300" />
             </motion.div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6">
               Partner With Us in Ministry
             </h1>
 
-            <p className="text-lg md:text-xl text-pink-100 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-purple-200 max-w-3xl mx-auto leading-relaxed">
               Your generous giving makes it possible for Jesus Manifestation Church to reach more lives, serve our community, and advance God's kingdom.
             </p>
           </motion.div>
@@ -81,7 +81,7 @@ export default function Give() {
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 Your Generosity Makes a Difference
               </h2>
-              
+
               <p className="text-lg text-gray-700 mb-4 leading-relaxed">
                 At Jesus Manifestation Church, we believe in the principle of sowing and reaping. When you give, you're not just supporting a church—you're investing in:
               </p>
@@ -101,7 +101,7 @@ export default function Give() {
                     transition={{ delay: i * 0.1 }}
                     className="flex items-start gap-3 text-gray-700"
                   >
-                    <span className="inline-block w-2 h-2 rounded-full bg-red-600 mt-2 flex-shrink-0" />
+                    <span className="inline-block w-2 h-2 rounded-full bg-purple-600 mt-2 flex-shrink-0" />
                     {item}
                   </motion.li>
                 ))}
@@ -117,10 +117,10 @@ export default function Give() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="bg-gradient-to-br from-red-50 to-pink-50 rounded-2xl p-8 border border-red-200"
+              className="bg-purple-50 rounded-2xl p-8 border border-purple-200"
             >
-              <Heart className="w-16 h-16 text-red-600 mb-6 fill-red-600" />
-              
+              <Heart className="w-16 h-16 text-purple-600 mb-6 fill-purple-600" />
+
               <blockquote className="text-2xl font-bold text-gray-900 mb-4">
                 "It is more blessed to give than to receive."
               </blockquote>
@@ -182,7 +182,7 @@ export default function Give() {
                     <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow">
                       <CardContent className="p-6 text-center flex flex-col h-full">
                         <motion.div
-                          className="w-16 h-16 rounded-full bg-gradient-to-br from-red-600 to-pink-600 flex items-center justify-center mx-auto mb-6"
+                          className="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center mx-auto mb-6"
                           whileHover={{ scale: 1.1, rotate: 5 }}
                         >
                           <Icon className="w-8 h-8 text-white" />
@@ -200,7 +200,7 @@ export default function Give() {
                           href={option.href}
                           target={option.href.startsWith("http") || option.href.startsWith("tel:") ? "_blank" : undefined}
                           rel={option.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                          className="inline-block mt-auto px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition"
+                          className="inline-block mt-auto px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold transition"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                         >
@@ -219,10 +219,10 @@ export default function Give() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-br from-slate-800 to-slate-900 text-white rounded-2xl p-8 md:p-12 text-center"
+            className="bg-purple-900 text-white rounded-2xl p-8 md:p-12 text-center"
           >
-            <DollarSign className="w-16 h-16 mx-auto mb-6 text-red-400" />
-            
+            <DollarSign className="w-16 h-16 mx-auto mb-6 text-purple-300" />
+
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
               Questions About Giving?
             </h3>
@@ -234,7 +234,7 @@ export default function Give() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <motion.a
                 href="tel:+254701504560"
-                className="flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 px-8 py-3 rounded-lg font-semibold transition"
+                className="flex items-center justify-center gap-3 bg-purple-600  hover:bg-purple-700 px-8 py-3 rounded-lg font-semibold transition"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

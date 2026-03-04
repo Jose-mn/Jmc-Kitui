@@ -51,7 +51,7 @@ export default function Events() {
       image: sundayWorshipImage,
       featured: true,
       attendees: "300+",
-      color: "from-purple-600 to-pink-600"
+      color: "bg-purple-600"
     },
     {
       id: 2,
@@ -64,7 +64,7 @@ export default function Events() {
       image: prayerMeetingImage,
       featured: false,
       attendees: "150+",
-      color: "from-blue-600 to-cyan-600"
+      color: "bg-purple-700"
     },
     {
       id: 3,
@@ -77,7 +77,7 @@ export default function Events() {
       image: bibleStudyImage,
       featured: false,
       attendees: "100+",
-      color: "from-yellow-600 to-orange-600"
+      color: "bg-purple-500"
     },
     {
       id: 4,
@@ -90,7 +90,7 @@ export default function Events() {
       image: youthConferenceImage,
       featured: true,
       attendees: "200+",
-      color: "from-green-600 to-teal-600"
+      color: "bg-purple-600"
     },
     {
       id: 5,
@@ -103,7 +103,7 @@ export default function Events() {
       image: childrenSundaySchoolImage,
       featured: false,
       attendees: "80+",
-      color: "from-pink-600 to-rose-600"
+      color: "bg-purple-700"
     },
     {
       id: 6,
@@ -116,7 +116,7 @@ export default function Events() {
       image: nightOfWorshipImage,
       featured: true,
       attendees: "500+",
-      color: "from-indigo-600 to-purple-600"
+      color: "bg-purple-500"
     }
   ];
 
@@ -136,7 +136,7 @@ export default function Events() {
       <Navigation />
 
       {/* HERO SECTION */}
-      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 text-white overflow-hidden">
+      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-purple-900 text-white overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 opacity-20">
           <motion.div
@@ -198,8 +198,8 @@ export default function Events() {
                   key={category.id}
                   onClick={() => setActiveFilter(category.id)}
                   className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${activeFilter === category.id
-                      ? "bg-white text-purple-900 shadow-xl scale-105"
-                      : "bg-white/20 text-white hover:bg-white/30"
+                    ? "bg-white text-purple-900 shadow-xl scale-105"
+                    : "bg-white/20 text-white hover:bg-white/30"
                     }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -240,7 +240,7 @@ export default function Events() {
                       alt={featuredEvent.title}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${featuredEvent.color} opacity-40`} />
+                    <div className={`absolute inset-0 ${featuredEvent.color} opacity-40`} />
 
                     {/* Featured Badge */}
                     <div className="absolute top-4 left-4 md:top-6 md:left-6">
@@ -261,7 +261,7 @@ export default function Events() {
                   <CardContent className="p-6 md:p-10 flex flex-col justify-between">
                     <div>
                       <div className="flex items-center gap-2 mb-4">
-                        <span className={`px-3 py-1 rounded-full bg-gradient-to-r ${featuredEvent.color} text-white text-xs md:text-sm font-semibold`}>
+                        <span className={`px-3 py-1 rounded-full ${featuredEvent.color} text-white text-xs md:text-sm font-semibold`}>
                           {categories.find(c => c.id === featuredEvent.category)?.name}
                         </span>
                       </div>
@@ -294,7 +294,7 @@ export default function Events() {
                     <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                       <Button
                         onClick={() => navigate('/contact')}
-                        className={`bg-gradient-to-r ${featuredEvent.color} hover:opacity-90 text-white px-6 md:px-8 py-3 md:py-4 font-bold text-base md:text-lg shadow-xl w-full sm:w-auto`}
+                        className={`${featuredEvent.color} hover:opacity-90 text-white px-6 md:px-8 py-3 md:py-4 font-bold text-base md:text-lg shadow-xl w-full sm:w-auto`}
                       >
                         Register Now
                         <ChevronRight className="ml-2 w-5 h-5" />
@@ -345,11 +345,11 @@ export default function Events() {
                       alt={event.title}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${event.color} opacity-30 group-hover:opacity-40 transition-opacity`} />
+                    <div className={`absolute inset-0 ${event.color} opacity-30 group-hover:opacity-40 transition-opacity`} />
 
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className={`px-3 py-1 rounded-full bg-gradient-to-r ${event.color} text-white text-xs md:text-sm font-semibold shadow-lg`}>
+                      <span className={`px-3 py-1 rounded-full ${event.color} text-white text-xs md:text-sm font-semibold shadow-lg`}>
                         {categories.find(c => c.id === event.category)?.name}
                       </span>
                     </div>
@@ -394,7 +394,7 @@ export default function Events() {
                     {/* Action Button */}
                     <Button
                       onClick={() => navigate('/contact')}
-                      className={`w-full bg-gradient-to-r ${event.color} hover:opacity-90 text-white font-semibold text-sm md:text-base shadow-lg`}
+                      className={`w-full ${event.color} hover:opacity-90 text-white font-semibold text-sm md:text-base shadow-lg`}
                     >
                       Register for Event
                       <ChevronRight className="ml-2 w-4 h-4" />
@@ -423,7 +423,7 @@ export default function Events() {
       </section>
 
       {/* CTA SECTION */}
-      <section className="py-16 md:py-24 px-4 md:px-6 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900 text-white text-center relative overflow-hidden">
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-purple-900 text-white text-center relative overflow-hidden">
         {/* Animated Background */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div

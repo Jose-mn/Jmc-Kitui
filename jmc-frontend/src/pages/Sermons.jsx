@@ -21,9 +21,9 @@ export default function Sermons() {
       setLoading(true);
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
       const res = await fetch(`${apiUrl}/api/sermons`);
-      
+
       if (!res.ok) throw new Error("Failed to fetch sermons");
-      
+
       const data = await res.json();
       setSermons(Array.isArray(data) ? data : []);
       setError(null);
@@ -57,11 +57,11 @@ export default function Sermons() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col">
       <Navigation />
 
       {/* HERO SECTION */}
-      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-gradient-to-br from-purple-900 via-purple-800 to-pink-900 text-white overflow-hidden">
+      <section className="relative pt-20 md:pt-24 pb-16 md:pb-24 px-4 md:px-6 bg-purple-900 text-white overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <motion.div
             className="absolute top-20 left-10 w-72 h-72 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
@@ -96,7 +96,7 @@ export default function Sermons() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="inline-block mb-4"
             >
-              <PlayCircle className="w-16 h-16 md:w-20 md:h-20 text-yellow-400" />
+              <PlayCircle className="w-16 h-16 md:w-20 md:h-20 text-purple-300" />
             </motion.div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-black mb-4 md:mb-6">
@@ -203,7 +203,7 @@ export default function Sermons() {
                             </div>
                           </>
                         ) : (
-                          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-600 to-pink-600">
+                          <div className="absolute inset-0 flex items-center justify-center bg-purple-700">
                             <PlayCircle className="w-12 h-12 text-white opacity-50" />
                           </div>
                         )}
