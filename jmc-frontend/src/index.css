@@ -65,6 +65,7 @@ body {
 
     --radius: 0.5rem
   }
+
   .dark {
     /* Deep purple-tinted dark background */
     --background: 255 30% 8%;
@@ -115,6 +116,7 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -143,9 +145,12 @@ body {
 }
 
 @keyframes float {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
@@ -155,19 +160,49 @@ body {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(250, 204, 21, 0.3);
   }
+
   50% {
     box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
   }
 }
+
+.text-shadow-sm {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Force UserWay widget to the left */
+.uwy.userway_p6 {
+  left: 20px !important;
+  right: auto !important;
+}
+
+.uwy.userway_p5 {
+  left: 20px !important;
+  right: auto !important;
+}
+
+.uwy.userway_p7 {
+  left: 20px !important;
+  right: auto !important;
+}
+
+body>.uwy {
+  left: 20px !important;
+  right: auto !important;
+}
+
 
 .float {
   animation: float 3s ease-in-out infinite;
