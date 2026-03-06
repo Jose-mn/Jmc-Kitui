@@ -57,7 +57,7 @@ export default function Sermons() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION */}
@@ -111,7 +111,7 @@ export default function Sermons() {
       </section>
 
       {/* SEARCH & FILTER */}
-      <section className="py-8 px-4 md:px-6 bg-white border-b">
+      <section className="py-8 px-4 md:px-6 bg-white dark:bg-slate-900 border-b dark:border-slate-800 transition-colors duration-300">
         <div className="max-w-6xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -125,7 +125,7 @@ export default function Sermons() {
               placeholder="Search sermons by title or speaker..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-6 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              className="w-full pl-12 pr-6 py-3 rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-600 dark:focus:ring-purple-500 focus:border-transparent transition-colors"
             />
           </motion.div>
         </div>
@@ -141,13 +141,13 @@ export default function Sermons() {
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                 className="inline-block"
               >
-                <PlayCircle className="w-12 h-12 text-purple-600 opacity-50" />
+                <PlayCircle className="w-12 h-12 text-purple-600 dark:text-purple-400 opacity-50 transition-colors" />
               </motion.div>
-              <p className="mt-4 text-gray-600 text-lg">Loading sermons...</p>
+              <p className="mt-4 text-gray-600 dark:text-gray-400 text-lg transition-colors">Loading sermons...</p>
             </div>
           ) : error ? (
-            <div className="text-center py-20 bg-red-50 rounded-lg border border-red-200">
-              <p className="text-red-600 text-lg mb-4">{error}</p>
+            <div className="text-center py-20 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-900/50 transition-colors">
+              <p className="text-red-600 dark:text-red-400 text-lg mb-4 transition-colors">{error}</p>
               <Button
                 onClick={fetchSermons}
                 className="bg-purple-600 hover:bg-purple-700 text-white"
@@ -157,8 +157,8 @@ export default function Sermons() {
             </div>
           ) : filteredSermons.length === 0 ? (
             <div className="text-center py-20">
-              <PlayCircle className="w-16 h-16 mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500 text-lg">
+              <PlayCircle className="w-16 h-16 mx-auto text-gray-300 dark:text-gray-600 mb-4 transition-colors" />
+              <p className="text-gray-500 dark:text-gray-400 text-lg transition-colors">
                 {searchTerm
                   ? "No sermons match your search."
                   : "No sermons available at this time. Check back soon!"}
@@ -176,7 +176,7 @@ export default function Sermons() {
                     transition={{ delay: index * 0.1, duration: 0.5 }}
                     viewport={{ once: true }}
                   >
-                    <Card className="h-full flex flex-col overflow-hidden hover:shadow-xl transition-shadow">
+                    <Card className="h-full flex flex-col overflow-hidden hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                       {/* Video Thumbnail */}
                       <div className="relative w-full pt-[56.25%] bg-gray-900 overflow-hidden group">
                         {youtubeId ? (
@@ -210,12 +210,12 @@ export default function Sermons() {
                       </div>
 
                       {/* Content */}
-                      <CardContent className="flex-1 p-5 flex flex-col">
-                        <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition">
+                      <CardContent className="flex-1 p-5 flex flex-col bg-white dark:bg-slate-900 transition-colors">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                           {sermon.title || "Untitled Sermon"}
                         </h3>
 
-                        <div className="space-y-2 mb-4 text-sm text-gray-600">
+                        <div className="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-400 transition-colors">
                           {sermon.speaker && (
                             <div className="flex items-center gap-2">
                               <User size={16} className="text-purple-600" />

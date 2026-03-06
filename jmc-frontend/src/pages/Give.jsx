@@ -12,7 +12,7 @@ const fadeUp = {
 
 export default function Give() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION */}
@@ -78,11 +78,11 @@ export default function Give() {
           >
             {/* Left: Message */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">
                 Your Generosity Makes a Difference
               </h2>
 
-              <p className="text-lg text-gray-700 mb-4 leading-relaxed">
+              <p className="text-lg text-gray-700 dark:text-gray-300 mb-4 leading-relaxed transition-colors">
                 At Jesus Manifestation Church, we believe in the principle of sowing and reaping. When you give, you're not just supporting a church—you're investing in:
               </p>
 
@@ -99,7 +99,7 @@ export default function Give() {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex items-start gap-3 text-gray-700"
+                    className="flex items-start gap-3 text-gray-700 dark:text-gray-300 transition-colors"
                   >
                     <span className="inline-block w-2 h-2 rounded-full bg-purple-600 mt-2 flex-shrink-0" />
                     {item}
@@ -107,7 +107,7 @@ export default function Give() {
                 ))}
               </ul>
 
-              <p className="text-sm text-gray-600 italic">
+              <p className="text-sm text-gray-600 dark:text-gray-400 italic transition-colors">
                 "God loves a cheerful giver." — 2 Corinthians 9:7
               </p>
             </div>
@@ -117,19 +117,19 @@ export default function Give() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="bg-purple-50 rounded-2xl p-8 border border-purple-200"
+              className="bg-purple-50 dark:bg-slate-900 rounded-2xl p-8 border border-purple-200 dark:border-slate-800 transition-colors"
             >
               <Heart className="w-16 h-16 text-purple-600 mb-6 fill-purple-600" />
 
-              <blockquote className="text-2xl font-bold text-gray-900 mb-4">
+              <blockquote className="text-2xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
                 "It is more blessed to give than to receive."
               </blockquote>
 
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 transition-colors">
                 Giving is not just about money—it's about showing love for God and His kingdom. When you support JMC, you're joining us in the mission to manifest Jesus Christ in our generation.
               </p>
 
-              <p className="text-sm text-gray-600 font-semibold">
+              <p className="text-sm text-gray-600 dark:text-gray-400 font-semibold transition-colors">
                 — Acts 20:35
               </p>
             </motion.div>
@@ -138,7 +138,7 @@ export default function Give() {
           {/* GIVING OPTIONS */}
           <div className="mb-16">
             <motion.h2
-              className="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-12"
+              className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white text-center mb-12 transition-colors"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -179,7 +179,7 @@ export default function Give() {
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.1 }}
                   >
-                    <Card className="h-full border-0 shadow-lg hover:shadow-xl transition-shadow">
+                    <Card className="h-full border-0 shadow-lg hover:shadow-xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 transition-all duration-300">
                       <CardContent className="p-6 text-center flex flex-col h-full">
                         <motion.div
                           className="w-16 h-16 rounded-full bg-purple-600 flex items-center justify-center mx-auto mb-6"
@@ -188,11 +188,11 @@ export default function Give() {
                           <Icon className="w-8 h-8 text-white" />
                         </motion.div>
 
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">
                           {option.title}
                         </h3>
 
-                        <p className="text-gray-600 mb-6 flex-1">
+                        <p className="text-gray-600 dark:text-gray-400 mb-6 flex-1 transition-colors">
                           {option.description}
                         </p>
 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-white text-gray-800;
+  @apply bg-white text-slate-800 transition-colors duration-300;
 }
 
 
@@ -66,54 +66,46 @@ body {
     --radius: 0.5rem
   }
   .dark {
+    /* Deep purple-tinted dark background */
+    --background: 255 30% 8%;
+    /* Bright readable text */
+    --foreground: 0 0% 95%;
 
-    --background: 0 0% 3.9%;
+    /* Slightly lighter purple for cards */
+    --card: 255 25% 12%;
+    --card-foreground: 0 0% 95%;
 
-    --foreground: 0 0% 98%;
+    --popover: 255 25% 12%;
+    --popover-foreground: 0 0% 95%;
 
-    --card: 0 0% 3.9%;
+    /* Primary brand color (lighter for contrast in dark mode) */
+    --primary: 270 60% 70%;
+    --primary-foreground: 255 40% 10%;
 
-    --card-foreground: 0 0% 98%;
+    /* Secondary backgrounds */
+    --secondary: 255 20% 16%;
+    --secondary-foreground: 0 0% 95%;
 
-    --popover: 0 0% 3.9%;
+    --muted: 255 20% 16%;
+    --muted-foreground: 255 15% 65%;
 
-    --popover-foreground: 0 0% 98%;
+    /* Accent color (gold/yellow) */
+    --accent: 45 93% 57%;
+    --accent-foreground: 255 40% 10%;
 
-    --primary: 0 0% 98%;
-
-    --primary-foreground: 0 0% 9%;
-
-    --secondary: 0 0% 14.9%;
-
-    --secondary-foreground: 0 0% 98%;
-
-    --muted: 0 0% 14.9%;
-
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 14.9%;
-
-    --accent-foreground: 0 0% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-
+    --destructive: 0 62.8% 40%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 14.9%;
-
-    --input: 0 0% 14.9%;
-
-    --ring: 0 0% 83.1%;
+    /* Subdued purple borders */
+    --border: 255 20% 20%;
+    --input: 255 20% 20%;
+    --ring: 270 50% 50%;
 
     --chart-1: 220 70% 50%;
-
     --chart-2: 160 60% 45%;
-
     --chart-3: 30 80% 55%;
-
     --chart-4: 280 65% 60%;
-
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 }
 
@@ -134,11 +126,11 @@ body {
   }
 
   .gradient-heading {
-    @apply bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 dark:from-white dark:via-purple-300 dark:to-white bg-clip-text text-transparent transition-colors duration-300;
   }
 
   .gradient-sky {
-    @apply bg-gradient-to-br from-blue-400 to-cyan-500;
+    @apply bg-gradient-to-br from-blue-400 to-cyan-500 transition-colors duration-300;
   }
 
   .card-hover {

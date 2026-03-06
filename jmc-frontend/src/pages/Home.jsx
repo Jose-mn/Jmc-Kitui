@@ -84,7 +84,7 @@ export default function Home() {
     return match ? match[1] : null;
   };
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION */}
@@ -130,18 +130,18 @@ export default function Home() {
               <Quote className="w-16 h-16 fill-current" />
             </div>
 
-            <h2 className="text-5xl font-black text-slate-900 leading-tight">
+            <h2 className="text-5xl font-black text-slate-900 dark:text-white leading-tight transition-colors duration-300">
               Welcome to Jesus Manifestation Church
             </h2>
 
-            <p className="text-lg text-gray-700 leading-relaxed">
+            <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed transition-colors duration-300">
               Jesus Manifestation Church is a Christ-centered family where faith is built, lives are transformed, and purpose is discovered. We are committed to teaching the Word of God with clarity, worshipping in truth, and living out the love of Christ in our daily lives. No matter where you are in your journey of faith, this is a place where you can grow, belong, and encounter God.
 
               “And the Word became flesh and dwelt among us, and we beheld His glory.”
               John 1:14
             </p>
 
-            <p className="text-base text-gray-600 leading-relaxed">
+            <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed transition-colors duration-300">
               Join us as we worship, grow in faith, and engage in meaningful ministry. There's a place for you here.
             </p>
 
@@ -178,11 +178,11 @@ export default function Home() {
               <div className="w-3 h-3 rounded-full bg-purple-600" />
               <div className="w-3 h-3 rounded-full bg-purple-600" />
             </div>
-            <h3 className="text-3xl font-bold text-purple-700">Message from our Pastors</h3>
+            <h3 className="text-3xl font-bold text-purple-700 dark:text-purple-400">Message from our Pastors</h3>
           </motion.div>
 
           <motion.div
-            className="bg-white rounded-2xl p-6 shadow-lg"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg border border-transparent dark:border-slate-800 transition-colors duration-300"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -190,17 +190,17 @@ export default function Home() {
           >
             <div className="grid md:grid-cols-2 gap-6 items-center">
               <div>
-                <p className="text-gray-700 leading-relaxed mb-4 text-justify">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4 text-justify">
                   Welcome to Jesus Manifestation Church. We are excited to have you visit our website and learn more about who we are as a church community. Our mission is to be a place where the Spirit of God moves freely, transforming lives and equipping believers to manifest the presence and power of Christ in every aspect of their lives.
                 </p>
 
-                <p className="text-gray-700 leading-relaxed mb-4 text-justify">
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4 text-justify">
                   Whether you are seeking spiritual growth, community, fellowship, or simply want to understand more about faith in Jesus Christ, we welcome you with open arms. Our services are designed to inspire, challenge, and encourage you in your faith journey.
                 </p>
 
-                <p className="text-gray-600 font-semibold">
+                <p className="text-gray-600 dark:text-gray-400 font-semibold">
                   In His Service,<br />
-                  <span className="text-purple-700">Your Pastoral Team</span>
+                  <span className="text-purple-700 dark:text-purple-400">Your Pastoral Team</span>
                 </p>
               </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
       </section>
 
       {/* SERVICE TIMES */}
-      <section className="py-20 px-6 relative overflow-hidden bg-purple-50/30">
+      <section className="py-20 px-6 relative overflow-hidden bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300">
 
         <div className="max-w-5xl mx-auto relative z-10">
           <motion.div
@@ -241,11 +241,11 @@ export default function Home() {
             >
               <Calendar className="w-16 h-16 mx-auto mb-4 text-purple-600" />
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 dark:text-purple-400 mb-4 transition-colors">
               Join Us for Worship
             </h2>
-            <p className="text-gray-600 text-lg">We can't wait to see you!</p>
-            <div className="h-1 w-24 mx-auto bg-purple-600 rounded-full mt-4" />
+            <p className="text-gray-600 dark:text-gray-400 text-lg transition-colors">We can't wait to see you!</p>
+            <div className="h-1 w-24 mx-auto bg-purple-600 dark:bg-purple-500 rounded-full mt-4" />
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -282,7 +282,7 @@ export default function Home() {
                   viewport={{ once: true }}
                   whileHover={{ y: -10 }}
                 >
-                  <Card className="border-0 shadow-xl overflow-hidden h-full bg-white hover:shadow-2xl transition-all duration-300">
+                  <Card className="border-0 shadow-xl overflow-hidden h-full bg-white dark:bg-slate-900 hover:shadow-2xl transition-all duration-300 dark:border dark:border-slate-800">
                     <div className={`h-2 ${service.color}`} />
                     <CardContent className="p-8 text-center">
                       <motion.div
@@ -293,11 +293,11 @@ export default function Home() {
                         <Icon className="text-white w-10 h-10" />
                       </motion.div>
 
-                      <h3 className="font-bold text-2xl text-slate-900 mb-2">{service.title}</h3>
-                      <p className="text-sm text-gray-500 mb-4">{service.description}</p>
+                      <h3 className="font-bold text-2xl text-slate-900 dark:text-white mb-2 transition-colors">{service.title}</h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 transition-colors">{service.description}</p>
 
-                      <div className={`inline-block px-6 py-3 rounded-full ${service.color} bg-opacity-10 mb-4`}>
-                        <p className="text-slate-800 font-bold text-lg">{service.time}</p>
+                      <div className={`inline-block px-6 py-3 rounded-full ${service.color} bg-opacity-10 dark:bg-opacity-20 mb-4`}>
+                        <p className="text-slate-800 dark:text-slate-200 font-bold text-lg transition-colors">{service.time}</p>
                       </div>
 
                       <motion.div
@@ -340,7 +340,7 @@ export default function Home() {
         </div>
       </section>
       {/* DEVOTIONALS/BLOG SECTION */}
-      <section className="py-20 px-4 bg-purple-50/30">
+      <section className="py-20 px-4 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300">
         <div className="container mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -348,10 +348,10 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-purple-700 dark:text-purple-400 transition-colors">
               Latest Devotionals
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-400 text-lg transition-colors">
               Daily inspiration and biblical insights to strengthen your faith
             </p>
           </motion.div>
@@ -394,7 +394,7 @@ export default function Home() {
                 transition={{ delay: i * 0.1 }}
               >
                 <Card
-                  className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group cursor-pointer"
+                  className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group cursor-pointer bg-white dark:bg-slate-900 dark:border-slate-800 border-0 shadow-lg"
                   onClick={() => navigate(`/devotionals/${post.id}`)} // ADD THIS - makes entire card clickable
                 >
                   {/* Featured Image */}
@@ -405,7 +405,7 @@ export default function Home() {
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-white text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-white dark:bg-slate-800 text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold shadow-sm transition-colors">
                         {post.category}
                       </span>
                     </div>
@@ -413,7 +413,7 @@ export default function Home() {
 
                   <CardContent className="p-6">
                     {/* Meta Info */}
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3 transition-colors">
                       <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4" />
                         <span>{post.date}</span>
@@ -421,21 +421,21 @@ export default function Home() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-purple-600 transition-colors">
+                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {post.title}
                     </h3>
 
                     {/* Excerpt */}
-                    <p className="text-gray-600 mb-4 line-clamp-3">
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 transition-colors">
                       {post.excerpt}
                     </p>
 
                     {/* Author */}
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                      <span className="text-sm text-gray-700 font-medium">
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 transition-colors">
+                      <span className="text-sm text-gray-700 dark:text-gray-400 font-medium transition-colors">
                         {post.author}
                       </span>
-                      <span className="text-purple-600 font-semibold text-sm inline-flex items-center gap-1">
+                      <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm inline-flex items-center gap-1 transition-colors">
                         Read More →
                       </span>
                     </div>
@@ -472,13 +472,13 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-700 dark:text-purple-400 mb-4 transition-colors">
               Latest Sermons
             </h2>
-            <p className="text-gray-600 text-lg">
+            <p className="text-gray-600 dark:text-gray-400 text-lg transition-colors">
               Catch up on recent messages from our church services
             </p>
-            <div className="h-1 w-20 mx-auto bg-purple-500 rounded-full mt-4" />
+            <div className="h-1 w-20 mx-auto bg-purple-500 dark:bg-purple-600 rounded-full mt-4" />
           </motion.div>
 
           {sermonsLoading ? (
@@ -514,7 +514,7 @@ export default function Home() {
                     viewport={{ once: true }}
                     className="mb-10"
                   >
-                    <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow">
+                    <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                       <div className="h-2 bg-purple-600" />
                       {youtubeId ? (
                         <div className="relative w-full pt-[56.25%] bg-black">
@@ -535,10 +535,10 @@ export default function Home() {
                         </div>
                       )}
                       <CardContent className="p-10">
-                        <h3 className="text-2xl font-bold text-slate-900 text-center mb-2">
+                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white text-center mb-2 transition-colors">
                           {featured.title || "Untitled Sermon"}
                         </h3>
-                        <div className="flex items-center justify-center gap-4 text-slate-600 text-lg font-semibold mb-6">
+                        <div className="flex items-center justify-center gap-4 text-slate-600 dark:text-slate-400 text-lg font-semibold mb-6 transition-colors">
                           {featured.speaker && (
                             <span className="flex items-center gap-1">
                               <User size={18} className="text-purple-600" />
@@ -584,7 +584,7 @@ export default function Home() {
                         transition={{ delay: index * 0.15, duration: 0.5 }}
                         viewport={{ once: true }}
                       >
-                        <Card className="h-full flex flex-col overflow-hidden hover:shadow-xl transition-shadow group">
+                        <Card className="h-full flex flex-col overflow-hidden hover:shadow-xl transition-shadow group bg-white dark:bg-slate-900 border-0 shadow-lg dark:border dark:border-slate-800">
                           {/* Thumbnail */}
                           <div className="relative w-full pt-[56.25%] bg-gray-900 overflow-hidden">
                             {youtubeId ? (
@@ -612,10 +612,10 @@ export default function Home() {
                             )}
                           </div>
                           <CardContent className="flex-1 p-5 flex flex-col">
-                            <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition">
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
                               {sermon.title || "Untitled Sermon"}
                             </h3>
-                            <div className="space-y-2 mb-4 text-sm text-gray-600">
+                            <div className="space-y-2 mb-4 text-sm text-gray-600 dark:text-gray-400 transition-colors">
                               {sermon.speaker && (
                                 <div className="flex items-center gap-2">
                                   <User size={16} className="text-purple-600" />

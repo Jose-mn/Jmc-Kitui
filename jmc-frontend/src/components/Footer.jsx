@@ -2,7 +2,7 @@ import { Play, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-200 py-12 mt-12">
+    <footer className="bg-slate-900 dark:bg-[#1a0f2e] text-slate-200 py-12 mt-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-8">
         <div>
           <h4 className="text-lg font-bold text-white mb-3">Jesus Manifestation Church</h4>
@@ -38,7 +38,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-slate-800 mt-8 pt-6 text-center text-sm text-slate-400">
+      <div className="border-t border-slate-800 dark:border-[#2a1f3e] mt-8 pt-6 text-center text-sm text-slate-400 transition-colors duration-300">
         © 2026 Jesus Manifestation Church. All rights reserved.
       </div>
     </footer>

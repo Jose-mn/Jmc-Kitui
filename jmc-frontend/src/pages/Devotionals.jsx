@@ -24,7 +24,7 @@ export default function Devotionals() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
       {/* NAVIGATION - This should appear at the top */}
       <Navigation />
 
@@ -36,10 +36,10 @@ export default function Devotionals() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-purple-900 mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold text-purple-900 dark:text-white mb-4 transition-colors">
               Daily Devotionals
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto transition-colors">
               Short daily reflections to encourage your walk with God
             </p>
           </motion.div>
@@ -51,7 +51,7 @@ export default function Devotionals() {
               placeholder="Search devotionals..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors"
             />
           </div>
 
@@ -66,7 +66,7 @@ export default function Devotionals() {
               >
                 <Link
                   to={`/devotionals/${devotional.id}`}
-                  className="block bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden h-full"
+                  className="block bg-white dark:bg-slate-900 border border-transparent dark:border-slate-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden h-full"
                 >
                   {devotional.image && (
                     <img
@@ -77,7 +77,7 @@ export default function Devotionals() {
                   )}
 
                   <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3 transition-colors">
                       <span className="flex items-center gap-1">
                         <Calendar size={16} />
                         {formatDate(devotional.date)}
@@ -90,20 +90,20 @@ export default function Devotionals() {
                       )}
                     </div>
 
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2 transition-colors">
                       {devotional.title}
                     </h2>
 
-                    <div className="flex items-center gap-2 text-purple-600 text-sm mb-3">
+                    <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 text-sm mb-3 transition-colors">
                       <BookOpen size={16} />
                       <span className="font-medium">{devotional.scripture}</span>
                     </div>
 
-                    <p className="text-gray-600 line-clamp-3">
+                    <p className="text-gray-600 dark:text-gray-400 line-clamp-3 transition-colors">
                       {devotional.excerpt}
                     </p>
 
-                    <div className="mt-4 text-purple-600 font-semibold text-sm">
+                    <div className="mt-4 text-purple-600 dark:text-purple-400 font-semibold text-sm transition-colors">
                       Read More →
                     </div>
                   </div>
@@ -114,7 +114,7 @@ export default function Devotionals() {
 
           {filteredDevotionals.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-gray-500 text-lg">No devotionals found matching your search.</p>
+              <p className="text-gray-500 dark:text-gray-400 text-lg transition-colors">No devotionals found matching your search.</p>
             </div>
           )}
         </div>

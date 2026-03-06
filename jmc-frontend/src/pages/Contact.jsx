@@ -82,15 +82,15 @@ export default function Contacts() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
-      <main className="flex-1 px-6 py-20 bg-gray-50">
+      <main className="flex-1 px-6 py-20 bg-gray-50 dark:bg-slate-950 transition-colors duration-300">
         <div className="max-w-4xl mx-auto text-center mb-12">
-          <motion.h1 className="text-4xl font-bold text-primary" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+          <motion.h1 className="text-4xl font-bold text-primary dark:text-white transition-colors" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             Contact Us
           </motion.h1>
-          <p className="mt-4 text-gray-600 text-lg">We would love to hear from you. Use the form or the contact details below.</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-300 text-lg transition-colors">We would love to hear from you. Use the form or the contact details below.</p>
         </div>
 
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
@@ -98,29 +98,29 @@ export default function Contacts() {
             <div className="flex items-start gap-4">
               <MapPin className="text-gold w-6 h-6 mt-1" />
               <div>
-                <h3 className="font-semibold">Location</h3>
-                <p className="text-gray-600">Jesus Manifestation Church<br />Kitui County, Kenya</p>
+                <h3 className="font-semibold dark:text-white transition-colors">Location</h3>
+                <p className="text-gray-600 dark:text-gray-400 transition-colors">Jesus Manifestation Church<br />Kitui County, Kenya</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
               <Phone className="text-gold w-6 h-6 mt-1" />
               <div>
-                <h3 className="font-semibold">Phone</h3>
-                <p className="text-gray-600">+254 701 504 560</p>
+                <h3 className="font-semibold dark:text-white transition-colors">Phone</h3>
+                <p className="text-gray-600 dark:text-gray-400 transition-colors">+254 701 504 560</p>
               </div>
             </div>
 
             <div className="flex items-start gap-4">
               <Mail className="text-gold w-6 h-6 mt-1" />
               <div>
-                <h3 className="font-semibold">Email</h3>
-                <p className="text-gray-600">jmckitui@gmail.com</p>
+                <h3 className="font-semibold dark:text-white transition-colors">Email</h3>
+                <p className="text-gray-600 dark:text-gray-400 transition-colors">jmckitui@gmail.com</p>
               </div>
             </div>
 
             <div className="mt-6">
-              <div className="aspect-[16/9] w-full rounded-lg overflow-hidden border">
+              <div className="aspect-[16/9] w-full rounded-lg overflow-hidden border dark:border-slate-800 transition-colors">
                 <iframe
                   title="Jesus Manifestation Church Map"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63820.607000139156!2d37.922412761184816!3d-1.3021761134670427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x18245371df3859df%3A0x4c43808b5e4d1d75!2sJesus%20Manifestation%20Church!5e0!3m2!1sen!2ske!4v1770663176099!5m2!1sen!2ske"
@@ -133,19 +133,19 @@ export default function Contacts() {
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-2">Click the map to open in Google Maps, or use the "Get Directions" button on the home page.</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 transition-colors">Click the map to open in Google Maps, or use the "Get Directions" button on the home page.</p>
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="bg-white rounded-xl shadow-sm p-8">
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="bg-white dark:bg-slate-900 border border-transparent dark:border-slate-800 rounded-xl shadow-sm p-8 transition-colors">
             <form className="space-y-6" onSubmit={handleSubmit}>
               {error && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-red-50 border border-red-200 rounded-lg"
+                  className="p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/50 rounded-lg transition-colors"
                 >
-                  <p className="text-red-700 font-medium text-sm">{error}</p>
+                  <p className="text-red-700 dark:text-red-400 font-medium text-sm transition-colors">{error}</p>
                 </motion.div>
               )}
 
@@ -153,30 +153,30 @@ export default function Contacts() {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-green-50 border border-green-200 rounded-lg"
+                  className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-900/50 rounded-lg transition-colors"
                 >
-                  <p className="text-green-700 font-medium text-sm">✓ Thank you for reaching out! We will get back to you soon.</p>
+                  <p className="text-green-700 dark:text-green-400 font-medium text-sm transition-colors">✓ Thank you for reaching out! We will get back to you soon.</p>
                 </motion.div>
               )}
 
               <div>
-                <label htmlFor="fullName" className="block text-sm font-medium mb-1">Full Name <span className="text-red-500">*</span></label>
-                <Input id="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required />
+                <label htmlFor="fullName" className="block text-sm font-medium mb-1 dark:text-white transition-colors">Full Name <span className="text-red-500">*</span></label>
+                <Input id="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required className="dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-colors" />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-1">Email Address <span className="text-red-500">*</span></label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+                <label htmlFor="email" className="block text-sm font-medium mb-1 dark:text-white transition-colors">Email Address <span className="text-red-500">*</span></label>
+                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required className="dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-colors" />
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-medium mb-1">Phone Number</label>
-                <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+254..." />
+                <label htmlFor="phone" className="block text-sm font-medium mb-1 dark:text-white transition-colors">Phone Number</label>
+                <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+254..." className="dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-colors" />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-1">Message <span className="text-red-500">*</span> (min 10 chars)</label>
-                <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Write your message here..." className="min-h-[120px]" required />
+                <label htmlFor="message" className="block text-sm font-medium mb-1 dark:text-white transition-colors">Message <span className="text-red-500">*</span> (min 10 chars)</label>
+                <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Write your message here..." className="min-h-[120px] dark:bg-slate-800 dark:border-slate-700 dark:text-white transition-colors" required />
               </div>
 
               <Button type="submit" disabled={loading} className="w-full bg-primary text-white">{loading ? "Sending..." : "Send Message"}</Button>
@@ -184,7 +184,7 @@ export default function Contacts() {
           </motion.div>
 
         </div>
-        <p className="text-xs text-gray-400 text-center mt-4">Your information is kept private and used only for church communication.</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 text-center mt-4 transition-colors">Your information is kept private and used only for church communication.</p>
       </main>
 
       <Footer />

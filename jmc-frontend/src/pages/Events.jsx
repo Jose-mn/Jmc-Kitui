@@ -132,7 +132,7 @@ export default function Events() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION */}
@@ -198,8 +198,8 @@ export default function Events() {
                   key={category.id}
                   onClick={() => setActiveFilter(category.id)}
                   className={`flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300 ${activeFilter === category.id
-                    ? "bg-white text-purple-900 shadow-xl scale-105"
-                    : "bg-white/20 text-white hover:bg-white/30"
+                    ? "bg-white dark:bg-slate-900 text-purple-900 dark:text-purple-400 shadow-xl scale-105"
+                    : "bg-white/20 dark:bg-white/10 text-white hover:bg-white/30 dark:hover:bg-white/20"
                     }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -218,7 +218,7 @@ export default function Events() {
 
       {/* FEATURED EVENT SECTION */}
       {featuredEvent && activeFilter === "all" && (
-        <section className="py-12 md:py-20 px-4 md:px-6 bg-gray-50">
+        <section className="py-12 md:py-20 px-4 md:px-6 bg-gray-50 dark:bg-slate-950 transition-colors duration-300">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -228,10 +228,10 @@ export default function Events() {
             >
               <div className="flex items-center gap-2 mb-6 md:mb-8">
                 <Sparkles className="w-6 h-6 md:w-8 md:h-8 text-yellow-500" />
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900">Featured Event</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white transition-colors">Featured Event</h2>
               </div>
 
-              <Card className="overflow-hidden border-0 shadow-2xl">
+              <Card className="overflow-hidden border-0 shadow-2xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 transition-colors">
                 <div className="grid md:grid-cols-2 gap-0">
                   {/* Image */}
                   <div className="relative h-64 md:h-full min-h-[400px]">
@@ -251,9 +251,9 @@ export default function Events() {
                     </div>
 
                     {/* Date Badge */}
-                    <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
-                      <p className="text-xs md:text-sm text-gray-600 font-semibold">Event Date</p>
-                      <p className="text-xl md:text-2xl font-black text-purple-900">{formatDate(featuredEvent.date)}</p>
+                    <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-2xl p-4 shadow-xl transition-colors">
+                      <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-semibold transition-colors">Event Date</p>
+                      <p className="text-xl md:text-2xl font-black text-purple-900 dark:text-purple-400 transition-colors">{formatDate(featuredEvent.date)}</p>
                     </div>
                   </div>
 
@@ -266,26 +266,26 @@ export default function Events() {
                         </span>
                       </div>
 
-                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 mb-4 md:mb-6">
+                      <h3 className="text-2xl md:text-3xl lg:text-4xl font-black text-slate-900 dark:text-white mb-4 md:mb-6 transition-colors">
                         {featuredEvent.title}
                       </h3>
 
-                      <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6 md:mb-8">
+                      <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6 md:mb-8 transition-colors">
                         {featuredEvent.description}
                       </p>
 
                       {/* Event Details */}
                       <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
-                        <div className="flex items-center gap-3 text-gray-700">
-                          <Clock className="w-5 h-5 md:w-6 md:h-6 text-purple-600 flex-shrink-0" />
+                        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 transition-colors">
+                          <Clock className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                           <span className="text-sm md:text-base font-semibold">{featuredEvent.time}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-gray-700">
-                          <MapPin className="w-5 h-5 md:w-6 md:h-6 text-purple-600 flex-shrink-0" />
+                        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 transition-colors">
+                          <MapPin className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                           <span className="text-sm md:text-base font-semibold">{featuredEvent.location}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-gray-700">
-                          <Users className="w-5 h-5 md:w-6 md:h-6 text-purple-600 flex-shrink-0" />
+                        <div className="flex items-center gap-3 text-gray-700 dark:text-gray-300 transition-colors">
+                          <Users className="w-5 h-5 md:w-6 md:h-6 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                           <span className="text-sm md:text-base font-semibold">{featuredEvent.attendees} Expected Attendees</span>
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export default function Events() {
       )}
 
       {/* ALL EVENTS GRID */}
-      <section className="py-12 md:py-20 px-4 md:px-6 bg-white">
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-white dark:bg-slate-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <motion.div
             className="mb-8 md:mb-12"
@@ -320,10 +320,10 @@ export default function Events() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-2 transition-colors">
               {activeFilter === "all" ? "All Upcoming Events" : `${categories.find(c => c.id === activeFilter)?.name} Events`}
             </h2>
-            <p className="text-base md:text-lg text-gray-600">
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 transition-colors">
               Mark your calendar and join us for these amazing gatherings
             </p>
           </motion.div>
@@ -337,7 +337,7 @@ export default function Events() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
               >
-                <Card className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group border-0 shadow-lg">
+                <Card className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group border-0 shadow-lg bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                   {/* Image */}
                   <div className="relative h-48 md:h-56 overflow-hidden">
                     <img
@@ -355,11 +355,11 @@ export default function Events() {
                     </div>
 
                     {/* Date Badge */}
-                    <div className="absolute top-4 right-4 bg-white rounded-xl p-2 md:p-3 shadow-xl text-center">
-                      <p className="text-xs text-gray-600 font-semibold uppercase">
+                    <div className="absolute top-4 right-4 bg-white dark:bg-slate-800 rounded-xl p-2 md:p-3 shadow-xl text-center transition-colors">
+                      <p className="text-xs text-gray-600 dark:text-gray-400 font-semibold uppercase transition-colors">
                         {new Date(event.date).toLocaleDateString('en-US', { month: 'short' })}
                       </p>
-                      <p className="text-xl md:text-2xl font-black text-purple-900">
+                      <p className="text-xl md:text-2xl font-black text-purple-900 dark:text-purple-400 transition-colors">
                         {new Date(event.date).getDate()}
                       </p>
                     </div>
@@ -367,26 +367,26 @@ export default function Events() {
 
                   {/* Content */}
                   <CardContent className="p-5 md:p-6">
-                    <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
+                    <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
                       {event.title}
                     </h3>
 
-                    <p className="text-sm md:text-base text-gray-600 mb-4 line-clamp-2">
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 transition-colors">
                       {event.description}
                     </p>
 
                     {/* Event Info */}
                     <div className="space-y-2 mb-5">
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <Clock className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 transition-colors">
+                        <Clock className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                         <span className="text-xs md:text-sm font-medium">{event.time}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <MapPin className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 transition-colors">
+                        <MapPin className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                         <span className="text-xs md:text-sm font-medium line-clamp-1">{event.location}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-700">
-                        <Users className="w-4 h-4 text-purple-600 flex-shrink-0" />
+                      <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 transition-colors">
+                        <Users className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0 transition-colors" />
                         <span className="text-xs md:text-sm font-medium">{event.attendees}</span>
                       </div>
                     </div>
@@ -412,9 +412,9 @@ export default function Events() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Calendar className="w-16 h-16 md:w-20 md:h-20 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl md:text-2xl font-bold text-gray-600 mb-2">No Events Found</h3>
-              <p className="text-base md:text-lg text-gray-500">
+              <Calendar className="w-16 h-16 md:w-20 md:h-20 text-gray-300 dark:text-gray-600 mx-auto mb-4 transition-colors" />
+              <h3 className="text-xl md:text-2xl font-bold text-gray-600 dark:text-gray-400 mb-2 transition-colors">No Events Found</h3>
+              <p className="text-base md:text-lg text-gray-500 dark:text-gray-500 transition-colors">
                 There are no {categories.find(c => c.id === activeFilter)?.name.toLowerCase()} events scheduled at this time.
               </p>
             </motion.div>

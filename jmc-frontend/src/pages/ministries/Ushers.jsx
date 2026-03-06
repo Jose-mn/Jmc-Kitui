@@ -59,7 +59,7 @@ export default function Ushers() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
@@ -123,7 +123,7 @@ export default function Ushers() {
       </section>
 
       {/* WHAT WE DO SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6">
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-white dark:bg-slate-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
 
@@ -137,31 +137,31 @@ export default function Ushers() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <HandHeart className="w-8 h-8 text-purple-600" />
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900">
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white transition-colors">
                   Our Role
                 </h2>
               </div>
               <div className="w-16 h-1 bg-purple-600 mb-6 rounded-full" />
 
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-4">
+              <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-4 transition-colors">
                 Ushers are the first point of contact, ensuring every person feels welcomed and guided during church services. We believe that hospitality is a ministry in itself—reflecting the love of Christ from the moment you walk through the door.
               </p>
-              <p className="text-base md:text-lg text-gray-700 leading-relaxed mb-6">
+              <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6 transition-colors">
                 The ministry operates with discipline, love, and service. Our team is trained to handle various situations with grace, maintain order during services, and create an atmosphere where worship can flow freely.
               </p>
 
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <Heart className="w-5 h-5 text-purple-500" />
-                  <span className="text-sm font-semibold text-gray-600">Love</span>
+                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 transition-colors">Love</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Shield className="w-5 h-5 text-purple-500" />
-                  <span className="text-sm font-semibold text-gray-600">Discipline</span>
+                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 transition-colors">Discipline</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-purple-500" />
-                  <span className="text-sm font-semibold text-gray-600">Service</span>
+                  <span className="text-sm font-semibold text-gray-600 dark:text-gray-400 transition-colors">Service</span>
                 </div>
               </div>
             </motion.div>
@@ -188,7 +188,7 @@ export default function Ushers() {
       </section>
 
       {/* ACTIVITIES SECTION */}
-      <section className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30">
+      <section className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30 dark:bg-slate-900/50 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -197,11 +197,11 @@ export default function Ushers() {
             variants={fadeUp}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-3 transition-colors">
               Ushers Activities
             </h2>
             <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
-            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors">
               Discover the ways we serve and create a welcoming church experience
             </p>
           </motion.div>
@@ -218,15 +218,15 @@ export default function Ushers() {
                   variants={fadeUp}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                 >
-                  <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
+                  <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                     <CardContent className="p-6 text-center">
-                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
-                        <Icon className="text-gray-400 group-hover:text-white w-8 h-8 md:w-10 md:h-10 transition-colors duration-300" />
+                      <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gray-200 dark:bg-slate-800 group-hover:${activity.color} flex items-center justify-center mb-4 mx-auto shadow-lg transition-all duration-300`}>
+                        <Icon className="text-gray-400 dark:text-gray-500 group-hover:text-white w-8 h-8 md:w-10 md:h-10 transition-colors duration-300" />
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
+                      <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">
                         {activity.title}
                       </h3>
-                      <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                      <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 leading-relaxed transition-colors">
                         {activity.description}
                       </p>
                     </CardContent>
@@ -239,7 +239,7 @@ export default function Ushers() {
       </section>
 
       {/* EVENTS SCHEDULE */}
-      <section id="events" className="py-12 md:py-20 px-4 md:px-6">
+      <section id="events" className="py-12 md:py-20 px-4 md:px-6 bg-white dark:bg-slate-950 transition-colors duration-300">
         <div className="max-w-5xl mx-auto">
           <motion.div
             initial="hidden"
@@ -249,11 +249,11 @@ export default function Ushers() {
             className="text-center mb-12"
           >
             <Calendar className="w-16 h-16 mx-auto mb-4 text-purple-600" />
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-3 transition-colors">
               Upcoming Events
             </h2>
             <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
-            <p className="text-base md:text-lg text-gray-600">
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 transition-colors">
               Join us in serving and growing together as a team
             </p>
           </motion.div>
@@ -268,18 +268,18 @@ export default function Ushers() {
                 variants={fadeUp}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white">
+                <Card className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                   <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center">
+                    <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-colors">
                       <Calendar className="w-6 h-6" />
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 transition-colors">
                       {event.title}
                     </h3>
-                    <p className="text-purple-600 font-semibold mb-3">
+                    <p className="text-purple-600 dark:text-purple-400 font-semibold mb-3 transition-colors">
                       {event.time}
                     </p>
-                    <p className="text-gray-600 text-sm">
+                    <p className="text-gray-600 dark:text-gray-400 text-sm transition-colors">
                       {event.description}
                     </p>
                   </CardContent>

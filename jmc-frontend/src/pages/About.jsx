@@ -58,7 +58,7 @@ export default function About() {
   ];
 
   return (
-    <div className="bg-white text-gray-800">
+    <div className="bg-white dark:bg-slate-950 text-gray-800 dark:text-gray-200 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION WITH TRANSPARENT BANNER BACKGROUND */}
@@ -136,11 +136,11 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-6 transition-colors">
               Who We Are
             </h2>
-            <div className="w-20 h-1 bg-purple-600 mx-auto mb-6 rounded-full" />
-            <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
+            <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto mb-6 rounded-full" />
+            <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-4xl mx-auto transition-colors">
               Jesus Manifestation Church (JMC) Kitui is a vibrant, Spirit-filled community of believers committed to manifesting the presence and power of Jesus Christ in our generation. We are more than a congregation—we are a family united by faith, worship, and love.
             </p>
           </motion.div>
@@ -149,7 +149,7 @@ export default function About() {
 
       {/* VISION & MISSION WITH IMAGE CARDS */}
       <section
-        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
       >
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -159,10 +159,10 @@ export default function About() {
             variants={fadeUp}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-3 transition-colors">
               Vision & Mission
             </h2>
-            <div className="w-20 h-1 bg-purple-600 mx-auto rounded-full" />
+            <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto rounded-full" />
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8 md:gap-12">
@@ -175,7 +175,7 @@ export default function About() {
               variants={fadeUp}
               transition={{ duration: 0.6 }}
             >
-              <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300">
+              <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                 <div className="relative h-64 md:h-80 overflow-hidden">
                   <img
                     src={visionImage}
@@ -193,12 +193,12 @@ export default function About() {
                     </h3>
                   </div>
                 </div>
-                <CardContent className="p-6 md:p-8 bg-white">
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                <CardContent className="p-6 md:p-8">
+                  <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                     To be a spiritual home where relationships and gifts are nurtured to serve God and mankind.
                   </p>
-                  <div className="mt-6 pt-6 border-t border-slate-200">
-                    <p className="text-sm font-semibold text-purple-600 italic">
+                  <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 transition-colors">
+                    <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 italic transition-colors">
                       "And the Word became flesh and dwelt among us, and we beheld His glory." - John 1:14
                     </p>
                   </div>
@@ -214,7 +214,7 @@ export default function About() {
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300">
+              <Card className="border-0 shadow-2xl overflow-hidden h-full group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                 <div className="relative h-64 md:h-80 overflow-hidden">
                   <img
                     src={missionImage}
@@ -232,12 +232,12 @@ export default function About() {
                     </h3>
                   </div>
                 </div>
-                <CardContent className="p-6 md:p-8 bg-white">
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                <CardContent className="p-6 md:p-8">
+                  <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                     To teach God's people the biblical truth so that they become effective fishers of men for Jesus Christ.
                   </p>
-                  <div className="mt-6 pt-6 border-t border-slate-200">
-                    <p className="text-sm font-semibold text-purple-600 italic">
+                  <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 transition-colors">
+                    <p className="text-sm font-semibold text-purple-600 dark:text-purple-400 italic transition-colors">
                       "Go therefore and make disciples of all nations..." - Matthew 28:19
                     </p>
                   </div>
@@ -262,11 +262,11 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12 md:mb-16"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 mb-3">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white mb-3 transition-colors">
               Our Core Values
             </h2>
-            <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
-            <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto">
+            <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto mb-4 rounded-full" />
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto transition-colors">
               These fundamental principles guide everything we do as a church community
             </p>
           </motion.div>
@@ -283,15 +283,15 @@ export default function About() {
                   variants={fadeUp}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
                 >
-                  <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white">
+                  <Card className="border-0 shadow-lg h-full hover:shadow-xl transition-all duration-300 group bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                     <CardContent className="p-6">
                       <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl ${value.color} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                         <Icon className="text-white w-8 h-8 md:w-10 md:h-10" />
                       </div>
-                      <h3 className="text-lg md:text-xl font-bold text-slate-900 mb-3">
+                      <h3 className="text-lg md:text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors">
                         {value.title}
                       </h3>
-                      <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                      <p className="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed transition-colors">
                         {value.description}
                       </p>
                     </CardContent>
@@ -305,7 +305,7 @@ export default function About() {
 
       {/* WHAT WE BELIEVE */}
       < section
-        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
       >
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -316,26 +316,26 @@ export default function About() {
             transition={{ duration: 0.6 }}
           >
             <div className="text-center mb-12">
-              <BookOpen className="w-16 h-16 mx-auto mb-6 text-purple-600" />
-              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-3">
+              <BookOpen className="w-16 h-16 mx-auto mb-6 text-purple-600 dark:text-purple-400" />
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-3 transition-colors">
                 What We Believe
               </h2>
-              <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
-              <p className="text-base md:text-lg text-gray-600">
+              <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto mb-4 rounded-full" />
+              <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 transition-colors">
                 Our faith is built on the solid foundation of God's Word
               </p>
             </div>
 
-            <Card className="border-0 shadow-xl bg-white">
+            <Card className="border-0 shadow-xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 transition-colors duration-300">
               <CardContent className="p-6 md:p-10">
-                <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                   We believe in Jesus Christ as the Son of God and Savior of the world. We believe in the authority of the Bible as the inspired Word of God, and in the work of the Holy Spirit in the life of every believer.
                 </p>
-                <div className="bg-purple-50 p-6 rounded-xl border-l-4 border-purple-600 mt-6">
-                  <p className="italic text-base text-gray-700">
+                <div className="bg-purple-50 dark:bg-purple-900/20 p-6 rounded-xl border-l-4 border-purple-600 mt-6 transition-colors">
+                  <p className="italic text-base text-gray-700 dark:text-gray-300 transition-colors">
                     "For no other foundation can anyone lay than that which is laid, which is Jesus Christ."
                   </p>
-                  <p className="text-sm text-purple-600 font-semibold mt-2">
+                  <p className="text-sm text-purple-600 dark:text-purple-400 font-semibold mt-2 transition-colors">
                     — 1 Corinthians 3:11
                   </p>
                 </div>
@@ -358,11 +358,11 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="max-w-6xl mx-auto"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-3 text-center text-slate-900">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-3 text-center text-slate-900 dark:text-white transition-colors">
             Our Leadership
           </h2>
-          <div className="w-20 h-1 bg-purple-600 mx-auto mb-4 rounded-full" />
-          <p className="text-base md:text-lg text-gray-600 text-center mb-12 md:mb-16 max-w-3xl mx-auto">
+          <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto mb-4 rounded-full" />
+          <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 text-center mb-12 md:mb-16 max-w-3xl mx-auto transition-colors">
             Meet the pastoral team leading Jesus Manifestation Church with vision, wisdom, and dedication
           </p>
 
@@ -373,9 +373,9 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300">
+              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                 <CardContent className="p-0">
-                  <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
+                  <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
                     <img
                       src={bishop}
                       alt="Bishop Elijah Mutua"
@@ -383,10 +383,10 @@ export default function About() {
                     />
                     <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <div className="p-6 md:p-8 text-center bg-white">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">Bishop Elijah Mutua</h3>
-                    <p className="text-base md:text-lg text-purple-600 font-bold mt-2 mb-4">Lead Pastor</p>
-                    <p className="text-base text-gray-700 leading-relaxed">
+                  <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">Bishop Elijah Mutua</h3>
+                    <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">Lead Pastor</p>
+                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                       Serving with a heart for God's people, grounded in prayer, humility, and biblical truth.
                     </p>
                   </div>
@@ -400,9 +400,9 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300">
+              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                 <CardContent className="p-0">
-                  <div className="relative w-full aspect-square bg-gray-100 overflow-hidden">
+                  <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
                     <img
                       src={revRuth}
                       alt="Reverend Ruth Mutua"
@@ -410,10 +410,10 @@ export default function About() {
                     />
                     <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <div className="p-6 md:p-8 text-center bg-white">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900">Reverend Ruth Mutua</h3>
-                    <p className="text-base md:text-lg text-purple-600 font-bold mt-2 mb-4">Co-Pastor</p>
-                    <p className="text-base text-gray-700 leading-relaxed">
+                  <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
+                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">Reverend Ruth Mutua</h3>
+                    <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">Co-Pastor</p>
+                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                       Passionate about nurturing faith, family, and spiritual growth within the church community.
                     </p>
                   </div>
@@ -426,7 +426,7 @@ export default function About() {
 
       {/* COMMUNITY */}
       < section
-        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30"
+        className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
       >
         <motion.div
           initial="hidden"
@@ -436,10 +436,10 @@ export default function About() {
           transition={{ duration: 0.6 }}
           className="max-w-5xl mx-auto text-center"
         >
-          <Users className="w-16 h-16 mx-auto mb-6 text-purple-600" />
-          <h2 className="text-3xl md:text-4xl font-black mb-3 text-slate-900">Our Church Family</h2>
-          <div className="w-20 h-1 bg-purple-600 mx-auto mb-6 rounded-full" />
-          <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto mb-8">
+          <Users className="w-16 h-16 mx-auto mb-6 text-purple-600 dark:text-purple-400" />
+          <h2 className="text-3xl md:text-4xl font-black mb-3 text-slate-900 dark:text-white transition-colors">Our Church Family</h2>
+          <div className="w-20 h-1 bg-purple-600 dark:bg-purple-500 mx-auto mb-6 rounded-full" />
+          <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed max-w-3xl mx-auto mb-8 transition-colors">
             We are more than a congregation. We are a family united by faith, worship, and love, with ministries that allow everyone to grow, serve, and belong.
           </p>
           <Button

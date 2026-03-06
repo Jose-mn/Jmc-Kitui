@@ -97,7 +97,7 @@ const leaders = [
 export default function Pastorate() {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex flex-col bg-stone-50">
+    <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-slate-950 transition-colors duration-300">
       <Navigation />
 
       {/* HERO SECTION */}
@@ -151,7 +151,7 @@ export default function Pastorate() {
             variants={fadeUp}
             transition={{ duration: 0.6 }}
           >
-            <Card className="border-0 shadow-2xl overflow-hidden rounded-2xl">
+            <Card className="border-0 shadow-2xl overflow-hidden rounded-2xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 transition-colors duration-300">
               <div className="grid md:grid-cols-2 gap-0">
 
                 {/* Image Side */}
@@ -175,27 +175,27 @@ export default function Pastorate() {
                 </div>
 
                 {/* Content Side */}
-                <CardContent className="p-8 md:p-12 flex flex-col justify-center bg-white border-l border-purple-100">
+                <CardContent className="p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-slate-900 border-l border-purple-100 dark:border-slate-800 transition-colors">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-8 h-0.5 bg-purple-500" />
-                    <span className="text-purple-600 text-xs font-bold tracking-widest uppercase">A Word from the Pastor</span>
+                    <span className="text-purple-600 dark:text-purple-400 text-xs font-bold tracking-widest uppercase transition-colors">A Word from the Pastor</span>
                   </div>
 
-                  <Quote className="w-10 h-10 text-purple-300 mb-4" />
+                  <Quote className="w-10 h-10 text-purple-300 dark:text-purple-500 mb-4 transition-colors" />
 
-                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-1">
+                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1 transition-colors">
                     {leaders[0].name}
                   </h2>
-                  <p className="text-purple-600 font-bold text-base mb-6 tracking-wide">
+                  <p className="text-purple-600 dark:text-purple-400 font-bold text-base mb-6 tracking-wide transition-colors">
                     {leaders[0].title}
                   </p>
 
-                  <p className="text-base md:text-lg text-gray-600 leading-relaxed mb-6 italic">
+                  <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6 italic transition-colors">
                     "{leaders[0].message}"
                   </p>
 
-                  <div className="bg-purple-50 border-l-4 border-purple-500 p-4 rounded-r-xl mb-8">
-                    <p className="text-sm text-gray-500 italic font-medium">
+                  <div className="bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-500 p-4 rounded-r-xl mb-8 transition-colors">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 italic font-medium transition-colors">
                       {leaders[0].scripture}
                     </p>
                   </div>
@@ -222,7 +222,7 @@ export default function Pastorate() {
       </section>
 
       {/* CO-PASTOR FEATURED */}
-      <section className="py-4 md:py-8 px-4 md:px-6 bg-purple-50/30">
+      <section className="py-4 md:py-8 px-4 md:px-6 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
@@ -231,31 +231,31 @@ export default function Pastorate() {
             variants={fadeUp}
             transition={{ duration: 0.6 }}
           >
-            <Card className="border-0 shadow-2xl overflow-hidden rounded-2xl">
+            <Card className="border-0 shadow-2xl overflow-hidden rounded-2xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800 transition-colors duration-300">
               <div className="grid md:grid-cols-2 gap-0">
 
                 {/* Content Side */}
-                <CardContent className="p-8 md:p-12 flex flex-col justify-center bg-white order-2 md:order-1 border-r border-purple-100">
+                <CardContent className="p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-slate-900 order-2 md:order-1 border-r border-purple-100 dark:border-slate-800 transition-colors">
                   <div className="flex items-center gap-3 mb-6">
                     <div className="w-8 h-0.5 bg-purple-500" />
-                    <span className="text-purple-600 text-xs font-bold tracking-widest uppercase">A Word from the Co-Pastor</span>
+                    <span className="text-purple-600 dark:text-purple-400 text-xs font-bold tracking-widest uppercase transition-colors">A Word from the Co-Pastor</span>
                   </div>
 
-                  <Quote className="w-10 h-10 text-purple-300 mb-4" />
+                  <Quote className="w-10 h-10 text-purple-300 dark:text-purple-500 mb-4 transition-colors" />
 
-                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-1">
+                  <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-1 transition-colors">
                     {leaders[1].name}
                   </h2>
-                  <p className="text-amber-600 font-bold text-base mb-6 tracking-wide">
+                  <p className="text-amber-600 dark:text-amber-500 font-bold text-base mb-6 tracking-wide transition-colors">
                     {leaders[1].title}
                   </p>
 
-                  <p className="text-base md:text-lg text-stone-600 leading-relaxed mb-6 italic">
+                  <p className="text-base md:text-lg text-stone-600 dark:text-gray-300 leading-relaxed mb-6 italic transition-colors">
                     "{leaders[1].message}"
                   </p>
 
-                  <div className="bg-stone-50 border-l-4 border-amber-400 p-4 rounded-r-xl mb-8">
-                    <p className="text-sm text-stone-500 italic font-medium">
+                  <div className="bg-stone-50 dark:bg-slate-800 border-l-4 border-amber-400 p-4 rounded-r-xl mb-8 transition-colors">
+                    <p className="text-sm text-stone-500 dark:text-gray-400 italic font-medium transition-colors">
                       {leaders[1].scripture}
                     </p>
                   </div>
@@ -310,12 +310,12 @@ export default function Pastorate() {
             transition={{ duration: 0.6 }}
             className="text-center mb-12 md:mb-16"
           >
-            <span className="text-purple-600 text-xs font-bold tracking-widest uppercase">Our Team</span>
-            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mt-2 mb-3">
+            <span className="text-purple-600 dark:text-purple-400 text-xs font-bold tracking-widest uppercase transition-colors">Our Team</span>
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mt-2 mb-3 transition-colors">
               Ministry Leadership
             </h2>
             <div className="w-16 h-0.5 bg-purple-500 mx-auto mb-4" />
-            <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto transition-colors">
               Dedicated servants of God leading our various ministries and departments
             </p>
           </motion.div>
@@ -330,7 +330,7 @@ export default function Pastorate() {
                 variants={fadeUp}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
               >
-                <Card className="border-0 shadow-xl overflow-hidden h-full group hover:shadow-2xl transition-all duration-300 rounded-2xl">
+                <Card className="border-0 shadow-xl overflow-hidden h-full group hover:shadow-2xl transition-all duration-300 rounded-2xl bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
                   <div className="grid grid-cols-3 gap-0 h-full">
 
                     {/* Image Column */}
@@ -353,20 +353,20 @@ export default function Pastorate() {
                     </div>
 
                     {/* Content Column */}
-                    <CardContent className="col-span-2 p-5 md:p-6 flex flex-col justify-between bg-white">
+                    <CardContent className="col-span-2 p-5 md:p-6 flex flex-col justify-between bg-white dark:bg-slate-900 border-l border-transparent dark:border-slate-800 transition-colors">
                       <div>
                         <div className="w-6 h-0.5 bg-purple-400 mb-3" />
-                        <h3 className="text-lg md:text-xl font-black text-slate-900 mb-1">
+                        <h3 className="text-lg md:text-xl font-black text-slate-900 dark:text-white mb-1 transition-colors">
                           {leader.name}
                         </h3>
-                        <p className="text-xs font-bold text-purple-600 tracking-widest uppercase mb-3">
+                        <p className="text-xs font-bold text-purple-600 dark:text-purple-400 tracking-widest uppercase mb-3 transition-colors">
                           {leader.title}
                         </p>
-                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-4 mb-3 italic">
+                        <p className="text-sm text-gray-500 dark:text-gray-300 leading-relaxed line-clamp-4 mb-3 italic transition-colors">
                           "{leader.message}"
                         </p>
-                        <div className="bg-purple-50 border-l-4 border-purple-400 p-3 rounded-r-lg mb-4">
-                          <p className="text-xs text-gray-400 italic line-clamp-2">
+                        <div className="bg-purple-50 dark:bg-purple-900/20 border-l-4 border-purple-400 p-3 rounded-r-lg mb-4 transition-colors">
+                          <p className="text-xs text-gray-500 dark:text-gray-400 italic line-clamp-2 transition-colors">
                             {leader.scripture}
                           </p>
                         </div>
