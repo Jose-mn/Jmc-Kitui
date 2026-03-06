@@ -657,7 +657,7 @@ export default function Home() {
                 className="text-center mt-10"
               >
                 <Button
-                  onClick={() => navigate('/sermons')}
+                  onClick={() => window.open('https://www.youtube.com/@JMCKITUI', '_blank')}
                   variant="outline"
                   className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 font-semibold text-lg"
                 >
