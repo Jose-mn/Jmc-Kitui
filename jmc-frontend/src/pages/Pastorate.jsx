@@ -161,8 +161,8 @@ export default function Pastorate() {
                     alt={leaders[0].name}
                     className="w-full h-full object-cover object-top absolute inset-0"
                   />
-                  {/* Subtle dark gradient at bottom */}
-                  <div className="absolute inset-0 bg-purple-900/60" />
+
+
 
                   {/* Name overlay at bottom */}
                   <div className="absolute bottom-0 left-0 right-0 p-6">

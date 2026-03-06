@@ -1,7 +1,8 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Church, PlayCircle, HeartHandshake, Quote } from "lucide-react";
+import { Calendar, Church, PlayCircle, HeartHandshake, Quote, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import ImageCarousel from "@/components/ImageCarousel";
@@ -10,8 +11,78 @@ import faithImage from "../assets/devotionals/faith.jpeg";
 import prayerImage from "../assets/devotionals/prayer.jpeg";
 import purposeImage from "../assets/devotionals/purpose.jpeg";
 import pastorateImage from "../assets/pastorate.jpeg";
+
 export default function Home() {
-  const navigate = useNavigate(); // ADD THIS LINE
+  const navigate = useNavigate();
+  const [latestSermons, setLatestSermons] = useState([]);
+  const [sermonsLoading, setSermonsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchLatestSermons();
+  }, []);
+
+  const fetchLatestSermons = async () => {
+    try {
+      setSermonsLoading(true);
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/api/sermons`);
+      if (!res.ok) throw new Error("Failed to fetch sermons");
+      const data = await res.json();
+      const allSermons = (Array.isArray(data) ? data : [])
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
+      // Find the most recent Sunday
+      const now = new Date();
+      const lastSunday = new Date(now);
+      lastSunday.setDate(now.getDate() - now.getDay()); // getDay() 0=Sunday
+      lastSunday.setHours(0, 0, 0, 0);
+
+      const nextDay = new Date(lastSunday);
+      nextDay.setDate(lastSunday.getDate() + 1);
+
+      // Filter sermons from the most recent Sunday
+      const sundaySermons = allSermons.filter((s) => {
+        const d = new Date(s.created_at);
+        return d >= lastSunday && d < nextDay;
+      });
+
+      // Prefer Sunday sermons; fall back to latest overall
+      const picked = sundaySermons.length > 0
+        ? sundaySermons.slice(0, 3)
+        : allSermons.slice(0, 3);
+
+      setLatestSermons(picked);
+    } catch (err) {
+      console.error("Error fetching latest sermons:", err);
+      // Fallback: show the most recent known sermon when API is unavailable
+      setLatestSermons([
+        {
+          sermon_id: "fallback-1",
+          title: "United With the Lord",
+          speaker: "Bishop Elijah Mutua",
+          video_url: "https://www.youtube.com/watch?v=fkVLZptUHGo",
+          created_at: "2026-03-01T10:00:00Z"
+        }
+      ]);
+    } finally {
+      setSermonsLoading(false);
+    }
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "Date TBA";
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const extractYoutubeId = (url) => {
+    if (!url) return null;
+    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|live\/)|youtu\.be\/)([^&\n?#]+)/);
+    return match ? match[1] : null;
+  };
   return (
     <div className="flex flex-col">
       <Navigation />
@@ -391,9 +462,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-      {/* LATEST SERMON */}
+      {/* LATEST SERMONS */}
       <section className="py-20 px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <motion.div
             className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
@@ -402,54 +473,199 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-4xl md:text-5xl font-bold text-purple-700 mb-4">
-              Latest Sermon
+              Latest Sermons
             </h2>
-            <div className="h-1 w-20 mx-auto bg-purple-500 rounded-full" />
+            <p className="text-gray-600 text-lg">
+              Catch up on recent messages from our church services
+            </p>
+            <div className="h-1 w-20 mx-auto bg-purple-500 rounded-full mt-4" />
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow">
-              <div className="h-2 bg-purple-600" />
-
-              {/* YouTube Video Embed */}
-              <div className="relative w-full pt-[56.25%] bg-black">
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
-                  src="https://www.youtube.com/embed/RX8k09Gz-rc?autoplay=1&mute=1&loop=1&playlist=RX8k09Gz-rc&controls=1&modestbranding=1&rel=0"
-                  title="Latest Sermon"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-
-              <CardContent className="p-10">
-                <h3 className="text-2xl font-bold text-slate-900 text-center mb-2">
-                  The assurance of our Faith
-                </h3>
-                <p className="text-slate-600 text-center text-lg font-semibold mb-6">
-                  Bishop Maurice Kareithi - February 11, 2026
-                </p>
-
-                <motion.div
-                  className="flex justify-center gap-4"
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <Button
-                    onClick={() => window.open('https://www.youtube.com/live/RX8k09Gz-rc?si=YyJSmhXnv9njcYRz')}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-3 font-bold text-lg shadow-lg"
+          {sermonsLoading ? (
+            /* Loading skeleton */
+            <div className="grid md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 rounded-lg aspect-video mb-4" />
+                  <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-200 rounded w-1/2" />
+                </div>
+              ))}
+            </div>
+          ) : latestSermons.length === 0 ? (
+            /* Empty state */
+            <div className="text-center py-16">
+              <PlayCircle className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-500 text-lg">
+                No sermons available yet. Check back soon!
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Featured (most recent) sermon - large card */}
+              {latestSermons[0] && (() => {
+                const featured = latestSermons[0];
+                const youtubeId = extractYoutubeId(featured.video_url);
+                return (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    className="mb-10"
                   >
-                    Watch Full Sermon
-                  </Button>
-                </motion.div>
-              </CardContent>
-            </Card>
-          </motion.div>
+                    <Card className="border-0 shadow-xl overflow-hidden hover:shadow-2xl transition-shadow">
+                      <div className="h-2 bg-purple-600" />
+                      {youtubeId ? (
+                        <div className="relative w-full pt-[56.25%] bg-black">
+                          <iframe
+                            className="absolute top-0 left-0 w-full h-full"
+                            src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&controls=1&modestbranding=1&rel=0`}
+                            title={featured.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          />
+                        </div>
+                      ) : (
+                        <div className="relative w-full pt-[56.25%] bg-purple-800 flex items-center justify-center">
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <PlayCircle className="w-20 h-20 text-white opacity-50" />
+                          </div>
+                        </div>
+                      )}
+                      <CardContent className="p-10">
+                        <h3 className="text-2xl font-bold text-slate-900 text-center mb-2">
+                          {featured.title || "Untitled Sermon"}
+                        </h3>
+                        <div className="flex items-center justify-center gap-4 text-slate-600 text-lg font-semibold mb-6">
+                          {featured.speaker && (
+                            <span className="flex items-center gap-1">
+                              <User size={18} className="text-purple-600" />
+                              {featured.speaker}
+                            </span>
+                          )}
+                          {featured.created_at && (
+                            <span className="flex items-center gap-1">
+                              <Calendar size={18} className="text-purple-600" />
+                              {formatDate(featured.created_at)}
+                            </span>
+                          )}
+                        </div>
+                        {featured.video_url && (
+                          <motion.div
+                            className="flex justify-center gap-4"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            <Button
+                              onClick={() => window.open(featured.video_url, '_blank')}
+                              className="bg-purple-600 hover:bg-purple-700 text-white px-10 py-3 font-bold text-lg shadow-lg"
+                            >
+                              Watch Full Sermon
+                            </Button>
+                          </motion.div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })()}
+
+              {/* Additional recent sermons as smaller cards */}
+              {latestSermons.length > 1 && (
+                <div className="grid md:grid-cols-2 gap-6">
+                  {latestSermons.slice(1).map((sermon, index) => {
+                    const youtubeId = extractYoutubeId(sermon.video_url);
+                    return (
+                      <motion.div
+                        key={sermon.sermon_id || index}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.15, duration: 0.5 }}
+                        viewport={{ once: true }}
+                      >
+                        <Card className="h-full flex flex-col overflow-hidden hover:shadow-xl transition-shadow group">
+                          {/* Thumbnail */}
+                          <div className="relative w-full pt-[56.25%] bg-gray-900 overflow-hidden">
+                            {youtubeId ? (
+                              <>
+                                <img
+                                  src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+                                  alt={sermon.title}
+                                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                />
+                                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-all flex items-center justify-center">
+                                  <a
+                                    href={sermon.video_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-700 transition-colors"
+                                  >
+                                    <PlayCircle className="w-7 h-7 text-white fill-white" />
+                                  </a>
+                                </div>
+                              </>
+                            ) : (
+                              <div className="absolute inset-0 flex items-center justify-center bg-purple-700">
+                                <PlayCircle className="w-12 h-12 text-white opacity-50" />
+                              </div>
+                            )}
+                          </div>
+                          <CardContent className="flex-1 p-5 flex flex-col">
+                            <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-purple-600 transition">
+                              {sermon.title || "Untitled Sermon"}
+                            </h3>
+                            <div className="space-y-2 mb-4 text-sm text-gray-600">
+                              {sermon.speaker && (
+                                <div className="flex items-center gap-2">
+                                  <User size={16} className="text-purple-600" />
+                                  <span>{sermon.speaker}</span>
+                                </div>
+                              )}
+                              {sermon.created_at && (
+                                <div className="flex items-center gap-2">
+                                  <Calendar size={16} className="text-purple-600" />
+                                  <span>{formatDate(sermon.created_at)}</span>
+                                </div>
+                              )}
+                            </div>
+                            {sermon.video_url && (
+                              <motion.a
+                                href={sermon.video_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mt-auto pt-4 inline-flex items-center gap-2 text-purple-600 font-semibold hover:text-purple-700 transition"
+                                whileHover={{ x: 5 }}
+                              >
+                                <PlayCircle size={18} />
+                                Watch Sermon
+                              </motion.a>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* View All Sermons Button */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="text-center mt-10"
+              >
+                <Button
+                  onClick={() => navigate('/sermons')}
+                  variant="outline"
+                  className="border-2 border-purple-600 text-purple-600 hover:bg-purple-600 hover:text-white px-8 py-3 font-semibold text-lg"
+                >
+                  View All Sermons
+                </Button>
+              </motion.div>
+            </>
+          )}
         </div>
       </section>
 
