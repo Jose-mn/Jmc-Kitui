@@ -54,7 +54,33 @@ export default function Home() {
       setLatestSermons(picked);
     } catch (err) {
       console.error("Error fetching latest sermons:", err);
-      // Fallback: show the most recent known sermon when API is unavailable
+      // Try to fetch dynamically from YouTube RSS as fallback
+      try {
+        const ytUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9sbvr5FmX9fu1VIShXMeYA';
+        const ytRes = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(ytUrl)}`);
+        if (ytRes.ok) {
+          const ytText = await ytRes.text();
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(ytText, "text/xml");
+          const entries = xmlDoc.querySelectorAll("entry");
+
+          if (entries && entries.length > 0) {
+            const ytSermons = Array.from(entries).slice(0, 3).map((entry, index) => ({
+              sermon_id: `yt-home-${index}`,
+              title: entry.querySelector("title")?.textContent || "JMC KITUI Sermon",
+              speaker: entry.querySelector("author > name")?.textContent || "JMC KITUI",
+              video_url: entry.querySelector("link")?.getAttribute("href") || "https://www.youtube.com/@JMCKITUI",
+              created_at: entry.querySelector("published")?.textContent || new Date().toISOString()
+            }));
+            setLatestSermons(ytSermons);
+            return;
+          }
+        }
+      } catch (ytErr) {
+        console.error("Error fetching from YouTube fallback:", ytErr);
+      }
+
+      // Hard fallback: show the most recent known sermon when everything else fails
       setLatestSermons([
         {
           sermon_id: "fallback-1",

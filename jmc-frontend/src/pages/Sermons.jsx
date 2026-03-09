@@ -29,6 +29,33 @@ export default function Sermons() {
       setError(null);
     } catch (err) {
       console.error("Error fetching sermons:", err);
+      // Try fetching from YouTube RSS fallback
+      try {
+        const ytUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9sbvr5FmX9fu1VIShXMeYA';
+        const ytRes = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(ytUrl)}`);
+        if (ytRes.ok) {
+          const ytText = await ytRes.text();
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(ytText, "text/xml");
+          const entries = xmlDoc.querySelectorAll("entry");
+
+          if (entries && entries.length > 0) {
+            const ytSermons = Array.from(entries).map((entry, index) => ({
+              sermon_id: `yt-sermons-${index}`,
+              title: entry.querySelector("title")?.textContent || "JMC KITUI Sermon",
+              speaker: entry.querySelector("author > name")?.textContent || "JMC KITUI",
+              video_url: entry.querySelector("link")?.getAttribute("href") || "https://www.youtube.com/@JMCKITUI",
+              created_at: entry.querySelector("published")?.textContent || new Date().toISOString()
+            }));
+            setSermons(ytSermons);
+            setError(null);
+            return;
+          }
+        }
+      } catch (ytErr) {
+        console.error("Error fetching from YouTube fallback:", ytErr);
+      }
+
       setError("Unable to load sermons at this moment. Please try again later.");
       setSermons([]);
     } finally {
