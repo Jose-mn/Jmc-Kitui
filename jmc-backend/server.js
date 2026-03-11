@@ -7,8 +7,9 @@ import devotionsRoutes from "./routes/devotionsRoutes.js";
 import sermonsRoutes from "./routes/sermonsRoutes.js";
 import leadershipRoutes from "./routes/leadershipRoutes.js";
 import authRoutes from "./routes/auth.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import path from "path";
 // payment routes removed (Mpesa integration undone)
-
 
 dotenv.config();
 
@@ -19,12 +20,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve uploads folder statically
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
 app.use("/api/contact", contactRoutes);
 app.use("/api/events", eventsRoutes);
 app.use("/api/devotions", devotionsRoutes);
 app.use("/api/sermons", sermonsRoutes);
 app.use("/api/leadership", leadershipRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/upload", uploadRoutes);
 // app.use("/api/pay", paymentsRoutes);  // disabled
 
 app.get("/", (req, res) => {

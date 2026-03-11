@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { devotionals } from "../Data/Devotionals";
 import { Calendar, User, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "../components/Navigation";
@@ -8,6 +7,35 @@ import Footer from "../components/Footer";
 
 export default function Devotionals() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [devotionals, setDevotionals] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDevotionals = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/api/devotions`);
+        if (res.ok) {
+          const data = await res.json();
+          const mappedData = data.map(dev => ({
+            id: dev.id,
+            title: dev.title,
+            scripture: dev.scripture || "N/A",
+            excerpt: dev.content ? dev.content.substring(0, 150) + "..." : "",
+            date: dev.created_at,
+            author: "JMC Kitui",
+            image: dev.image_url ? `${apiUrl}${dev.image_url}` : "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80",
+          }));
+          setDevotionals(mappedData);
+        }
+      } catch (err) {
+        console.error("Failed to fetch devotionals:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDevotionals();
+  }, []);
 
   const filteredDevotionals = devotionals.filter(dev =>
     dev.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -16,6 +44,7 @@ export default function Devotionals() {
   );
 
   const formatDate = (dateString) => {
+    if (!dateString) return "Date TBA";
     return new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',

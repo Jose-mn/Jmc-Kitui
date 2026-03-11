@@ -5,7 +5,7 @@ const router = express.Router();
 
 // ✅ POST: Create a new leader
 router.post("/", async (req, res) => {
-  const { name, position, bio } = req.body;
+  const { name, position, bio, image_url } = req.body;
 
   if (!name || !position) {
     return res.status(400).json({ error: "Name and position are required" });
@@ -13,13 +13,13 @@ router.post("/", async (req, res) => {
 
   try {
     const sql = `
-      INSERT INTO leadership (name, position, bio, created_at)
-      VALUES (?, ?, ?, NOW())
+      INSERT INTO leadership (name, position, bio, image_url, created_at)
+      VALUES (?, ?, ?, ?, NOW())
     `;
 
-    await pool.execute(sql, [name, position, bio]);
+    await pool.execute(sql, [name, position, bio, image_url || null]);
 
-    res.status(201).json({ message: "Leader created successfully", leader: { name, position, bio } });
+    res.status(201).json({ message: "Leader created successfully", leader: { name, position, bio, image_url } });
   } catch (err) {
     console.error("POST /api/leadership error:", err);
     // Return success in development mode

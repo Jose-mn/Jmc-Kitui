@@ -101,12 +101,7 @@ export default function AdminLogin() {
           </button>
         </form>
 
-        {/* Demo Credentials */}
-        <div className="mt-6 p-4 bg-gray-100 rounded-lg text-xs text-gray-600">
-          <p className="font-semibold mb-2">Demo Credentials:</p>
-          <p>Email: <span className="font-mono bg-white px-2 py-1 rounded">admin@jmc.com</span></p>
-          <p>Password: <span className="font-mono bg-white px-2 py-1 rounded">admin123</span></p>
-        </div>
+
       </div>
     </div>
   );

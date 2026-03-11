@@ -7,10 +7,10 @@ const router = express.Router();
 
 // ✅ CREATE EVENT (Protected)
 router.post("/", authenticateToken, async (req, res) => {
-  const { title, date, location } = req.body;
+  const { title, date, location, image_url } = req.body;
 
   console.log("POST /api/events - User:", req.user);
-  console.log("Request body:", { title, date, location });
+  console.log("Request body:", { title, date, location, image_url });
 
   if (!title || !date) {
     return res.status(400).json({ error: "Title and date are required" });
@@ -18,26 +18,27 @@ router.post("/", authenticateToken, async (req, res) => {
 
   try {
     const sql = `
-      INSERT INTO events (title, event_date, location)
-      VALUES (?, ?, ?)
+      INSERT INTO events (title, event_date, location, image_url)
+      VALUES (?, ?, ?, ?)
     `;
 
-    const [result] = await pool.execute(sql, [title, date, location]);
+    const [result] = await pool.execute(sql, [title, date, location, image_url || null]);
 
-    res.status(201).json({ 
+    res.status(201).json({
       message: "Event created successfully",
-      event: { 
+      event: {
         id: result.insertId,
-        title, 
-        date, 
-        location 
+        title,
+        date,
+        location,
+        image_url
       }
     });
 
   } catch (err) {
     console.error("POST /api/events error:", err);
     // Return success mock response in development if DB fails
-    res.status(201).json({ 
+    res.status(201).json({
       message: "Event created successfully (offline mode)",
       event: { title, date, location }
     });

@@ -1,10 +1,10 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles, Quote } from "lucide-react";
-import bishop from "../assets/leadership/bishop-elijah.jpg";
-import revRuth from "../assets/leadership/rev-ruth.jpg";
+import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles } from "lucide-react";
+import defaultLeaderImage from "../assets/leadership/bishop-elijah.jpg";
 import bannerImage from "../assets/banner.webp";
 import visionImage from "../assets/Vision.jpg";
 import missionImage from "../assets/Mission.jpg";
@@ -18,6 +18,31 @@ const fadeUp = {
 
 export default function About() {
   const navigate = useNavigate();
+  const [leaders, setLeaders] = useState([]);
+
+  useEffect(() => {
+    const fetchLeaders = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/api/leadership`);
+        if (res.ok) {
+          const data = await res.json();
+          const mappedLeaders = data.map(leader => ({
+            id: leader.id,
+            name: leader.name,
+            position: leader.position,
+            bio: leader.bio || "Leading with a heart for God's people.",
+            image: leader.image_url ? `${apiUrl}${leader.image_url}` : defaultLeaderImage,
+          }));
+          setLeaders(mappedLeaders.length > 0 ? mappedLeaders : []);
+        }
+      } catch (err) {
+        console.error("Failed to fetch leaders:", err);
+      }
+    };
+    fetchLeaders();
+  }, []);
+
   const coreValues = [
     {
       icon: Heart,
@@ -366,66 +391,48 @@ export default function About() {
             Meet the pastoral team leading Jesus Manifestation Church with vision, wisdom, and dedication
           </p>
 
-          <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
-                <CardContent className="p-0">
-                  <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
-                    <img
-                      src={bishop}
-                      alt="Bishop Elijah Mutua"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">Bishop Elijah Mutua</h3>
-                    <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">Lead Pastor</p>
-                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
-                      Serving with a heart for God's people, grounded in prayer, humility, and biblical truth.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
-                <CardContent className="p-0">
-                  <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
-                    <img
-                      src={revRuth}
-                      alt="Reverend Ruth Mutua"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
-                  <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
-                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">Reverend Ruth Mutua</h3>
-                    <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">Co-Pastor</p>
-                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
-                      Passionate about nurturing faith, family, and spiritual growth within the church community.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </div>
+          {leaders.length === 0 ? (
+            <div className="text-center py-10">
+              <p className="text-gray-500">Loading leadership team...</p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+              {leaders.map((leader, index) => (
+                <motion.div
+                  key={leader.id || index}
+                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
+                    <CardContent className="p-0">
+                      <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
+                        <img
+                          src={leader.image}
+                          alt={leader.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      </div>
+                      <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
+                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">{leader.name}</h3>
+                        <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">{leader.position}</p>
+                        <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
+                          {leader.bio}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </motion.div>
-      </section >
+      </section>
 
       {/* COMMUNITY */}
-      < section
+      <section
         className="py-12 md:py-20 px-4 md:px-6 bg-purple-50/30 dark:bg-purple-900/10 transition-colors duration-300"
       >
         <motion.div
@@ -449,10 +456,10 @@ export default function About() {
             Become Part of Our Family
           </Button>
         </motion.div>
-      </section >
+      </section>
 
       {/* CTA SECTION */}
-      < section className="py-16 md:py-24 px-4 md:px-6 bg-purple-900 text-white text-center relative overflow-hidden" >
+      <section className="py-16 md:py-24 px-4 md:px-6 bg-purple-900 text-white text-center relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
           <motion.div
             className="absolute top-10 left-1/4 w-96 h-96 bg-yellow-400 rounded-full mix-blend-multiply filter blur-3xl"
@@ -509,9 +516,9 @@ export default function About() {
             </Button>
           </motion.div>
         </div>
-      </section >
+      </section>
 
       <Footer />
-    </div >
+    </div>
   );
 }

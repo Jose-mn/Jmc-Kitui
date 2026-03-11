@@ -26,32 +26,32 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/sermons" element={<Sermons />} />
         <Route path="/pastorate" element={<Pastorate />} />
-        
+
         {/* Devotionals Routes */}
         <Route path="/devotionals" element={<Devotionals />} />
         <Route path="/devotionals/:id" element={<DevotionalDetail />} />
-        
+
         <Route path="/events" element={<Events />} />
         <Route path="/give" element={<Give />} />
-        
+
         {/* Ministries Routes */}
         <Route path="/ministries/youth" element={<Youth />} />
         <Route path="/ministries/choir" element={<Choir />} />
         <Route path="/ministries/ushers" element={<Ushers />} />
         <Route path="/ministries/media" element={<Media />} />
-        
+
         <Route path="/contact" element={<Contact />} />
-        
+
         {/* Admin Routes */}
         <Route path="/admin/login" element={<Login />} />
-        <Route path="/admin" element={<AdminLayout />} />
-        <Route path="/admin/messages" element={<AdminLayout />} />
-        <Route path="/admin/devotions" element={<AdminLayout />} />
-        <Route path="/admin/leadership" element={<AdminLayout />} />
-        <Route path="/admin/events" element={<AdminLayout />} />
-        <Route path="/admin/sermons" element={<AdminLayout />} />
-        <Route path="/admin/media" element={<AdminLayout />} />
-        <Route path="/admin/analytics" element={<AdminLayout />} />
+        <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/messages" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/devotions" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/leadership" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/events" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/sermons" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/media" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
+        <Route path="/admin/analytics" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>} />
         <Route path="/admin/*" element={<ProtectedRoute><AdminRouter /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>

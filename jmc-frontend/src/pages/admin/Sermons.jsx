@@ -10,13 +10,41 @@ export default function Sermons() {
     speaker: "",
     video: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Initial fetch of sermons would go here ideally
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title || !form.speaker || !form.video) return;
 
-    setSermons([...sermons, form]);
-    setForm({ title: "", speaker: "", video: "" });
+    try {
+      setLoading(true);
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(`${apiUrl}/api/sermons`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setSermons([...sermons, form]);
+        setForm({ title: "", speaker: "", video: "" });
+        alert("Sermon added successfully!");
+      } else {
+        alert("Failed to add sermon");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("An error occurred");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,9 +78,10 @@ export default function Sermons() {
           />
           <Button
             onClick={handleSubmit}
-            className="bg-jmcPrimary hover:bg-jmcPrimary/90"
+            disabled={loading}
+            className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
-            Add Sermon
+            {loading ? "Adding..." : "Add Sermon"}
           </Button>
         </CardContent>
       </Card>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
@@ -18,17 +18,13 @@ import {
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
-// Import event images from assets
-import sundayWorshipImage from "../assets/events/sunday-worship.jpg";
-import prayerMeetingImage from "../assets/events/prayer-meeting.jpg";
-import bibleStudyImage from "../assets/events/bible-study.jpg";
-import youthConferenceImage from "../assets/events/youth-conference.jpg";
-import childrenSundaySchoolImage from "../assets/events/children-sunday-school.jpg";
-import nightOfWorshipImage from "../assets/events/night-of-worship.jpg";
+// Fallback image if event has no image_url
+import defaultEventImage from "../assets/events/sunday-worship.jpg";
 
 export default function Events() {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("all");
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
   const categories = [
     { id: "all", name: "All Events", icon: Calendar },
@@ -39,86 +35,41 @@ export default function Events() {
     { id: "children", name: "Children", icon: Baby },
   ];
 
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Sunday Worship Service",
-      category: "worship",
-      date: "2026-02-16",
-      time: "8:45 AM - 12:00 PM",
-      location: "Main Sanctuary, JMC Kitui",
-      description: "Join us for powerful worship, inspiring preaching, and fellowship as we celebrate God's goodness together.",
-      image: sundayWorshipImage,
-      featured: true,
-      attendees: "300+",
-      color: "bg-purple-600"
-    },
-    {
-      id: 2,
-      title: "Mid-Week Prayer Meeting",
-      category: "prayer",
-      date: "2026-02-18",
-      time: "5:00 PM - 7:00 PM",
-      location: "Prayer Hall, JMC Kitui",
-      description: "A time of intercession, thanksgiving, and seeking God's face for our church, families, and nation.",
-      image: prayerMeetingImage,
-      featured: false,
-      attendees: "150+",
-      color: "bg-purple-700"
-    },
-    {
-      id: 3,
-      title: "Bible Study: Walking in Faith",
-      category: "teaching",
-      date: "2026-02-19",
-      time: "6:00 PM - 8:00 PM",
-      location: "Fellowship Hall",
-      description: "Deep dive into God's Word with Bishop Elijah Mutua. This week's topic: Living by Faith in Uncertain Times.",
-      image: bibleStudyImage,
-      featured: false,
-      attendees: "100+",
-      color: "bg-purple-500"
-    },
-    {
-      id: 4,
-      title: "Youth Empowerment Conference 2026",
-      category: "youth",
-      date: "2026-02-21",
-      time: "9:00 AM - 4:00 PM",
-      location: "JMC Kitui Campus",
-      description: "A transformative one-day conference for young people focusing on purpose, leadership, and spiritual growth.",
-      image: youthConferenceImage,
-      featured: true,
-      attendees: "200+",
-      color: "bg-purple-600"
-    },
-    {
-      id: 5,
-      title: "Children's Sunday School",
-      category: "children",
-      date: "2026-02-23",
-      time: "9:00 AM - 11:00 AM",
-      location: "Children's Ministry Center",
-      description: "Fun-filled Bible lessons, creative activities, and character-building sessions for kids aged 3-12.",
-      image: childrenSundaySchoolImage,
-      featured: false,
-      attendees: "80+",
-      color: "bg-purple-700"
-    },
-    {
-      id: 6,
-      title: "Night of Worship & Miracles",
-      category: "worship",
-      date: "2026-02-28",
-      time: "6:00 PM - 10:00 PM",
-      location: "Main Sanctuary",
-      description: "An evening of powerful worship, prophetic ministry, and supernatural encounters with the Holy Spirit.",
-      image: nightOfWorshipImage,
-      featured: true,
-      attendees: "500+",
-      color: "bg-purple-500"
-    }
-  ];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/api/events`);
+        if (res.ok) {
+          const data = await res.json();
+          // Map backend fields to UI fields
+          const mappedEvents = data.map((ev) => {
+            // Pick a random category and color for nice UI since backend doesn't have them yet
+            const catOptions = ["worship", "prayer", "teaching", "youth", "children"];
+            const colorOptions = ["bg-purple-600", "bg-purple-700", "bg-purple-500"];
+
+            return {
+              id: ev.id,
+              title: ev.title,
+              category: catOptions[ev.id % catOptions.length],
+              date: ev.event_date,
+              time: "TBA", // Not in schema, fallback
+              location: ev.location || "JMC Kitui",
+              description: ev.description || "Join us for this wonderful event.",
+              image: ev.image_url ? `${apiUrl}${ev.image_url}` : defaultEventImage,
+              featured: ev.id % 3 === 0, // Mock featured status
+              attendees: "100+",
+              color: colorOptions[ev.id % colorOptions.length]
+            };
+          });
+          setUpcomingEvents(mappedEvents);
+        }
+      } catch (err) {
+        console.error("Failed to fetch events:", err);
+      }
+    };
+    fetchEvents();
+  }, []);
 
   const filteredEvents = activeFilter === "all"
     ? upcomingEvents
@@ -127,6 +78,7 @@ export default function Events() {
   const featuredEvent = upcomingEvents.find(event => event.featured);
 
   const formatDate = (dateString) => {
+    if (!dateString) return "Date TBA";
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };

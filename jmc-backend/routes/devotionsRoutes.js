@@ -5,7 +5,7 @@ const router = express.Router();
 
 // ✅ POST: Create a new devotion
 router.post("/", async (req, res) => {
-  const { title, scripture, content } = req.body;
+  const { title, scripture, content, image_url } = req.body;
 
   if (!title || !content) {
     return res.status(400).json({ error: "Title and content are required" });
@@ -13,20 +13,20 @@ router.post("/", async (req, res) => {
 
   try {
     const sql = `
-      INSERT INTO devotions (title, scripture, content, created_at)
-      VALUES (?, ?, ?, NOW())
+      INSERT INTO devotions (title, scripture, content, image_url, created_at)
+      VALUES (?, ?, ?, ?, NOW())
     `;
 
-    await pool.execute(sql, [title, scripture, content]);
+    await pool.execute(sql, [title, scripture, content, image_url || null]);
 
-    res.status(201).json({ 
+    res.status(201).json({
       message: "Devotion created successfully",
-      devotion: { title, scripture, content }
+      devotion: { title, scripture, content, image_url }
     });
   } catch (err) {
     console.error("POST /api/devotions error:", err);
     // Return success response even if database fails (for development)
-    res.status(201).json({ 
+    res.status(201).json({
       message: "Devotion created successfully (offline mode)",
       devotion: { title, scripture, content }
     });
