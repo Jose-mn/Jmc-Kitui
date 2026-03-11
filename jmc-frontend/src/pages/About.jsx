@@ -6,7 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles } from "lucide-react";
 import defaultLeaderImage from "../assets/leadership/bishop-elijah.jpg";
 import bishopElijah from "../assets/leadership/Bishop Elijah 1.png";
-import revRuth from "../assets/leadership/rev-ruth.jpg";
+// The Reverend Ruth image isn't checked into the repo yet. Use a default placeholder until
+// the correct file is added to `src/assets/leadership` (e.g. rev-ruth.jpg).
+const revRuth = defaultLeaderImage; // <-- update this import when the actual picture is available
+
 import bannerImage from "../assets/banner.webp";
 import visionImage from "../assets/Vision.jpg";
 import missionImage from "../assets/Mission.jpg";
@@ -33,7 +36,7 @@ export default function About() {
       name: "Reverend Ruth Mutua",
       position: "Co-Pastor",
       bio: "Passionate about restoring families and empowering every believer to rise into their God-given identity.",
-      image: revRuth,
+      image: revRuth, // falls back to `defaultLeaderImage` until the asset is added
     },
     {
       id: 3,
