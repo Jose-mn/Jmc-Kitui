@@ -31,27 +31,31 @@ export default function Home() {
       const allSermons = (Array.isArray(data) ? data : [])
         .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-      // Find the most recent Sunday
-      const now = new Date();
-      const lastSunday = new Date(now);
-      lastSunday.setDate(now.getDate() - now.getDay()); // getDay() 0=Sunday
-      lastSunday.setHours(0, 0, 0, 0);
+      // If DB has sermons, show the most recent ones
+      if (allSermons.length > 0) {
+        // Find the most recent Sunday
+        const now = new Date();
+        const lastSunday = new Date(now);
+        lastSunday.setDate(now.getDate() - now.getDay());
+        lastSunday.setHours(0, 0, 0, 0);
+        const nextDay = new Date(lastSunday);
+        nextDay.setDate(lastSunday.getDate() + 1);
 
-      const nextDay = new Date(lastSunday);
-      nextDay.setDate(lastSunday.getDate() + 1);
+        const sundaySermons = allSermons.filter((s) => {
+          const d = new Date(s.created_at);
+          return d >= lastSunday && d < nextDay;
+        });
 
-      // Filter sermons from the most recent Sunday
-      const sundaySermons = allSermons.filter((s) => {
-        const d = new Date(s.created_at);
-        return d >= lastSunday && d < nextDay;
-      });
+        const picked = sundaySermons.length > 0
+          ? sundaySermons.slice(0, 3)
+          : allSermons.slice(0, 3);
 
-      // Prefer Sunday sermons; fall back to latest overall
-      const picked = sundaySermons.length > 0
-        ? sundaySermons.slice(0, 3)
-        : allSermons.slice(0, 3);
+        setLatestSermons(picked);
+        return;
+      }
 
-      setLatestSermons(picked);
+      // DB is empty — fall through to YouTube / hard fallback below
+      throw new Error("No sermons in database yet");
     } catch (err) {
       console.error("Error fetching latest sermons:", err);
       // Try to fetch dynamically from YouTube RSS as fallback
