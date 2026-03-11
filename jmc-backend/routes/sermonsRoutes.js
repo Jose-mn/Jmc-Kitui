@@ -37,12 +37,7 @@ router.get("/", async (req, res) => {
     res.json(rows);
   } catch (err) {
     console.error("GET /api/sermons error:", err);
-    // Return mock data
-    const mockSermons = [
-      { id: 1, title: "The Love of Christ", speaker: "Pastor John", video_url: "https://youtube.com/watch?v=example1", created_at: new Date() },
-      { id: 2, title: "Faith Works", speaker: "Pastor Mary", video_url: "https://youtube.com/watch?v=example2", created_at: new Date() },
-    ];
-    res.json(mockSermons);
+    res.status(500).json({ error: "Database error fetching sermons" });
   }
 });
 

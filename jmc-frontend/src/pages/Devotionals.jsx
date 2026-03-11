@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 export default function Devotionals() {
   const [searchTerm, setSearchTerm] = useState("");
   const [devotionals, setDevotionals] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchDevotionals = async () => {
