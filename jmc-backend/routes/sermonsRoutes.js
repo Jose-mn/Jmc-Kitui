@@ -19,11 +19,10 @@ router.post("/", async (req, res) => {
 
     await pool.execute(sql, [title, speaker, video]);
 
-    res.status(201).json({ message: "Sermon created successfully", sermon: { title, speaker, video } });
+    res.status(201).json({ message: "Sermon created successfully", sermon: { title, speaker, video_url: video } });
   } catch (err) {
     console.error("POST /api/sermons error:", err);
-    // Return success in development mode
-    res.status(201).json({ message: "Sermon created successfully (offline mode)", sermon: { title, speaker, video } });
+    res.status(500).json({ error: "Failed to create sermon", details: err.message });
   }
 });
 
@@ -51,8 +50,7 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Sermon deleted successfully" });
   } catch (err) {
     console.error("DELETE /api/sermons/:id error:", err);
-    // Return success in development mode
-    res.json({ message: "Sermon deleted successfully (offline mode)" });
+    res.status(500).json({ error: "Failed to delete sermon", details: err.message });
   }
 });
 

@@ -148,4 +148,29 @@ export const api = {
         headers: getAuthHeaders(),
       }).then(handleAuthError),
   },
+
+  // Upload / Media endpoints
+  upload: {
+    getAll: () =>
+      fetch(`${API_URL}/api/upload`, {
+        headers: getAuthHeaders(),
+      }).then(handleAuthError),
+    upload: (file) => {
+      const formData = new FormData();
+      formData.append("image", file);
+      const token = localStorage.getItem("token");
+      const headers = {};
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      return fetch(`${API_URL}/api/upload`, {
+        method: "POST",
+        headers,
+        body: formData,
+      }).then(handleAuthError);
+    },
+    delete: (filename) =>
+      fetch(`${API_URL}/api/upload/${encodeURIComponent(filename)}`, {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      }).then(handleAuthError),
+  },
 };

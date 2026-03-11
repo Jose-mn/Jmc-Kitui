@@ -37,11 +37,7 @@ router.post("/", authenticateToken, async (req, res) => {
 
   } catch (err) {
     console.error("POST /api/events error:", err);
-    // Return success mock response in development if DB fails
-    res.status(201).json({
-      message: "Event created successfully (offline mode)",
-      event: { title, date, location }
-    });
+    res.status(500).json({ error: "Failed to create event", details: err.message });
   }
 });
 
@@ -57,12 +53,7 @@ router.get("/", async (req, res) => {
 
   } catch (err) {
     console.error("GET /api/events error:", err);
-    // Return mock data in development if DB fails
-    const mockEvents = [
-      { event_id: 1, title: "Sunday Service", event_date: "2026-02-15", location: "Main Church" },
-      { event_id: 2, title: "Bible Study", event_date: "2026-02-17", location: "Fellowship Hall" },
-    ];
-    res.json(mockEvents);
+    res.status(500).json({ error: "Failed to fetch events", details: err.message });
   }
 });
 
@@ -107,8 +98,7 @@ router.delete("/:id", authenticateToken, async (req, res) => {
 
   } catch (err) {
     console.error("DELETE /api/events error:", err);
-    // Return success mock response in development if DB fails
-    res.json({ message: "Event deleted successfully (offline mode)" });
+    res.status(500).json({ error: "Failed to delete event", details: err.message });
   }
 });
 

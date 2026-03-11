@@ -25,11 +25,7 @@ router.post("/", async (req, res) => {
     });
   } catch (err) {
     console.error("POST /api/devotions error:", err);
-    // Return success response even if database fails (for development)
-    res.status(201).json({
-      message: "Devotion created successfully (offline mode)",
-      devotion: { title, scripture, content }
-    });
+    res.status(500).json({ error: "Failed to create devotion", details: err.message });
   }
 });
 
@@ -43,24 +39,7 @@ router.get("/", async (req, res) => {
     res.json(rows);
   } catch (err) {
     console.error("GET /api/devotions error:", err);
-    // Return mock data in development if database fails
-    const mockDevotions = [
-      {
-        id: 1,
-        title: "Faith in Times of Trial",
-        scripture: "Romans 5:3-5",
-        content: "When we face difficulties, we can trust that God is working through our challenges to build our faith.",
-        created_at: new Date(),
-      },
-      {
-        id: 2,
-        title: "The Power of Prayer",
-        scripture: "Philippians 4:6-7",
-        content: "Prayer is our direct connection to God. Through prayer, we find peace and strength in all circumstances.",
-        created_at: new Date(),
-      },
-    ];
-    res.json(mockDevotions);
+    res.status(500).json({ error: "Failed to fetch devotions", details: err.message });
   }
 });
 
@@ -74,8 +53,7 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Devotion deleted successfully" });
   } catch (err) {
     console.error("DELETE /api/devotions/:id error:", err);
-    // Return success even if database fails (for development)
-    res.json({ message: "Devotion deleted successfully (offline mode)" });
+    res.status(500).json({ error: "Failed to delete devotion", details: err.message });
   }
 });
 

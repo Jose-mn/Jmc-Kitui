@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Upload, X } from "lucide-react";
+import { api } from "../../lib/api";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 export default function Media() {
   const [image, setImage] = useState(null);
@@ -15,15 +18,15 @@ export default function Media() {
     loadGallery();
   }, []);
 
-  const loadGallery = () => {
-    // Load images from localStorage for demo
-    const savedImages = localStorage.getItem("mediaGallery");
-    if (savedImages) {
-      try {
-        setGallery(JSON.parse(savedImages));
-      } catch (err) {
-        console.error("Error loading gallery:", err);
+  const loadGallery = async () => {
+    try {
+      const response = await api.upload.getAll();
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setGallery(data);
       }
+    } catch (err) {
+      console.error("Error loading gallery:", err);
     }
   };
 
@@ -62,30 +65,17 @@ export default function Media() {
     setSuccess("");
 
     try {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const dataUrl = e.target.result;
-        const token = localStorage.getItem("token");
+      const response = await api.upload.upload(image);
+      const data = await response.json();
 
-        // For demo: store in localStorage
-        // In production: send to backend API
-        const newImage = {
-          id: Date.now(),
-          name: image.name,
-          data: dataUrl,
-          uploadedAt: new Date().toLocaleDateString(),
-        };
-
-        const updatedGallery = [newImage, ...gallery];
-        setGallery(updatedGallery);
-        localStorage.setItem("mediaGallery", JSON.stringify(updatedGallery));
-
+      if (response.ok) {
         setSuccess("Image uploaded successfully!");
         removeImage();
-
+        loadGallery(); // Refresh gallery from backend
         setTimeout(() => setSuccess(""), 3000);
-      };
-      reader.readAsDataURL(image);
+      } else {
+        setError(data.error || "Failed to upload image. Please try again.");
+      }
     } catch (err) {
       console.error("Error uploading image:", err);
       setError("Failed to upload image. Please try again.");
@@ -94,12 +84,20 @@ export default function Media() {
     }
   };
 
-  const deleteImage = (id) => {
+  const deleteImage = async (filename) => {
     if (!window.confirm("Delete this image?")) return;
 
-    const updatedGallery = gallery.filter((img) => img.id !== id);
-    setGallery(updatedGallery);
-    localStorage.setItem("mediaGallery", JSON.stringify(updatedGallery));
+    try {
+      const response = await api.upload.delete(filename);
+      if (response.ok) {
+        setGallery((prev) => prev.filter((img) => img.filename !== filename));
+      } else {
+        setError("Failed to delete image.");
+      }
+    } catch (err) {
+      console.error("Error deleting image:", err);
+      setError("Failed to delete image.");
+    }
   };
 
   return (
@@ -181,24 +179,23 @@ export default function Media() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {gallery.map((img) => (
-              <div key={img.id} className="relative group">
+              <div key={img.filename} className="relative group">
                 <img
-                  src={img.data}
-                  alt={img.name}
+                  src={`${API_URL}${img.imageUrl}`}
+                  alt={img.filename}
                   className="w-full h-32 object-cover rounded-lg shadow-md"
                 />
 
                 <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition rounded-lg flex items-center justify-center gap-2">
                   <button
-                    onClick={() => deleteImage(img.id)}
+                    onClick={() => deleteImage(img.filename)}
                     className="p-2 bg-red-500 hover:bg-red-600 text-white rounded-full"
                   >
                     <X size={16} />
                   </button>
                 </div>
 
-                <p className="text-xs text-gray-600 mt-1 truncate">{img.name}</p>
-                <p className="text-xs text-gray-500">{img.uploadedAt}</p>
+                <p className="text-xs text-gray-600 mt-1 truncate">{img.filename}</p>
               </div>
             ))}
           </div>

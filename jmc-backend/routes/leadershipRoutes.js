@@ -22,8 +22,7 @@ router.post("/", async (req, res) => {
     res.status(201).json({ message: "Leader created successfully", leader: { name, position, bio, image_url } });
   } catch (err) {
     console.error("POST /api/leadership error:", err);
-    // Return success in development mode
-    res.status(201).json({ message: "Leader created successfully (offline mode)", leader: { name, position, bio } });
+    res.status(500).json({ error: "Failed to create leader", details: err.message });
   }
 });
 
@@ -51,8 +50,7 @@ router.delete("/:id", async (req, res) => {
     res.json({ message: "Leader deleted successfully" });
   } catch (err) {
     console.error("DELETE /api/leadership/:id error:", err);
-    // Return success in development mode
-    res.json({ message: "Leader deleted successfully (offline mode)" });
+    res.status(500).json({ error: "Failed to delete leader", details: err.message });
   }
 });
 

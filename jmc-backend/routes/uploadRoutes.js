@@ -47,7 +47,6 @@ router.post("/", upload.single("image"), (req, res) => {
         }
 
         // Construct the public URL for the frontend to use
-        // Assuming backend runs on a known URL or relative path
         const imageUrl = `/uploads/${req.file.filename}`;
 
         res.status(201).json({
@@ -57,6 +56,45 @@ router.post("/", upload.single("image"), (req, res) => {
     } catch (error) {
         console.error("Upload error:", error);
         res.status(500).json({ error: "Image upload failed" });
+    }
+});
+
+// ✅ GET: List all uploaded images
+router.get("/", (req, res) => {
+    try {
+        const files = fs.readdirSync(uploadDir);
+        const images = files
+            .filter((f) => /\.(jpeg|jpg|png|webp|gif)$/i.test(f))
+            .map((filename) => ({
+                filename,
+                imageUrl: `/uploads/${filename}`,
+            }));
+        res.json(images);
+    } catch (error) {
+        console.error("List uploads error:", error);
+        res.status(500).json({ error: "Failed to list images" });
+    }
+});
+
+// ✅ DELETE: Delete an uploaded image by filename
+router.delete("/:filename", (req, res) => {
+    try {
+        const { filename } = req.params;
+        // Prevent path traversal
+        if (filename.includes("..") || filename.includes("/") || filename.includes("\\")) {
+            return res.status(400).json({ error: "Invalid filename" });
+        }
+
+        const filePath = path.join(uploadDir, filename);
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({ error: "File not found" });
+        }
+
+        fs.unlinkSync(filePath);
+        res.json({ message: "Image deleted successfully" });
+    } catch (error) {
+        console.error("Delete upload error:", error);
+        res.status(500).json({ error: "Failed to delete image" });
     }
 });
 
