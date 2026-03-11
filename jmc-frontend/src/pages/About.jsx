@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles } from "lucide-react";
 import defaultLeaderImage from "../assets/leadership/bishop-elijah.jpg";
+import bishopElijah from "../assets/leadership/Bishop Elijah 1.png";
+import revRuth from "../assets/leadership/rev-ruth.jpg";
 import bannerImage from "../assets/banner.webp";
 import visionImage from "../assets/Vision.jpg";
 import missionImage from "../assets/Mission.jpg";
@@ -18,7 +20,31 @@ const fadeUp = {
 
 export default function About() {
   const navigate = useNavigate();
-  const [leaders, setLeaders] = useState([]);
+  const staticLeaders = [
+    {
+      id: 1,
+      name: "Bishop Elijah Mutua",
+      position: "Lead Pastor & Founder",
+      bio: "A visionary leader committed to manifesting the presence and power of Jesus Christ in our generation.",
+      image: bishopElijah,
+    },
+    {
+      id: 2,
+      name: "Reverend Ruth Mutua",
+      position: "Co-Pastor",
+      bio: "Passionate about restoring families and empowering every believer to rise into their God-given identity.",
+      image: revRuth,
+    },
+    {
+      id: 3,
+      name: "Elder Pastor Jacob",
+      position: "Senior Elder",
+      bio: "Dedicated to providing spiritual covering, wisdom, and accountability to our church community.",
+      image: defaultLeaderImage,
+    },
+  ];
+
+  const [leaders, setLeaders] = useState(staticLeaders);
 
   useEffect(() => {
     const fetchLeaders = async () => {
@@ -27,17 +53,20 @@ export default function About() {
         const res = await fetch(`${apiUrl}/api/leadership`);
         if (res.ok) {
           const data = await res.json();
-          const mappedLeaders = data.map(leader => ({
-            id: leader.id,
-            name: leader.name,
-            position: leader.position,
-            bio: leader.bio || "Leading with a heart for God's people.",
-            image: leader.image_url ? `${apiUrl}${leader.image_url}` : defaultLeaderImage,
-          }));
-          setLeaders(mappedLeaders.length > 0 ? mappedLeaders : []);
+          if (Array.isArray(data) && data.length > 0) {
+            const mappedLeaders = data.map(leader => ({
+              id: leader.id,
+              name: leader.name,
+              position: leader.position,
+              bio: leader.bio || "Leading with a heart for God's people.",
+              image: leader.image_url ? `${apiUrl}${leader.image_url}` : defaultLeaderImage,
+            }));
+            setLeaders(mappedLeaders);
+          }
         }
       } catch (err) {
         console.error("Failed to fetch leaders:", err);
+        // Keep static leaders as fallback
       }
     };
     fetchLeaders();
@@ -391,43 +420,37 @@ export default function About() {
             Meet the pastoral team leading Jesus Manifestation Church with vision, wisdom, and dedication
           </p>
 
-          {leaders.length === 0 ? (
-            <div className="text-center py-10">
-              <p className="text-gray-500">Loading leadership team...</p>
-            </div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-              {leaders.map((leader, index) => (
-                <motion.div
-                  key={leader.id || index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
-                    <CardContent className="p-0">
-                      <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
-                        <img
-                          src={leader.image}
-                          alt={leader.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </div>
-                      <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
-                        <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">{leader.name}</h3>
-                        <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">{leader.position}</p>
-                        <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
-                          {leader.bio}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-          )}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+            {leaders.map((leader, index) => (
+              <motion.div
+                key={leader.id || index}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Card className="border-0 shadow-2xl overflow-hidden group hover:shadow-3xl transition-all duration-300 bg-white dark:bg-slate-900 dark:border dark:border-slate-800">
+                  <CardContent className="p-0">
+                    <div className="relative w-full aspect-square bg-gray-100 dark:bg-gray-800 overflow-hidden transition-colors">
+                      <img
+                        src={leader.image}
+                        alt={leader.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-purple-900/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    </div>
+                    <div className="p-6 md:p-8 text-center bg-white dark:bg-slate-900 transition-colors">
+                      <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white transition-colors">{leader.name}</h3>
+                      <p className="text-base md:text-lg text-purple-600 dark:text-purple-400 font-bold mt-2 mb-4 transition-colors">{leader.position}</p>
+                      <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
+                        {leader.bio}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </section>
 

@@ -37,12 +37,7 @@ router.get("/", async (req, res) => {
     res.json(rows);
   } catch (err) {
     console.error("GET /api/leadership error:", err);
-    // Return mock data
-    const mockLeaders = [
-      { id: 1, name: "Pastor John", position: "Lead Pastor", bio: "Senior Pastor with 20 years of ministry experience" },
-      { id: 2, name: "Pastor Mary", position: "Associate Pastor", bio: "Dedicated to youth ministry" },
-    ];
-    res.json(mockLeaders);
+    res.status(500).json({ error: "Database error fetching leadership" });
   }
 });
 
