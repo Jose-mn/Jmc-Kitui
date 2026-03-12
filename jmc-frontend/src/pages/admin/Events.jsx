@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -11,63 +12,65 @@ export default function Events() {
     location: "",
   });
   const [imageFile, setImageFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  // fetch existing events
+  useEffect(() => {
+    const load = async () => {
+      setFetching(true);
+      setError("");
+      try {
+        const res = await api.events.getAll();
+        if (!res.ok) throw new Error("Unable to load events");
+        const data = await res.json();
+        setEvents(data);
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch events");
+      } finally {
+        setFetching(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title || !form.date) return;
 
+    setError("");
     try {
-      setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const token = localStorage.getItem("token");
+      setSubmitting(true);
       let image_url = null;
 
-      // 1. Upload Image (if provided)
       if (imageFile) {
-        const formData = new FormData();
-        formData.append("image", imageFile);
-
-        const uploadRes = await fetch(`${apiUrl}/api/upload`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`
-          },
-          body: formData,
-        });
-
+        const uploadRes = await api.upload(imageFile);
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
           image_url = uploadData.imageUrl;
         } else {
-          alert("Image upload failed");
-          return;
+          throw new Error("Image upload failed");
         }
       }
 
-      // 2. Create Event
-      const res = await fetch(`${apiUrl}/api/events`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ ...form, image_url }),
-      });
-
+      const res = await api.events.create({ ...form, image_url });
       if (res.ok) {
-        setEvents([...events, form]);
+        const created = await res.json();
+        setEvents((prev) => [...prev, created]);
         setForm({ title: "", date: "", location: "" });
         setImageFile(null);
         alert("Event added successfully!");
       } else {
-        alert("Failed to add event");
+        const txt = await res.text();
+        throw new Error(txt || "Create failed");
       }
     } catch (err) {
       console.error(err);
-      alert("An error occurred");
+      setError(err.message || "An error occurred");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -76,6 +79,8 @@ export default function Events() {
       <h1 className="text-3xl font-bold text-jmcPrimary mb-6">
         Manage Events
       </h1>
+
+      {error && <p className="text-red-600 mb-2">{error}</p>}
 
       <Card className="mb-8">
         <CardContent className="p-6">
@@ -117,35 +122,38 @@ export default function Events() {
 
             <Button
               type="submit"
-              disabled={loading}
+              disabled={submitting}
               className="mt-4 bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
             >
-              {loading ? "Adding..." : "Add Event"}
+              {submitting ? "Adding..." : "Add Event"}
             </Button>
           </form>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardContent className="p-6 space-y-3">
-          {events.length === 0 && (
-            <p className="text-gray-500">No events created yet.</p>
-          )}
-          {events.map((event, index) => (
-            <div
-              key={index}
-              className="flex justify-between items-center border-b pb-2"
-            >
-              <div>
-                <p className="font-semibold">{event.title}</p>
-                <p className="text-sm text-gray-500">
-                  {event.date} • {event.location}
-                </p>
+      {fetching && <p>Loading events…</p>}
+      {!fetching && events.length === 0 && (
+        <p className="text-gray-500">No events created yet.</p>
+      )}
+      {!fetching && events.length > 0 && (
+        <Card>
+          <CardContent className="p-6 space-y-3">
+            {events.map((event) => (
+              <div
+                key={event.event_id || event.id}
+                className="flex justify-between items-center border-b pb-2"
+              >
+                <div>
+                  <p className="font-semibold">{event.title}</p>
+                  <p className="text-sm text-gray-500">
+                    {event.date} • {event.location}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
+            ))}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

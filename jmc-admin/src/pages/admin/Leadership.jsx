@@ -12,6 +12,7 @@ export default function Leadership() {
     position: "",
     bio: "",
   });
+  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -44,18 +45,28 @@ export default function Leadership() {
     setError("");
 
     try {
-      const response = await api.leadership.create(form);
+      let response;
+      if (editingId) {
+        response = await api.leadership.update(editingId, form);
+      } else {
+        response = await api.leadership.create(form);
+      }
       const data = await response.json();
 
       if (response.ok) {
-        setLeaders([data.leader || { ...form }, ...leaders]);
+        if (editingId) {
+          setLeaders(leaders.map((l) => (l.leader_id === editingId || l.id === editingId ? { ...l, ...form } : l)));
+          setEditingId(null);
+        } else {
+          setLeaders([data.leader || { ...form }, ...leaders]);
+        }
         setForm({ name: "", position: "", bio: "" });
       } else {
-        console.error("Create leader error:", data);
-        setError(data.error || "Failed to create leader");
+        console.error("Leader error:", data);
+        setError(data.error || "Failed to submit leader");
       }
     } catch (err) {
-      console.error("Error creating leader:", err);
+      console.error("Error submitting leader:", err);
       setError("Connection error. Please try again.");
     } finally {
       setLoading(false);
@@ -113,8 +124,20 @@ export default function Leadership() {
             disabled={loading}
             className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
-            {loading ? "Adding..." : "Add Leader"}
+            {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Leader" : "Add Leader")}
           </Button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditingId(null);
+                setForm({ name: "", position: "", bio: "" });
+              }}
+              className="ml-4 text-sm text-gray-600 hover:underline"
+            >
+              Cancel
+            </button>
+          )}
         </CardContent>
       </Card>
 
@@ -133,12 +156,27 @@ export default function Leadership() {
                 <p className="text-sm text-gray-600">{leader.position}</p>
                 <p className="text-xs text-gray-500 mt-1">{leader.bio}</p>
               </div>
-              <button
-                onClick={() => handleDelete(leader.leader_id || leader.id)}
-                className="ml-4 px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-              >
-                Delete
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleDelete(leader.leader_id || leader.id)}
+                  className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                >
+                  Delete
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingId(leader.leader_id || leader.id);
+                    setForm({
+                      name: leader.name,
+                      position: leader.position,
+                      bio: leader.bio || "",
+                    });
+                  }}
+                  className="px-3 py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
+                >
+                  Edit
+                </button>
+              </div>
             </div>
           ))}
         </CardContent>

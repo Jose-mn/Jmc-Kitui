@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -8,13 +9,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { api } from "../../lib/api";
 
-const stats = [
-  { title: "Events", value: 12 },
-  { title: "Sermons", value: 48 },
-  { title: "Devotions", value: 30 },
-  { title: "Messages", value: 24 },
-  { title: "Media Files", value: 86 },
+// initial placeholders while loading
+const placeholderStats = [
+  { title: "Events", value: 0 },
+  { title: "Sermons", value: 0 },
+  { title: "Devotions", value: 0 },
+  { title: "Messages", value: 0 },
+  { title: "Media Files", value: 0 },
 ];
 
 const growthData = [
@@ -26,6 +29,42 @@ const growthData = [
 ];
 
 export default function Analytics() {
+  const [stats, setStats] = useState(placeholderStats);
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const [eventsRes, sermonsRes, devotionsRes, messagesRes, mediaRes] =
+          await Promise.all([
+            api.events.getAll(),
+            api.sermons.getAll(),
+            api.devotions.getAll(),
+            api.contact.getAll(),
+            api.upload.getAll(),
+          ]);
+
+        const [events, sermons, devotions, messages, media] = await Promise.all([
+          eventsRes.json(),
+          sermonsRes.json(),
+          devotionsRes.json(),
+          messagesRes.json(),
+          mediaRes.json(),
+        ]);
+
+        setStats([
+          { title: "Events", value: Array.isArray(events) ? events.length : 0 },
+          { title: "Sermons", value: Array.isArray(sermons) ? sermons.length : 0 },
+          { title: "Devotions", value: Array.isArray(devotions) ? devotions.length : 0 },
+          { title: "Messages", value: Array.isArray(messages) ? messages.length : 0 },
+          { title: "Media Files", value: Array.isArray(media) ? media.length : 0 },
+        ]);
+      } catch (err) {
+        console.error("Failed to load analytics stats", err);
+      }
+    };
+    loadStats();
+  }, []);
+
   return (
     <div className="space-y-10">
       <h1 className="text-3xl font-bold text-jmcPrimary">

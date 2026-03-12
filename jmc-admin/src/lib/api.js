@@ -85,6 +85,12 @@ export const api = {
       fetch(`${API_URL}/api/events`, {
         headers: getAuthHeaders(),
       }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/events/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
+      }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/events/${id}`, { 
         method: "DELETE",
@@ -103,6 +109,12 @@ export const api = {
     getAll: () => 
       fetch(`${API_URL}/api/devotions`, {
         headers: getAuthHeaders(),
+      }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/devotions/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
       }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/devotions/${id}`, { 
@@ -123,6 +135,12 @@ export const api = {
       fetch(`${API_URL}/api/sermons`, {
         headers: getAuthHeaders(),
       }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/sermons/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
+      }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/sermons/${id}`, { 
         method: "DELETE",
@@ -141,6 +159,12 @@ export const api = {
     getAll: () => 
       fetch(`${API_URL}/api/leadership`, {
         headers: getAuthHeaders(),
+      }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/leadership/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
       }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/leadership/${id}`, { 

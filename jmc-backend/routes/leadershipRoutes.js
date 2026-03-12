@@ -40,6 +40,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ UPDATE: Modify a leader
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, position, bio } = req.body;
+
+  if (!name || !position) {
+    return res.status(400).json({ error: "Name and position are required" });
+  }
+
+  try {
+    await pool.execute(
+      `UPDATE leadership SET name = ?, position = ?, bio = ? WHERE leader_id = ?`,
+      [name, position, bio, id]
+    );
+    res.json({ message: "Leader updated successfully" });
+  } catch (err) {
+    console.error("PUT /api/leadership/:id error:", err);
+    res.status(500).json({ error: "Failed to update leader", details: err.message });
+  }
+});
+
 // ✅ DELETE: Delete a leader
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

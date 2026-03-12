@@ -1,77 +1,80 @@
-// API utility for making requests to the backend
-// Centralized configuration to avoid hardcoding URLs
+// API utility for making requests to the backend with built‑in auth handling
+// Centralized configuration to avoid hardcoding URLs and duplicate logic
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
+async function request(path, options = {}) {
+  const token = localStorage.getItem("token");
+  const headers = { ...options.headers };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  if (
+    options.body &&
+    !(options.body instanceof FormData) &&
+    !headers["Content-Type"]
+  ) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const res = await fetch(`${API_URL}${path}`, {
+    ...options,
+    headers,
+  });
+
+  if (res.status === 401) {
+    // redirect to login for protected endpoints
+    window.location.href = "/admin/login";
+    throw new Error("Unauthorized");
+  }
+
+  return res;
+}
+
 export const api = {
-  // Contact endpoints
+  request,
+
+  // helper for uploading images/files
+  upload: (file) => {
+    const formData = new FormData();
+    formData.append("image", file);
+    return request("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+  },
+
   contact: {
-    submit: (data) =>
-      fetch(`${API_URL}/api/contact`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
-    getAll: () => fetch(`${API_URL}/api/contact`),
+    submit: (data) => request("/api/contact", { method: "POST", body: JSON.stringify(data) }),
+    getAll: () => request("/api/contact"),
     updateStatus: (id, status) =>
-      fetch(`${API_URL}/api/contact/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      }),
-    delete: (id) =>
-      fetch(`${API_URL}/api/contact/${id}`, { method: "DELETE" }),
+      request(`/api/contact/${id}`, { method: "PATCH", body: JSON.stringify({ status }) }),
+    delete: (id) => request(`/api/contact/${id}`, { method: "DELETE" }),
   },
 
-  // Events endpoints
   events: {
-    create: (data) =>
-      fetch(`${API_URL}/api/events`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
-    getAll: () => fetch(`${API_URL}/api/events`),
-    delete: (id) =>
-      fetch(`${API_URL}/api/events/${id}`, { method: "DELETE" }),
+    create: (data) => request("/api/events", { method: "POST", body: JSON.stringify(data) }),
+    getAll: () => request("/api/events"),
+    delete: (id) => request(`/api/events/${id}`, { method: "DELETE" }),
   },
 
-  // Devotions endpoints
   devotions: {
-    create: (data) =>
-      fetch(`${API_URL}/api/devotions`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
-    getAll: () => fetch(`${API_URL}/api/devotions`),
-    delete: (id) =>
-      fetch(`${API_URL}/api/devotions/${id}`, { method: "DELETE" }),
+    create: (data) => request("/api/devotions", { method: "POST", body: JSON.stringify(data) }),
+    getAll: () => request("/api/devotions"),
+    delete: (id) => request(`/api/devotions/${id}`, { method: "DELETE" }),
   },
 
-  // Sermons endpoints
   sermons: {
-    create: (data) =>
-      fetch(`${API_URL}/api/sermons`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
-    getAll: () => fetch(`${API_URL}/api/sermons`),
-    delete: (id) =>
-      fetch(`${API_URL}/api/sermons/${id}`, { method: "DELETE" }),
+    create: (data) => request("/api/sermons", { method: "POST", body: JSON.stringify(data) }),
+    getAll: () => request("/api/sermons"),
+    delete: (id) => request(`/api/sermons/${id}`, { method: "DELETE" }),
   },
 
-  // Leadership endpoints
   leadership: {
-    create: (data) =>
-      fetch(`${API_URL}/api/leadership`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      }),
-    getAll: () => fetch(`${API_URL}/api/leadership`),
-    delete: (id) =>
-      fetch(`${API_URL}/api/leadership/${id}`, { method: "DELETE" }),
+    create: (data) => request("/api/leadership", { method: "POST", body: JSON.stringify(data) }),
+    getAll: () => request("/api/leadership"),
+    delete: (id) => request(`/api/leadership/${id}`, { method: "DELETE" }),
   },
 };

@@ -43,6 +43,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ UPDATE: Modify a devotion (Protected)
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, scripture, content } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).json({ error: "Title and content are required" });
+  }
+
+  try {
+    await pool.execute(
+      `UPDATE devotions SET title = ?, scripture = ?, content = ? WHERE devotion_id = ?`,
+      [title, scripture, content, id]
+    );
+    res.json({ message: "Devotion updated successfully" });
+  } catch (err) {
+    console.error("PUT /api/devotions/:id error:", err);
+    res.status(500).json({ error: "Failed to update devotion", details: err.message });
+  }
+});
+
 // ✅ DELETE: Delete a devotion
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

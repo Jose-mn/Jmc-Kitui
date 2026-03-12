@@ -40,6 +40,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+// ✅ UPDATE: Modify a sermon
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, speaker, video } = req.body;
+
+  if (!title || !speaker || !video) {
+    return res.status(400).json({ error: "Title, speaker, and video link are required" });
+  }
+
+  try {
+    await pool.execute(
+      `UPDATE sermons SET title = ?, speaker = ?, video_url = ? WHERE sermon_id = ?`,
+      [title, speaker, video, id]
+    );
+    res.json({ message: "Sermon updated successfully" });
+  } catch (err) {
+    console.error("PUT /api/sermons/:id error:", err);
+    res.status(500).json({ error: "Failed to update sermon", details: err.message });
+  }
+});
+
 // ✅ DELETE: Delete a sermon
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;

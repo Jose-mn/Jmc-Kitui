@@ -11,6 +11,7 @@ export default function Sermons() {
     speaker: "",
     video: "",
   });
+  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -43,23 +44,33 @@ export default function Sermons() {
     setError("");
 
     try {
-      const response = await api.sermons.create({
-        title: form.title,
-        speaker: form.speaker,
-        video: form.video,
-      });
+      let response;
+      if (editingId) {
+        response = await api.sermons.update(editingId, form);
+      } else {
+        response = await api.sermons.create({
+          title: form.title,
+          speaker: form.speaker,
+          video: form.video,
+        });
+      }
 
       const data = await response.json();
 
       if (response.ok) {
-        setSermons([data.sermon || { ...form }, ...sermons]);
+        if (editingId) {
+          setSermons(sermons.map((s) => (s.sermon_id === editingId || s.id === editingId ? { ...s, ...form } : s)));
+          setEditingId(null);
+        } else {
+          setSermons([data.sermon || { ...form }, ...sermons]);
+        }
         setForm({ title: "", speaker: "", video: "" });
       } else {
-        console.error("Create sermon error:", data);
-        setError(data.error || "Failed to create sermon");
+        console.error("Sermon error:", data);
+        setError(data.error || "Failed to submit sermon");
       }
     } catch (err) {
-      console.error("Error creating sermon:", err);
+      console.error("Error submitting sermon:", err);
       setError("Connection error. Please try again.");
     } finally {
       setLoading(false);
@@ -121,8 +132,20 @@ export default function Sermons() {
             disabled={loading}
             className="bg-jmcPrimary hover:bg-jmcPrimary/90"
           >
-            {loading ? "Adding..." : "Add Sermon"}
+            {loading ? (editingId ? "Updating..." : "Adding...") : (editingId ? "Update Sermon" : "Add Sermon")}
           </Button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditingId(null);
+                setForm({ title: "", speaker: "", video: "" });
+              }}
+              className="ml-4 text-sm text-gray-600 hover:underline"
+            >
+              Cancel
+            </button>
+          )}
         </CardContent>
       </Card>
 
@@ -140,6 +163,7 @@ export default function Sermons() {
                     </h3>
                     <p className="text-gray-600">Speaker: {sermon.speaker}</p>
                   </div>
+                  <div className="flex gap-2">
                   <Button
                     variant="destructive"
                     onClick={() =>
@@ -149,6 +173,21 @@ export default function Sermons() {
                   >
                     Delete
                   </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      setEditingId(sermon.id || sermon.sermon_id);
+                      setForm({
+                        title: sermon.title,
+                        speaker: sermon.speaker,
+                        video: sermon.video,
+                      });
+                    }}
+                    className="bg-blue-500 hover:bg-blue-600"
+                  >
+                    Edit
+                  </Button>
+                </div>
                 </div>
                 {sermon.video && (
                   <a

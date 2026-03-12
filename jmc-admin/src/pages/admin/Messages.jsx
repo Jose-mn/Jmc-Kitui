@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { RefreshCw } from "lucide-react";
+import { api } from "@/lib/api"; // centralized fetch helper
 
 export default function Messages() {
   const [messages, setMessages] = useState([]);
@@ -10,14 +11,52 @@ export default function Messages() {
     setLoading(true);
     setError("");
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/contact`);
+      const res = await api.contact.getAll();
       if (!res.ok) throw new Error("Failed to fetch messages");
       const data = await res.json();
       setMessages(data);
     } catch (err) {
+      console.error(err);
       setError("Failed to load messages. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const STATUS_OPTIONS = ["New", "Read", "Replied"];
+
+  const updateStatus = async (id, status) => {
+    setError("");
+    try {
+      const res = await api.contact.updateStatus(id, status);
+      if (res.ok) {
+        setMessages((msgs) =>
+          msgs.map((m) => (m.message_id === id ? { ...m, status } : m))
+        );
+      } else {
+        const text = await res.text();
+        throw new Error(text || "update failed");
+      }
+    } catch (err) {
+      console.error("Failed to update status", err);
+      setError("Unable to change message status. Please try again.");
+    }
+  };
+
+  const deleteMessage = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this message?")) return;
+    setError("");
+    try {
+      const res = await api.contact.delete(id);
+      if (res.ok) {
+        setMessages((msgs) => msgs.filter((m) => m.message_id !== id));
+      } else {
+        const text = await res.text();
+        throw new Error(text || "delete failed");
+      }
+    } catch (err) {
+      console.error("Failed to delete message", err);
+      setError("Could not delete message. Please try again.");
     }
   };
 
@@ -53,6 +92,7 @@ export default function Messages() {
                 <th className="p-4 text-left">Message</th>
                 <th className="p-4 text-left">Status</th>
                 <th className="p-4 text-left">Submitted At</th>
+                <th className="p-4 text-left">Actions</th>
               </tr>
             </thead>
 
@@ -65,19 +105,28 @@ export default function Messages() {
                     {msg.message}
                   </td>
                   <td className="p-4">
-                    <span
-                      className={`px-2 py-1 rounded-full text-xs
-                      ${
-                        msg.status === "New"
-                          ? "bg-green-100 text-green-700"
-                          : "bg-gray-200 text-gray-700"
-                      }`}
+                    <select
+                      value={msg.status || "New"}
+                      onChange={(e) => updateStatus(msg.message_id, e.target.value)}
+                      className="text-sm border rounded px-2 py-1"
                     >
-                      {msg.status}
-                    </span>
+                      {STATUS_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
                   </td>
                   <td className="p-4">
                     {new Date(msg.submitted_at).toLocaleDateString()}
+                  </td>
+                  <td className="p-4">
+                    <button
+                      onClick={() => deleteMessage(msg.message_id)}
+                      className="text-red-600 hover:underline text-sm"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}
