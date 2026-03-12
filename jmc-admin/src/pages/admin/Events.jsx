@@ -5,20 +5,25 @@ import { Button } from "@/components/ui/button";
 import { api } from "../../lib/api";
 
 export default function Events() {
+  // list of events fetched from the server
   const [events, setEvents] = useState([]);
+  // form state for creating or editing an event
   const [form, setForm] = useState({
     title: "",
     date: "",
     location: "",
   });
-  const [editingId, setEditingId] = useState(null); // track event being edited
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // when editing we keep the id here so the submit handler knows
+  const [editingId, setEditingId] = useState(null);
+  const [loading, setLoading] = useState(false); // submission in progress
+  const [error, setError] = useState(""); // user-visible error message
 
+  // on component mount, load existing events
   useEffect(() => {
     fetchEvents();
   }, []);
 
+  // helper: retrieve events from backend and update state
   const fetchEvents = async () => {
     try {
       const response = await api.events.getAll();
@@ -34,6 +39,7 @@ export default function Events() {
     e.preventDefault();
     if (!form.title || !form.date) return;
 
+    // ensure token still present; server will also guard but we can warn early
     const token = localStorage.getItem("token");
     if (!token) {
       setError("Not authenticated. Please login again.");
@@ -45,6 +51,7 @@ export default function Events() {
 
     try {
       let response;
+      // branch between create and update based on editingId
       if (editingId) {
         response = await api.events.update(editingId, {
           title: form.title,
@@ -81,6 +88,7 @@ export default function Events() {
     }
   };
 
+  // delete event after user confirmation
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
 

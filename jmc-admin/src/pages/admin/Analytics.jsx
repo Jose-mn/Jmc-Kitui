@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { api } from "../../lib/api";
 
-// initial placeholders while loading
+// placeholder data shown until real stats load from backend
 const placeholderStats = [
   { title: "Events", value: 0 },
   { title: "Sermons", value: 0 },
@@ -29,8 +29,10 @@ const growthData = [
 ];
 
 export default function Analytics() {
+  // state holds count of various objects
   const [stats, setStats] = useState(placeholderStats);
 
+  // on mount, fetch all collections concurrently
   useEffect(() => {
     const loadStats = async () => {
       try {

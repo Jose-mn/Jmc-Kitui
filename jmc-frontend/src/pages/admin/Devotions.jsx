@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 
+// admin page for posting devotional content
 export default function Devotions() {
   const [devotions, setDevotions] = useState([]);
   const [form, setForm] = useState({

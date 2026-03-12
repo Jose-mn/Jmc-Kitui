@@ -7,6 +7,7 @@ export default function Messages() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // retrieve messages from server and populate table
   const fetchMessages = async () => {
     setLoading(true);
     setError("");
@@ -25,11 +26,13 @@ export default function Messages() {
 
   const STATUS_OPTIONS = ["New", "Read", "Replied"];
 
+  // change status of individual message (New/Read/Replied)
   const updateStatus = async (id, status) => {
     setError("");
     try {
       const res = await api.contact.updateStatus(id, status);
       if (res.ok) {
+        // update local copy optimistically
         setMessages((msgs) =>
           msgs.map((m) => (m.message_id === id ? { ...m, status } : m))
         );
@@ -43,6 +46,7 @@ export default function Messages() {
     }
   };
 
+  // remove a message after confirmation
   const deleteMessage = async (id) => {
     if (!window.confirm("Are you sure you want to delete this message?")) return;
     setError("");

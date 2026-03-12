@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 
+// admin/events management page: list, create, edit, delete events
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [form, setForm] = useState({

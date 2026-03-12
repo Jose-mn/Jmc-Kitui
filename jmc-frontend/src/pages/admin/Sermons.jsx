@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 
+// page for creating/listing sermons in admin dashboard
+// supports fetching existing sermons and adding new ones
 export default function Sermons() {
   const [sermons, setSermons] = useState([]);
   const [form, setForm] = useState({

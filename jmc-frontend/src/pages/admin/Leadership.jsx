@@ -5,6 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
 
+// admin page for managing leadership profiles
+// allows uploading photos and adding bios
 export default function Leadership() {
   const [leaders, setLeaders] = useState([]);
   const [form, setForm] = useState({
