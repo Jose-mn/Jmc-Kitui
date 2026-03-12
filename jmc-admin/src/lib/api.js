@@ -1,9 +1,9 @@
-// API utility for making requests to the backend
-// Centralized configuration to avoid hardcoding URLs
+// simple API wrapper for the admin frontend
+// handles base URL, auth headers and common error cases
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
-// Helper to handle 403 errors by clearing invalid token
+// if the server rejects the request due to bad token, clear state
 const handleAuthError = (response) => {
   if (response.status === 403) {
     console.log("🔓 Invalid token detected - clearing auth");
@@ -14,18 +14,16 @@ const handleAuthError = (response) => {
   return response;
 };
 
-// Helper to get auth headers
+// build headers object including Authorization when available
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");
   const headers = { "Content-Type": "application/json" };
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
+  if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
 };
 
 export const api = {
-  // Auth endpoints
+  // authentication helpers used by login page
   auth: {
     login: (email, password) =>
       fetch(`${API_URL}/api/auth/login`, {
@@ -48,7 +46,7 @@ export const api = {
       }),
   },
 
-  // Contact endpoints
+  // contact form / messages API
   contact: {
     submit: (data) =>
       fetch(`${API_URL}/api/contact`, {
@@ -56,10 +54,10 @@ export const api = {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       }),
-    getAll: () => 
-      fetch(`${API_URL}/api/contact`, {
-        headers: getAuthHeaders(),
-      }).then(handleAuthError),
+    getAll: () =>
+      fetch(`${API_URL}/api/contact`, { headers: getAuthHeaders() }).then(
+        handleAuthError
+      ),
     updateStatus: (id, status) =>
       fetch(`${API_URL}/api/contact/${id}`, {
         method: "PATCH",
@@ -67,7 +65,7 @@ export const api = {
         body: JSON.stringify({ status }),
       }).then(handleAuthError),
     delete: (id) =>
-      fetch(`${API_URL}/api/contact/${id}`, { 
+      fetch(`${API_URL}/api/contact/${id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       }).then(handleAuthError),
@@ -84,6 +82,12 @@ export const api = {
     getAll: () => 
       fetch(`${API_URL}/api/events`, {
         headers: getAuthHeaders(),
+      }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/events/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
       }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/events/${id}`, { 
@@ -104,6 +108,12 @@ export const api = {
       fetch(`${API_URL}/api/devotions`, {
         headers: getAuthHeaders(),
       }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/devotions/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
+      }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/devotions/${id}`, { 
         method: "DELETE",
@@ -123,6 +133,12 @@ export const api = {
       fetch(`${API_URL}/api/sermons`, {
         headers: getAuthHeaders(),
       }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/sermons/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
+      }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/sermons/${id}`, { 
         method: "DELETE",
@@ -141,6 +157,12 @@ export const api = {
     getAll: () => 
       fetch(`${API_URL}/api/leadership`, {
         headers: getAuthHeaders(),
+      }).then(handleAuthError),
+    update: (id, data) =>
+      fetch(`${API_URL}/api/leadership/${id}`, {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
       }).then(handleAuthError),
     delete: (id) =>
       fetch(`${API_URL}/api/leadership/${id}`, { 

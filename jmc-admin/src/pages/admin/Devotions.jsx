@@ -12,6 +12,7 @@ export default function Devotions() {
     scripture: "",
     content: "",
   });
+  const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -44,18 +45,28 @@ export default function Devotions() {
     setError("");
 
     try {
-      const response = await api.devotions.create(form);
+      let response;
+      if (editingId) {
+        response = await api.devotions.update(editingId, form);
+      } else {
+        response = await api.devotions.create(form);
+      }
       const data = await response.json();
 
       if (response.ok) {
-        setDevotions([data.devotion || { ...form }, ...devotions]);
+        if (editingId) {
+          setDevotions(devotions.map((d) => (d.devotion_id === editingId || d.id === editingId ? { ...d, ...form } : d)));
+          setEditingId(null);
+        } else {
+          setDevotions([data.devotion || { ...form }, ...devotions]);
+        }
         setForm({ title: "", scripture: "", content: "" });
       } else {
-        console.error("Create devotion error:", data);
-        setError(data.error || "Failed to create devotion");
+        console.error("Devotion error:", data);
+        setError(data.error || "Failed to submit devotion");
       }
     } catch (err) {
-      console.error("Error creating devotion:", err);
+      console.error("Error submitting devotion:", err);
       setError("Connection error. Please try again.");
     } finally {
       setLoading(false);
@@ -119,8 +130,20 @@ export default function Devotions() {
             disabled={loading}
             className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
-            {loading ? "Publishing..." : "Publish Devotion"}
+            {loading ? (editingId ? "Updating..." : "Publishing...") : (editingId ? "Update Devotion" : "Publish Devotion")}
           </Button>
+          {editingId && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditingId(null);
+                setForm({ title: "", scripture: "", content: "" });
+              }}
+              className="ml-4 text-sm text-gray-600 hover:underline"
+            >
+              Cancel
+            </button>
+          )}
         </CardContent>
       </Card>
 
@@ -145,12 +168,27 @@ export default function Devotions() {
                       </p>
                     )}
                   </div>
-                  <button
-                    onClick={() => handleDelete(devotion.id)}
-                    className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                  >
-                    Delete
-                  </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleDelete(devotion.id)}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={() => {
+                          setEditingId(devotion.id);
+                          setForm({
+                            title: devotion.title,
+                            scripture: devotion.scripture || "",
+                            content: devotion.content,
+                          });
+                        }}
+                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"
+                      >
+                        Edit
+                      </button>
+                    </div>
                 </div>
                 <p className="text-gray-700 line-clamp-3">
                   {devotion.content}

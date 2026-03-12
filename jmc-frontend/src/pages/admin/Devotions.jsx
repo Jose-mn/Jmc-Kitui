@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
 
+// admin page for posting devotional content
 export default function Devotions() {
   const [devotions, setDevotions] = useState([]);
   const [form, setForm] = useState({
@@ -12,63 +14,64 @@ export default function Devotions() {
     content: "",
   });
   const [imageFile, setImageFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const load = async () => {
+      setFetching(true);
+      setError("");
+      try {
+        const res = await api.devotions.getAll();
+        if (!res.ok) throw new Error("Failed to load devotions");
+        const data = await res.json();
+        setDevotions(data);
+      } catch (err) {
+        console.error(err);
+        setError("Could not fetch devotions");
+      } finally {
+        setFetching(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title || !form.content) return;
 
+    setError("");
     try {
-      setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const token = localStorage.getItem("token");
+      setSubmitting(true);
       let image_url = null;
 
-      // 1. Upload Image (if provided)
       if (imageFile) {
-        const formData = new FormData();
-        formData.append("image", imageFile);
-
-        const uploadRes = await fetch(`${apiUrl}/api/upload`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`
-          },
-          body: formData,
-        });
-
+        const uploadRes = await api.upload(imageFile);
         if (uploadRes.ok) {
           const uploadData = await uploadRes.json();
           image_url = uploadData.imageUrl;
         } else {
-          alert("Image upload failed");
-          return;
+          throw new Error("Image upload failed");
         }
       }
 
-      // 2. Create Devotion
-      const res = await fetch(`${apiUrl}/api/devotions`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ ...form, image_url }),
-      });
-
+      const res = await api.devotions.create({ ...form, image_url });
       if (res.ok) {
-        setDevotions([...devotions, form]);
+        const created = await res.json();
+        setDevotions((prev) => [...prev, created]);
         setForm({ title: "", scripture: "", content: "" });
         setImageFile(null);
         alert("Devotion published successfully!");
       } else {
-        alert("Failed to publish devotion");
+        const txt = await res.text();
+        throw new Error(txt || "Create failed");
       }
     } catch (err) {
       console.error(err);
-      alert("An error occurred");
+      setError(err.message || "An error occurred");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -77,6 +80,8 @@ export default function Devotions() {
       <h1 className="text-3xl font-bold text-jmcPrimary mb-6">
         Manage Devotions
       </h1>
+
+      {error && <p className="text-red-600 mb-2">{error}</p>}
 
       <Card className="mb-8">
         <CardContent className="p-6">
@@ -121,14 +126,31 @@ export default function Devotions() {
 
             <Button
               type="submit"
-              disabled={loading}
+              disabled={submitting}
               className="mt-4 bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
             >
-              {loading ? "Publishing..." : "Publish Devotion"}
+              {submitting ? "Publishing..." : "Publish Devotion"}
             </Button>
           </form>
         </CardContent>
       </Card>
+
+      {fetching && <p>Loading devotions…</p>}
+      {!fetching && devotions.length === 0 && (
+        <p className="text-gray-500">No devotions yet.</p>
+      )}
+      {!fetching && devotions.length > 0 && (
+        <Card>
+          <CardContent className="p-6 space-y-3">
+            {devotions.map((d) => (
+              <div key={d.devotion_id || d.id} className="border-b pb-2">
+                <p className="font-semibold">{d.title}</p>
+                <p className="text-sm text-gray-500">{d.scripture}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

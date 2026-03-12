@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { api } from "@/lib/api";
 
+// page for creating/listing sermons in admin dashboard
+// supports fetching existing sermons and adding new ones
 export default function Sermons() {
   const [sermons, setSermons] = useState([]);
   const [form, setForm] = useState({
@@ -10,40 +13,52 @@ export default function Sermons() {
     speaker: "",
     video: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  // Initial fetch of sermons would go here ideally
+  // fetch existing sermons on mount
+  useEffect(() => {
+    const load = async () => {
+      setFetching(true);
+      setError("");
+      try {
+        const res = await api.sermons.getAll();
+        if (!res.ok) throw new Error("Could not fetch sermons");
+        const data = await res.json();
+        setSermons(data);
+      } catch (err) {
+        console.error(err);
+        setError("Unable to load sermons");
+      } finally {
+        setFetching(false);
+      }
+    };
+    load();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.title || !form.speaker || !form.video) return;
 
+    setError("");
     try {
-      setLoading(true);
-      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const token = localStorage.getItem("token");
-
-      const res = await fetch(`${apiUrl}/api/sermons`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(form),
-      });
-
+      setSubmitting(true);
+      const res = await api.sermons.create(form);
       if (res.ok) {
-        setSermons([...sermons, form]);
+        const created = await res.json();
+        setSermons((prev) => [...prev, created]);
         setForm({ title: "", speaker: "", video: "" });
         alert("Sermon added successfully!");
       } else {
-        alert("Failed to add sermon");
+        const txt = await res.text();
+        throw new Error(txt || "Create failed");
       }
     } catch (err) {
       console.error(err);
-      alert("An error occurred");
+      setError("Failed to add sermon");
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
@@ -52,6 +67,8 @@ export default function Sermons() {
       <h1 className="text-3xl font-bold text-jmcPrimary mb-6">
         Manage Sermons
       </h1>
+
+      {error && <p className="text-red-600 mb-2">{error}</p>}
 
       <Card className="mb-8">
         <CardContent className="p-6 space-y-4">
@@ -78,13 +95,32 @@ export default function Sermons() {
           />
           <Button
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={submitting}
             className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
-            {loading ? "Adding..." : "Add Sermon"}
+            {submitting ? "Adding..." : "Add Sermon"}
           </Button>
         </CardContent>
       </Card>
+
+      {fetching && <p>Loading sermons…</p>}
+      {!fetching && sermons.length === 0 && (
+        <p className="text-gray-500">No sermons yet.</p>
+      )}
+      {!fetching && sermons.length > 0 && (
+        <Card>
+          <CardContent className="p-6 space-y-3">
+            {sermons.map((s) => (
+              <div key={s.sermon_id || s.id} className="border-b pb-2">
+                <p className="font-semibold">{s.title}</p>
+                <p className="text-sm text-gray-500">
+                  {s.speaker}
+                </p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
