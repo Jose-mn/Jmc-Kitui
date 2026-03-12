@@ -23,6 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 
+# database files
+*.db
 *.db-shm
 *.db-wal
 *.db-journal
+
+# node dependency directories
+node_modules/
+
+# environment variables files
+.env
