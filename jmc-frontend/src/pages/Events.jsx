@@ -35,6 +35,48 @@ export default function Events() {
     { id: "children", name: "Children", icon: Baby },
   ];
 
+  const scheduleOverrides = [
+    {
+      id: "prayer-tuesday",
+      title: "Midweek Prayer (Tuesday)",
+      category: "prayer",
+      date: "",
+      time: "5:30 PM - 7:00 PM",
+      location: "JMC Kitui",
+      description: "Join us every Tuesday for a powerful time of prayer, worship, and intercession.",
+      image: defaultEventImage,
+      featured: false,
+      attendees: "Open to all",
+      color: "bg-purple-600"
+    },
+    {
+      id: "prayer-thursday",
+      title: "Midweek Prayer (Thursday)",
+      category: "prayer",
+      date: "",
+      time: "5:30 PM - 7:00 PM",
+      location: "JMC Kitui",
+      description: "Thursday prayer meeting to seek God and stand in faith for our community.",
+      image: defaultEventImage,
+      featured: false,
+      attendees: "Open to all",
+      color: "bg-purple-700"
+    },
+    {
+      id: "kesha-first-last-friday",
+      title: "Kesha Gathering",
+      category: "worship",
+      date: "",
+      time: "7:00 PM - 9:00 PM",
+      location: "JMC Kitui",
+      description: "Every first and last Friday of the month: Kesha worship to encounter God.",
+      image: defaultEventImage,
+      featured: false,
+      attendees: "Open to all",
+      color: "bg-purple-500"
+    }
+  ];
+
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -44,7 +86,6 @@ export default function Events() {
           const data = await res.json();
           // Map backend fields to UI fields
           const mappedEvents = data.map((ev) => {
-            // Pick a random category and color for nice UI since backend doesn't have them yet
             const catOptions = ["worship", "prayer", "teaching", "youth", "children"];
             const colorOptions = ["bg-purple-600", "bg-purple-700", "bg-purple-500"];
 
@@ -53,61 +94,23 @@ export default function Events() {
               title: ev.title,
               category: catOptions[ev.id % catOptions.length],
               date: ev.event_date,
-              time: "TBA", // Not in schema, fallback
+              time: "TBA",
               location: ev.location || "JMC Kitui",
               description: ev.description || "Join us for this wonderful event.",
               image: ev.image_url ? `${apiUrl}${ev.image_url}` : defaultEventImage,
-              featured: ev.id % 3 === 0, // Mock featured status
+              featured: ev.id % 3 === 0,
               attendees: "100+",
               color: colorOptions[ev.id % colorOptions.length]
             };
           });
-          const scheduleOverrides = [
-            {
-              id: "prayer-tuesday",
-              title: "Midweek Prayer (Tuesday)",
-              category: "prayer",
-              date: "",
-              time: "5:30 PM - 7:00 PM",
-              location: "JMC Kitui",
-              description: "Join us every Tuesday for a powerful time of prayer, worship, and intercession.",
-              image: defaultEventImage,
-              featured: false,
-              attendees: "Open to all",
-              color: "bg-purple-600"
-            },
-            {
-              id: "prayer-thursday",
-              title: "Midweek Prayer (Thursday)",
-              category: "prayer",
-              date: "",
-              time: "5:30 PM - 7:00 PM",
-              location: "JMC Kitui",
-              description: "Thursday prayer meeting to seek God and stand in faith for our community.",
-              image: defaultEventImage,
-              featured: false,
-              attendees: "Open to all",
-              color: "bg-purple-700"
-            },
-            {
-              id: "kesha-first-last-friday",
-              title: "Kesha Gathering",
-              category: "worship",
-              date: "",
-              time: "7:00 PM - 9:00 PM",
-              location: "JMC Kitui",
-              description: "Every first and last Friday of the month: Kesha worship to encounter God.",
-              image: defaultEventImage,
-              featured: false,
-              attendees: "Open to all",
-              color: "bg-purple-500"
-            }
-          ];
 
           setUpcomingEvents([...mappedEvents, ...scheduleOverrides]);
+        } else {
+          setUpcomingEvents(scheduleOverrides);
         }
       } catch (err) {
         console.error("Failed to fetch events:", err);
+        setUpcomingEvents(scheduleOverrides);
       }
     };
     fetchEvents();

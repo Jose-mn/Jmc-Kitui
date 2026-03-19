@@ -119,6 +119,9 @@ const statements = [
     type    ENUM('Facebook','WhatsApp','Instagram','Other') DEFAULT 'Other'
   )`,
 
+  // Ensure events table has the image_url column used by seed data
+  `ALTER TABLE events ADD COLUMN image_url VARCHAR(500)`,
+
   // Seed admin user (INSERT IGNORE skips if already present)
   `INSERT IGNORE INTO users (username, email, password_hash, role)
    VALUES (
@@ -126,6 +129,25 @@ const statements = [
      'admin@jmc.com',
      '$2b$10$RPBpJYXElvWn8BwUjO6njene0x7hI4eJCftrhuOtzL2rryFhxo71.',
      'Admin'
+   )`,
+
+  // Seed recurring events (idempotent by title + event_date)
+  `INSERT INTO events (title, event_date, location, description, image_url, created_by)
+   SELECT 'Midweek Prayer (Tuesday)', '2026-03-24', 'JMC Kitui', 'Every Tuesday 5:30 PM - 7:00 PM: prayer, worship and intercession.', NULL, NULL
+   WHERE NOT EXISTS (
+     SELECT 1 FROM events WHERE title = 'Midweek Prayer (Tuesday)' AND event_date = '2026-03-24'
+   )`,
+
+  `INSERT INTO events (title, event_date, location, description, image_url, created_by)
+   SELECT 'Midweek Prayer (Thursday)', '2026-03-26', 'JMC Kitui', 'Every Thursday 5:30 PM - 7:00 PM: prayer meeting for community blessing.', NULL, NULL
+   WHERE NOT EXISTS (
+     SELECT 1 FROM events WHERE title = 'Midweek Prayer (Thursday)' AND event_date = '2026-03-26'
+   )`,
+
+  `INSERT INTO events (title, event_date, location, description, image_url, created_by)
+   SELECT 'Kesha Gathering', '2026-03-28', 'JMC Kitui', 'First and last Friday of the month: Kesha worship experience.', NULL, NULL
+   WHERE NOT EXISTS (
+     SELECT 1 FROM events WHERE title = 'Kesha Gathering' AND event_date = '2026-03-28'
    )`,
 ];
 
