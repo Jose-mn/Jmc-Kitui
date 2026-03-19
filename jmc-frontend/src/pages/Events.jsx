@@ -62,7 +62,49 @@ export default function Events() {
               color: colorOptions[ev.id % colorOptions.length]
             };
           });
-          setUpcomingEvents(mappedEvents);
+          const scheduleOverrides = [
+            {
+              id: "prayer-tuesday",
+              title: "Midweek Prayer (Tuesday)",
+              category: "prayer",
+              date: "",
+              time: "5:30 PM - 7:00 PM",
+              location: "JMC Kitui",
+              description: "Join us every Tuesday for a powerful time of prayer, worship, and intercession.",
+              image: defaultEventImage,
+              featured: false,
+              attendees: "Open to all",
+              color: "bg-purple-600"
+            },
+            {
+              id: "prayer-thursday",
+              title: "Midweek Prayer (Thursday)",
+              category: "prayer",
+              date: "",
+              time: "5:30 PM - 7:00 PM",
+              location: "JMC Kitui",
+              description: "Thursday prayer meeting to seek God and stand in faith for our community.",
+              image: defaultEventImage,
+              featured: false,
+              attendees: "Open to all",
+              color: "bg-purple-700"
+            },
+            {
+              id: "kesha-first-last-friday",
+              title: "Kesha Gathering",
+              category: "worship",
+              date: "",
+              time: "7:00 PM - 9:00 PM",
+              location: "JMC Kitui",
+              description: "Every first and last Friday of the month: Kesha worship to encounter God.",
+              image: defaultEventImage,
+              featured: false,
+              attendees: "Open to all",
+              color: "bg-purple-500"
+            }
+          ];
+
+          setUpcomingEvents([...mappedEvents, ...scheduleOverrides]);
         }
       } catch (err) {
         console.error("Failed to fetch events:", err);

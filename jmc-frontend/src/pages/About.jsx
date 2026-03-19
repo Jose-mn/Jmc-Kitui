@@ -26,23 +26,66 @@ export default function About() {
   const staticLeaders = [
     {
       id: 1,
-      name: "Bishop Elijah Mutua",
-      position: "Lead Pastor & Founder",
-      bio: "A visionary leader committed to manifesting the presence and power of Jesus Christ in our generation.",
+      name: "Bishop Elijah Mutua & Rev Ruth Mutua",
+      position: "Minister Head",
+      bio: "Leading with apostolic vision and pastoral unity.",
+      comment: "Two co-pastors, one heartbeat: carrying God’s assignment for this church.",
       image: bishopElijah,
     },
     {
       id: 2,
-      name: "Reverend Ruth Mutua",
-      position: "Co-Pastor",
-      bio: "Passionate about restoring families and empowering every believer to rise into their God-given identity.",
-      image: revRuth, // falls back to `defaultLeaderImage` until the asset is added
+      name: "Pst Jessica Mule",
+      position: "In His Presence Worship Team",
+      bio: "Worship leader committed to adoration and holy presence in every service.",
+      image: defaultLeaderImage,
     },
     {
       id: 3,
-      name: "Elder Pastor Jacob",
-      position: "Senior Elder",
-      bio: "Dedicated to providing spiritual covering, wisdom, and accountability to our church community.",
+      name: "Pst Ruth Samuel",
+      position: "HOD Women Ministry",
+      bio: "Championing women’s spiritual growth, discipleship, and community impact.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 4,
+      name: "Pst Sam Wambua",
+      position: "Ushering and Protocol",
+      bio: "Ensuring a welcoming environment and smooth experience for every guest.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 5,
+      name: "Mercy Kaari",
+      position: "Youth Ministry",
+      bio: "Fostering the next generation through mentorship and vibrant youth engagement.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 6,
+      name: "Alice John",
+      position: "Children Ministry",
+      bio: "Caring for our children with fun, faith, and foundational biblical teaching.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 7,
+      name: "Pst Jacob Munene",
+      position: "Men Department",
+      bio: "Developing godly leadership and brotherhood amongst the men of the church.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 8,
+      name: "Nicholas Nzamba",
+      position: "Couples Department",
+      bio: "Supporting healthy marriages through teaching, counseling and fellowship.",
+      image: defaultLeaderImage,
+    },
+    {
+      id: 9,
+      name: "Justine Kinyua",
+      position: "HOD Security / Media and Technical Support",
+      bio: "Overseeing safety and technical excellence for all church services.",
       image: defaultLeaderImage,
     },
   ];
@@ -448,6 +491,11 @@ export default function About() {
                       <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed transition-colors">
                         {leader.bio}
                       </p>
+                      {leader.comment && (
+                        <p className="mt-3 text-sm font-semibold text-purple-700 dark:text-purple-300 leading-relaxed transition-colors">
+                          {leader.comment}
+                        </p>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
