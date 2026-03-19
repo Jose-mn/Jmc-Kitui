@@ -10,7 +10,7 @@ import Footer from "@/components/Footer";
 import faithImage from "../assets/devotionals/faith.jpeg";
 import prayerImage from "../assets/devotionals/prayer.jpeg";
 import purposeImage from "../assets/devotionals/purpose.jpeg";
-import pastorateImage from "../assets/pastorate.jpeg";
+import pastorateImage from "../assets/Pastorate.jpeg";
 
 export default function Home() {
   const navigate = useNavigate();
