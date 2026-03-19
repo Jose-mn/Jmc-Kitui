@@ -9,7 +9,7 @@ import leadershipRoutes from "./routes/leadershipRoutes.js";
 import authRoutes from "./routes/auth.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import path from "path";
-// payment routes removed (Mpesa integration undone)
+import youtubeRoutes from "./routes/youtubeRoutes.js";
 
 dotenv.config();
 
@@ -17,7 +17,9 @@ console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "✅" : "❌");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "https://jmckitui.davericgamers.co.ke"
+}));
 app.use(express.json());
 
 // Serve uploads folder statically
@@ -30,7 +32,7 @@ app.use("/api/sermons", sermonsRoutes);
 app.use("/api/leadership", leadershipRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/upload", uploadRoutes);
-// app.use("/api/pay", paymentsRoutes);  // disabled
+app.use("/api/youtube", youtubeRoutes);
 
 app.get("/", (req, res) => {
   res.send("JMC Backend is running");
