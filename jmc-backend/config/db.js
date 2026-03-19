@@ -1,209 +1,218 @@
-import Database from "better-sqlite3";
-import path from "path";
-import { fileURLToPath } from "url";
-import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dbDir = path.join(__dirname, "..", "database");
-const dbPath = path.join(dbDir, "church.db");
+let pool;
 
-// Ensure database directory exists
-if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+// ─── MySQL Database Configuration ───────────────────────────────────────────
+const mysql = await import("mysql2/promise");
 
-const db = new Database(dbPath);
-db.pragma("journal_mode = WAL");
-db.pragma("foreign_keys = ON");
+pool = mysql.createPool({
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+});
 
-// ----------------------------------------------------------------
-// Initialize all tables on startup
-// ----------------------------------------------------------------
-db.exec(`
+// Test connection
+try {
+  await pool.execute("SELECT 1");
+  console.log("✅ MySQL database connected.");
+} catch (err) {
+  console.error("❌ MySQL connection failed:", err.message);
+  process.exit(1);
+}
+
+// Run migrations to create tables if they don't exist
+await pool.execute(`
   CREATE TABLE IF NOT EXISTS contact_messages (
-    message_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    full_name   TEXT NOT NULL,
-    email       TEXT NOT NULL,
-    phone       TEXT,
+    message_id  INT AUTO_INCREMENT PRIMARY KEY,
+    full_name   VARCHAR(255) NOT NULL,
+    email       VARCHAR(255) NOT NULL,
+    phone       VARCHAR(50),
     message     TEXT NOT NULL,
-    status      TEXT DEFAULT 'New' CHECK(status IN ('New','Read','Replied')),
-    submitted_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS events (
-    event_id   INTEGER PRIMARY KEY AUTOINCREMENT,
-    title      TEXT NOT NULL,
-    event_date TEXT NOT NULL,
-    location   TEXT,
-    image_url  TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS devotions (
-    devotion_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title       TEXT NOT NULL,
-    scripture   TEXT,
-    content     TEXT NOT NULL,
-    image_url   TEXT,
-    created_at  TEXT DEFAULT (datetime('now')),
-    updated_at  TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS sermons (
-    sermon_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    title      TEXT NOT NULL,
-    speaker    TEXT NOT NULL,
-    video_url  TEXT,
-    audio_path TEXT,
-    description TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS leadership (
-    leader_id  INTEGER PRIMARY KEY AUTOINCREMENT,
-    name       TEXT NOT NULL,
-    position   TEXT NOT NULL,
-    bio        TEXT,
-    image_url  TEXT,
-    created_at TEXT DEFAULT (datetime('now')),
-    updated_at TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS users (
-    user_id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    username      TEXT UNIQUE NOT NULL,
-    password_hash TEXT NOT NULL,
-    email         TEXT,
-    role          TEXT DEFAULT 'Editor' CHECK(role IN ('Admin','Moderator','Editor')),
-    created_at    TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS members (
-    member_id       INTEGER PRIMARY KEY AUTOINCREMENT,
-    first_name      TEXT NOT NULL,
-    last_name       TEXT NOT NULL,
-    email           TEXT UNIQUE,
-    phone           TEXT,
-    gender          TEXT CHECK(gender IN ('Male','Female','Other')),
-    date_of_birth   TEXT,
-    address         TEXT,
-    membership_date TEXT,
-    photo           TEXT,
-    status          TEXT DEFAULT 'Active' CHECK(status IN ('Active','Inactive')),
-    created_at      TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS ministries (
-    ministry_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name        TEXT NOT NULL,
-    description TEXT,
-    leader_id   INTEGER REFERENCES members(member_id) ON DELETE SET NULL
-  );
-
-  CREATE TABLE IF NOT EXISTS contributions (
-    contribution_id   INTEGER PRIMARY KEY AUTOINCREMENT,
-    member_id         INTEGER REFERENCES members(member_id) ON DELETE SET NULL,
-    amount            REAL NOT NULL,
-    contribution_type TEXT NOT NULL,
-    service_type      TEXT,
-    payment_method    TEXT NOT NULL,
-    reference_code    TEXT,
-    notes             TEXT,
-    contribution_date TEXT DEFAULT (datetime('now')),
-    recorded_by       INTEGER REFERENCES users(user_id) ON DELETE SET NULL
-  );
-
-  CREATE TABLE IF NOT EXISTS donations (
-    donation_id    INTEGER PRIMARY KEY AUTOINCREMENT,
-    member_id      INTEGER REFERENCES members(member_id) ON DELETE SET NULL,
-    amount         REAL NOT NULL,
-    donation_type  TEXT NOT NULL,
-    date           TEXT DEFAULT (datetime('now')),
-    payment_method TEXT,
-    notes          TEXT
-  );
-
-  CREATE TABLE IF NOT EXISTS media (
-    media_id     INTEGER PRIMARY KEY AUTOINCREMENT,
-    title        TEXT,
-    description  TEXT,
-    file_path    TEXT NOT NULL,
-    upload_date  TEXT DEFAULT (datetime('now')),
-    uploaded_by  INTEGER REFERENCES users(user_id) ON DELETE SET NULL
-  );
-
-  CREATE TABLE IF NOT EXISTS testimonials (
-    testimonial_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    member_id      INTEGER REFERENCES members(member_id) ON DELETE CASCADE,
-    content        TEXT NOT NULL,
-    date           TEXT DEFAULT (datetime('now'))
-  );
-
-  CREATE TABLE IF NOT EXISTS prayer_requests (
-    prayer_id      INTEGER PRIMARY KEY AUTOINCREMENT,
-    member_id      INTEGER REFERENCES members(member_id) ON DELETE CASCADE,
-    content        TEXT NOT NULL,
-    date_submitted TEXT DEFAULT (datetime('now')),
-    status         TEXT DEFAULT 'Pending' CHECK(status IN ('Pending','Answered','Private'))
-  );
-
-  CREATE TABLE IF NOT EXISTS links (
-    link_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name    TEXT,
-    url     TEXT NOT NULL,
-    type    TEXT DEFAULT 'Other' CHECK(type IN ('Facebook','WhatsApp','Instagram','Other'))
-  );
+    status      ENUM('New','Read','Replied') DEFAULT 'New',
+    submitted_at DATETIME DEFAULT NOW()
+  )
 `);
 
-// Seed default admin user (ignore if already exists)
-const existing = db.prepare("SELECT user_id FROM users WHERE username = 'admin'").get();
-if (!existing) {
-  db.prepare(
-    "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)"
-  ).run(
-    "admin",
-    "admin@jmc.com",
-    "$2b$10$RPBpJYXElvWn8BwUjO6njene0x7hI4eJCftrhuOtzL2rryFhxo71.",
-    "Admin"
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS events (
+    event_id   INT AUTO_INCREMENT PRIMARY KEY,
+    title      VARCHAR(255) NOT NULL,
+    event_date VARCHAR(100) NOT NULL,
+    location   VARCHAR(255),
+    image_url  TEXT,
+    created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS devotions (
+    devotion_id INT AUTO_INCREMENT PRIMARY KEY,
+    title       VARCHAR(255) NOT NULL,
+    scripture   VARCHAR(255),
+    content     TEXT NOT NULL,
+    image_url   TEXT,
+    created_at  DATETIME DEFAULT NOW(),
+    updated_at  DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS sermons (
+    sermon_id   INT AUTO_INCREMENT PRIMARY KEY,
+    title       VARCHAR(255) NOT NULL,
+    speaker     VARCHAR(255) NOT NULL,
+    video_url   TEXT,
+    audio_path  TEXT,
+    description TEXT,
+    created_at  DATETIME DEFAULT NOW(),
+    updated_at  DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS leadership (
+    leader_id  INT AUTO_INCREMENT PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    position   VARCHAR(255) NOT NULL,
+    bio        TEXT,
+    image_url  TEXT,
+    created_at DATETIME DEFAULT NOW(),
+    updated_at DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS users (
+    user_id       INT AUTO_INCREMENT PRIMARY KEY,
+    username      VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    email         VARCHAR(255),
+    role          ENUM('Admin','Moderator','Editor') DEFAULT 'Editor',
+    created_at    DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS members (
+    member_id       INT AUTO_INCREMENT PRIMARY KEY,
+    first_name      VARCHAR(255) NOT NULL,
+    last_name       VARCHAR(255) NOT NULL,
+    email           VARCHAR(255) UNIQUE,
+    phone           VARCHAR(50),
+    gender          ENUM('Male','Female','Other'),
+    date_of_birth   VARCHAR(50),
+    address         TEXT,
+    membership_date VARCHAR(50),
+    photo           TEXT,
+    status          ENUM('Active','Inactive') DEFAULT 'Active',
+    created_at      DATETIME DEFAULT NOW()
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS ministries (
+    ministry_id INT AUTO_INCREMENT PRIMARY KEY,
+    name        VARCHAR(255) NOT NULL,
+    description TEXT,
+    leader_id   INT,
+    FOREIGN KEY (leader_id) REFERENCES members(member_id) ON DELETE SET NULL
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS contributions (
+    contribution_id   INT AUTO_INCREMENT PRIMARY KEY,
+    member_id         INT,
+    amount            DECIMAL(10,2) NOT NULL,
+    contribution_type VARCHAR(255) NOT NULL,
+    service_type      VARCHAR(255),
+    payment_method    VARCHAR(255) NOT NULL,
+    reference_code    VARCHAR(255),
+    notes             TEXT,
+    contribution_date DATETIME DEFAULT NOW(),
+    recorded_by       INT,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE SET NULL,
+    FOREIGN KEY (recorded_by) REFERENCES users(user_id) ON DELETE SET NULL
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS donations (
+    donation_id    INT AUTO_INCREMENT PRIMARY KEY,
+    member_id      INT,
+    amount         DECIMAL(10,2) NOT NULL,
+    donation_type  VARCHAR(255) NOT NULL,
+    date           DATETIME DEFAULT NOW(),
+    payment_method VARCHAR(255),
+    notes          TEXT,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE SET NULL
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS media (
+    media_id     INT AUTO_INCREMENT PRIMARY KEY,
+    title        VARCHAR(255),
+    description  TEXT,
+    file_path    TEXT NOT NULL,
+    upload_date  DATETIME DEFAULT NOW(),
+    uploaded_by  INT,
+    FOREIGN KEY (uploaded_by) REFERENCES users(user_id) ON DELETE SET NULL
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS testimonials (
+    testimonial_id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id      INT,
+    content        TEXT NOT NULL,
+    date           DATETIME DEFAULT NOW(),
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS prayer_requests (
+    prayer_id      INT AUTO_INCREMENT PRIMARY KEY,
+    member_id      INT,
+    content        TEXT NOT NULL,
+    date_submitted DATETIME DEFAULT NOW(),
+    status         ENUM('Pending','Answered','Private') DEFAULT 'Pending',
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+  )
+`);
+
+await pool.execute(`
+  CREATE TABLE IF NOT EXISTS links (
+    link_id INT AUTO_INCREMENT PRIMARY KEY,
+    name    VARCHAR(255),
+    url     TEXT NOT NULL,
+    type    ENUM('Facebook','WhatsApp','Instagram','Other') DEFAULT 'Other'
+  )
+`);
+
+// Seed default admin user
+const [existing] = await pool.execute(
+  "SELECT user_id FROM users WHERE username = 'admin' LIMIT 1"
+);
+if (existing.length === 0) {
+  await pool.execute(
+    "INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)",
+    [
+      "admin",
+      "admin@jmc.com",
+      "$2b$10$RPBpJYXElvWn8BwUjO6njene0x7hI4eJCftrhuOtzL2rryFhxo71.",
+      "Admin",
+    ]
   );
   console.log("✅ Default admin user seeded.");
 }
 
-console.log("✅ SQLite database ready at:", dbPath);
-
-// ----------------------------------------------------------------
-// mysql2-compatible pool shim
-// Supports: pool.execute(sql, params) and pool.query(sql, params)
-// Returns [rows] for SELECT, [{ insertId, affectedRows }] for mutations
-// ----------------------------------------------------------------
-function translateSQL(sql) {
-  // Replace MySQL NOW() with SQLite equivalent
-  return sql.replace(/\bNOW\(\)/gi, "datetime('now')");
-}
-
-const pool = {
-  execute: async (sql, params = []) => {
-    const translated = translateSQL(sql.trim());
-    const upper = translated.toUpperCase();
-
-    try {
-      if (upper.startsWith("SELECT") || upper.startsWith("SHOW") || upper.startsWith("PRAGMA")) {
-        const rows = db.prepare(translated).all(...params);
-        return [rows, []];
-      } else if (upper.startsWith("INSERT")) {
-        const result = db.prepare(translated).run(...params);
-        return [{ insertId: result.lastInsertRowid, affectedRows: result.changes }, []];
-      } else {
-        const result = db.prepare(translated).run(...params);
-        return [{ affectedRows: result.changes }, []];
-      }
-    } catch (err) {
-      throw err;
-    }
-  },
-
-  query: async (sql, params = []) => pool.execute(sql, params),
-};
+console.log("✅ MySQL tables ready.");
 
 export default pool;
-export { db };
