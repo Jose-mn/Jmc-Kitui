@@ -9,14 +9,14 @@ import DevotionalDetail from "./pages/DevotionalDetail";
 import Events from "./pages/Events";
 import Give from "./pages/Give";
 import Contacts from "./pages/Contact";
-import AdminLayout from "./pages/admin/AdminLayout";
+import Ladies from "./pages/ministries/Ladies";
+import Men from "./pages/ministries/Men";
 import Youth from "./pages/ministries/Youth";
-import Choir from "./pages/ministries/Choir";
-import Ushers from "./pages/ministries/Ushers";
-import Media from "./pages/ministries/Media";
+import SundaySchool from "./pages/ministries/SundaySchool";
 import Login from "./pages/admin/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRouter from "./routes/AdminRouter";
+import AdminLayout from "./pages/admin/AdminLayout";
 
 function App() {
   return (
@@ -34,11 +34,11 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/give" element={<Give />} />
 
-        {/* Ministries Routes */}
-        <Route path="/ministries/youth" element={<Youth />} />
-        <Route path="/ministries/choir" element={<Choir />} />
-        <Route path="/ministries/ushers" element={<Ushers />} />
-        <Route path="/ministries/media" element={<Media />} />
+        {/* Departments Routes */}
+        <Route path="/departments/ladies" element={<Ladies />} />
+        <Route path="/departments/men" element={<Men />} />
+        <Route path="/departments/youth" element={<Youth />} />
+        <Route path="/departments/sundayschool" element={<SundaySchool />} />
 
         <Route path="/contact" element={<Contact />} />
 

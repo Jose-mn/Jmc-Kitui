@@ -180,7 +180,7 @@ export default function Sermons() {
                       setForm({
                         title: sermon.title,
                         speaker: sermon.speaker,
-                        video: sermon.video,
+                        video: sermon.video_url || sermon.video,
                       });
                     }}
                     className="bg-blue-500 hover:bg-blue-600"
@@ -189,9 +189,9 @@ export default function Sermons() {
                   </Button>
                 </div>
                 </div>
-                {sermon.video && (
+                {(sermon.video_url || sermon.video) && (
                   <a
-                    href={sermon.video}
+                    href={sermon.video_url || sermon.video}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:underline text-sm"

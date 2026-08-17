@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getDevotionalById } from "../Data/Devotionals";
 import { Calendar, User, BookOpen, ArrowLeft } from "lucide-react";
@@ -7,10 +8,55 @@ import Footer from "../components/Footer";
 
 export default function DevotionalDetail() {
   const { id } = useParams();
-  console.log("URL ID:", id); // DEBUG
+  const [devotional, setDevotional] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const devotional = getDevotionalById(id);
-  console.log("Found devotional:", devotional); // DEBUG
+  useEffect(() => {
+    const fetchDevotional = async () => {
+      try {
+        setLoading(true);
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const res = await fetch(`${apiUrl}/api/devotions/${id}`);
+        if (res.ok) {
+          const data = await res.json();
+          setDevotional({
+            id: data.devotion_id || data.id,
+            title: data.title,
+            scripture: data.scripture || "N/A",
+            excerpt: data.content ? data.content.substring(0, 150) + "..." : "",
+            content: data.content,
+            date: data.created_at,
+            author: "JMC Kitui",
+            image: data.image_url ? `${apiUrl}${data.image_url}` : null,
+            category: data.category || "Devotion",
+          });
+          return;
+        }
+      } catch (err) {
+        console.error("Failed to fetch devotional from API, falling back:", err);
+      }
+
+      // Fallback to static data
+      const staticDev = getDevotionalById(id);
+      if (staticDev) {
+        setDevotional(staticDev);
+      }
+    };
+
+    fetchDevotional().then(() => setLoading(false));
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col dark:bg-slate-950 transition-colors duration-300">
+        <Navigation />
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-gray-500">Loading devotion...</p>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!devotional) {
     console.log("Devotional not found!"); // DEBUG

@@ -17,11 +17,11 @@ router.post("/", async (req, res) => {
       VALUES (?, ?, ?, ?, NOW())
     `;
 
-    await pool.execute(sql, [title, scripture, content, image_url || null]);
+    const [result] = await pool.execute(sql, [title, scripture, content, image_url || null]);
 
     res.status(201).json({
       message: "Devotion created successfully",
-      devotion: { title, scripture, content, image_url }
+      devotion: { devotion_id: result.insertId, title, scripture, content, image_url }
     });
   } catch (err) {
     console.error("POST /api/devotions error:", err);
@@ -40,6 +40,26 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error("GET /api/devotions error:", err);
     res.status(500).json({ error: "Failed to fetch devotions", details: err.message });
+  }
+});
+
+// ✅ GET: Fetch a single devotion by ID
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const [rows] = await pool.execute(
+      "SELECT * FROM devotions WHERE devotion_id = ?",
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "Devotion not found" });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error("GET /api/devotions/:id error:", err);
+    res.status(500).json({ error: "Failed to fetch devotion", details: err.message });
   }
 });
 

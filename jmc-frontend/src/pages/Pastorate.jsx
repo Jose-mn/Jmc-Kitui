@@ -22,10 +22,7 @@ const leaders = [
     gradient: "bg-purple-800",
     message: "It is my joy to welcome you to Jesus Manifestation Church — a place where heaven meets earth. Our mandate is simple: to reveal Jesus Christ in His fullness. Whether through the Word, worship, or genuine fellowship, everything we do is anchored in Him. I believe God has a specific purpose for your life, and JMC is a place where that purpose is discovered and nurtured. Come, and let us grow together in the grace of our Lord Jesus Christ.",
     scripture: '"For in Him we live and move and have our being." — Acts 17:28',
-    contact: {
-      email: "bishop@jmckitui.org",
-      phone: "+254 700 000 001"
-    }
+    contact: {}
   },
   {
     id: 2,
@@ -35,62 +32,47 @@ const leaders = [
     gradient: "bg-purple-700",
     message: "Welcome to our family! At JMC Kitui, we believe that every person who walks through our doors carries a God-given destiny. My passion is to see families restored, women empowered, and the next generation raised in the fear of God. You are not here by accident — God has orchestrated this moment for you. I pray that as you journey with us, you will experience the transforming love of Jesus in every area of your life.",
     scripture: '"She is clothed with strength and dignity, and she laughs without fear of the future." — Proverbs 31:25',
-    contact: {
-      email: "rev.ruth@jmckitui.org",
-      phone: "+254 700 000 002"
-    }
+    contact: {}
   },
   {
     id: 3,
     name: "Elder Joseph Mwangi",
-    title: "Senior Elder",
+    title: "Men's Department Leader",
     image: null,
     gradient: "bg-purple-600",
-    message: "The elders of JMC are committed to providing spiritual covering, wisdom, and accountability to our church community. We stand on the Word of God and are dedicated to guiding this congregation in truth and integrity. It is our honour to serve alongside our pastors and to ensure that every member of this body is cared for, supported, and growing in their walk with God.",
-    scripture: '"The elders who direct the affairs of the church well are worthy of double honour." — 1 Timothy 5:17',
-    contact: {
-      email: "elder.joseph@jmckitui.org",
-      phone: "+254 700 000 003"
-    }
+    message: "The Men's Department is committed to raising strong, faith-filled leaders who serve their families and communities with wisdom, moral integrity, and deep conviction. We stand on the Word of God to support one another in our spiritual walks.",
+    scripture: '"As iron sharpens iron, so one man sharpens another." — Proverbs 27:17',
+    contact: {}
   },
   {
     id: 4,
     name: "Deaconess Grace Ndunge",
-    title: "Head of Women's Ministry",
+    title: "Women's Department Leader",
     image: null,
     gradient: "bg-purple-700",
-    message: "To every woman in our congregation and beyond — you are seen, you are valued, and you are deeply loved by God. The Women's Ministry at JMC exists to create a safe space where women can grow spiritually, heal emotionally, and rise into their God-given identity. Together we pray, study the Word, and spur one another towards greater faith. I invite every woman to join us as we seek God together.",
+    message: "The Ladies Department exists to create a nurturing space where women can grow spiritually, build a sisterhood of prayer, and rise into their God-given identity. Together we stand and serve with grace.",
     scripture: '"Many women do noble things, but you surpass them all." — Proverbs 31:29',
-    contact: {
-      email: "women@jmckitui.org",
-      phone: "+254 700 000 004"
-    }
+    contact: {}
   },
   {
     id: 5,
     name: "Pastor Samuel Kioko",
-    title: "Youth Pastor",
+    title: "Youth Department Leader",
     image: null,
     gradient: "bg-purple-600",
-    message: "To the young people of JMC — you are not the church of tomorrow, you are the church of today! We believe in raising a generation that is bold in faith, grounded in the Word, and unashamed of the Gospel. Our youth ministry is a place where you can ask hard questions, find genuine community, and encounter God in a real way. Step in, be yourself, and let God use you mightily right where you are.",
+    message: "Our youth department raises a bold, unashamed generation grounded in the Word. We welcome all young people to find community, learn, and grow in their faith walk.",
     scripture: '"Don\'t let anyone look down on you because you are young." — 1 Timothy 4:12',
-    contact: {
-      email: "youth@jmckitui.org",
-      phone: "+254 700 000 005"
-    }
+    contact: {}
   },
   {
     id: 6,
     name: "Minister Esther Kavata",
-    title: "Children's Ministry Leader",
+    title: "Sunday School Department Leader",
     image: null,
     gradient: "bg-purple-800",
-    message: "Children are a heritage from the Lord, and at JMC we take that calling seriously. Our Children's Ministry is designed to lay a strong spiritual foundation in the hearts of our little ones through fun, age-appropriate Bible teaching, creative worship, and character development. We partner with parents to raise children who love God, love people, and grow up with a firm identity in Christ.",
+    message: "We are committed to laying a strong spiritual foundation in the hearts of our children. Through creative Bible teaching and loving support, we raise children who grow up with a firm identity in Christ.",
     scripture: '"Train up a child in the way he should go, and when he is old he will not depart from it." — Proverbs 22:6',
-    contact: {
-      email: "children@jmckitui.org",
-      phone: "+254 700 000 006"
-    }
+    contact: {}
   }
 ];
 
@@ -201,18 +183,7 @@ export default function Pastorate() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <a href={`mailto:${leaders[0].contact.email}`}>
-                      <Button className="bg-purple-700 text-white px-6 py-2.5 font-semibold hover:bg-purple-800 flex items-center gap-2">
-                        <Mail className="w-4 h-4" />
-                        Send Email
-                      </Button>
-                    </a>
-                    <a href={`tel:${leaders[0].contact.phone}`}>
-                      <Button variant="outline" className="border-2 border-purple-700 text-purple-700 px-6 py-2.5 font-semibold hover:bg-transparent flex items-center gap-2">
-                        <Phone className="w-4 h-4" />
-                        Call
-                      </Button>
-                    </a>
+                    {/* Contact buttons removed */}
                   </div>
                 </CardContent>
               </div>
@@ -261,18 +232,7 @@ export default function Pastorate() {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-3">
-                    <a href={`mailto:${leaders[1].contact.email}`}>
-                      <Button className="bg-slate-800 text-white px-6 py-2.5 font-semibold hover:bg-slate-800 flex items-center gap-2">
-                        <Mail className="w-4 h-4" />
-                        Send Email
-                      </Button>
-                    </a>
-                    <a href={`tel:${leaders[1].contact.phone}`}>
-                      <Button variant="outline" className="border-2 border-slate-800 text-slate-800 px-6 py-2.5 font-semibold hover:bg-transparent flex items-center gap-2">
-                        <Phone className="w-4 h-4" />
-                        Call
-                      </Button>
-                    </a>
+                    {/* Contact buttons removed */}
                   </div>
                 </CardContent>
 
@@ -312,11 +272,11 @@ export default function Pastorate() {
           >
             <span className="text-purple-600 dark:text-purple-400 text-xs font-bold tracking-widest uppercase transition-colors">Our Team</span>
             <h2 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mt-2 mb-3 transition-colors">
-              Ministry Leadership
+              Department Leadership
             </h2>
-            <div className="w-16 h-0.5 bg-purple-500 mx-auto mb-4" />
+            <div className="w-16 h-0.5 bg-purple-505 mx-auto mb-4" />
             <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto transition-colors">
-              Dedicated servants of God leading our various ministries and departments
+              Dedicated servants of God leading our various departments
             </p>
           </motion.div>
 
@@ -373,25 +333,7 @@ export default function Pastorate() {
                       </div>
 
                       <div className="flex gap-2">
-                        <a href={`mailto:${leader.contact.email}`}>
-                          <Button
-                            size="sm"
-                            className="bg-purple-700 text-white px-4 py-2 text-xs font-semibold hover:bg-purple-800 flex items-center gap-1"
-                          >
-                            <Mail className="w-3 h-3" />
-                            Email
-                          </Button>
-                        </a>
-                        <a href={`tel:${leader.contact.phone}`}>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="border border-purple-700 text-purple-700 px-4 py-2 text-xs font-semibold hover:bg-transparent flex items-center gap-1"
-                          >
-                            <Phone className="w-3 h-3" />
-                            Call
-                          </Button>
-                        </a>
+                        {/* Contact buttons removed */}
                       </div>
                     </CardContent>
                   </div>

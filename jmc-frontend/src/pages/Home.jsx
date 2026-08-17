@@ -16,71 +16,94 @@ export default function Home() {
   const navigate = useNavigate();
   const [latestSermons, setLatestSermons] = useState([]);
   const [sermonsLoading, setSermonsLoading] = useState(true);
+  const [latestDevotions, setLatestDevotions] = useState([]);
+  const [devotionsLoading, setDevotionsLoading] = useState(true);
 
   useEffect(() => {
     fetchLatestSermons();
+    fetchLatestDevotions();
   }, []);
+
+  const fetchLatestDevotions = async () => {
+    try {
+      setDevotionsLoading(true);
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${apiUrl}/api/devotions`);
+      if (res.ok) {
+        const data = await res.json();
+        const mappedData = (Array.isArray(data) ? data : [])
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+          .slice(0, 3)
+          .map(dev => ({
+            id: dev.devotion_id || dev.id,
+            title: dev.title,
+            excerpt: dev.content ? dev.content.substring(0, 150) + "..." : "",
+            date: dev.created_at,
+            author: "JMC Kitui",
+            image: dev.image_url ? `${apiUrl}${dev.image_url}` : faithImage,
+            category: dev.category || "Devotion"
+          }));
+        
+        if (mappedData.length > 0) {
+          setLatestDevotions(mappedData);
+          return;
+        }
+      }
+      throw new Error("No database devotionals found");
+    } catch (err) {
+      console.error("Failed to fetch latest devotionals from API, falling back:", err);
+      setLatestDevotions([
+        { id: 1, title: "Walking in Faith", excerpt: "Discover what it means to truly trust God in every season of life and let faith guide your steps.", date: "2026-02-08T10:00:00Z", author: "Bishop Elijah Mutua", image: faithImage, category: "Faith" },
+        { id: 2, title: "The Power of Prayer", excerpt: "Unlock the transformative power of consistent prayer and communion with God in your daily walk.", date: "2026-02-05T10:00:00Z", author: "Pastor Bernard Nderitu", image: prayerImage, category: "Prayer" },
+        { id: 3, title: "Living in Purpose", excerpt: "God has a unique calling for your life. Learn how to discover and walk in your divine purpose.", date: "2026-02-01T10:00:00Z", author: "Pastor Josphat Musee", image: purposeImage, category: "Purpose" },
+      ]);
+    } finally {
+      setDevotionsLoading(false);
+    }
+  };
 
   const fetchLatestSermons = async () => {
     try {
       setSermonsLoading(true);
+      // Try fetching YouTube RSS from backend first to get the most recent upload/stream
       const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-      const res = await fetch(`${apiUrl}/api/sermons`);
-      if (!res.ok) throw new Error("Failed to fetch sermons");
-      const data = await res.json();
-      const allSermons = (Array.isArray(data) ? data : [])
-        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      const ytRes = await fetch(`${apiUrl}/api/youtube/latest`);
+      if (ytRes.ok) {
+        const ytText = await ytRes.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(ytText, "text/xml");
+        const entries = xmlDoc.querySelectorAll("entry");
 
-      // If DB has sermons, show the most recent ones
-      if (allSermons.length > 0) {
-        const now = new Date();
-        const lastSunday = new Date(now);
-        lastSunday.setDate(now.getDate() - now.getDay());
-        lastSunday.setHours(0, 0, 0, 0);
-        const nextDay = new Date(lastSunday);
-        nextDay.setDate(lastSunday.getDate() + 1);
-
-        const sundaySermons = allSermons.filter((s) => {
-          const d = new Date(s.created_at);
-          return d >= lastSunday && d < nextDay;
-        });
-
-        const picked = sundaySermons.length > 0
-          ? sundaySermons.slice(0, 3)
-          : allSermons.slice(0, 3);
-
-        setLatestSermons(picked);
-        return;
+        if (entries && entries.length > 0) {
+          const ytSermons = Array.from(entries).slice(0, 3).map((entry, index) => ({
+            sermon_id: `yt-home-${index}`,
+            title: entry.querySelector("title")?.textContent || "JMC KITUI Sermon",
+            speaker: entry.querySelector("author > name")?.textContent || "JMC KITUI",
+            video_url: entry.querySelector("link")?.getAttribute("href") || "https://www.youtube.com/@JMCKITUI",
+            created_at: entry.querySelector("published")?.textContent || new Date().toISOString()
+          }));
+          setLatestSermons(ytSermons);
+          return;
+        }
       }
-
-      throw new Error("No sermons in database yet");
+      throw new Error("No YouTube entries found");
     } catch (err) {
-      console.error("Error fetching latest sermons:", err);
+      console.error("Error fetching latest sermons from YouTube feed, falling back to database:", err);
 
-      // ✅ FIXED: Fetch YouTube RSS from backend instead of corsproxy.io
       try {
         const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
-        const ytRes = await fetch(`${apiUrl}/api/youtube/latest`);
-        if (ytRes.ok) {
-          const ytText = await ytRes.text();
-          const parser = new DOMParser();
-          const xmlDoc = parser.parseFromString(ytText, "text/xml");
-          const entries = xmlDoc.querySelectorAll("entry");
+        const res = await fetch(`${apiUrl}/api/sermons`);
+        if (!res.ok) throw new Error("Failed to fetch sermons");
+        const data = await res.json();
+        const allSermons = (Array.isArray(data) ? data : [])
+          .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-          if (entries && entries.length > 0) {
-            const ytSermons = Array.from(entries).slice(0, 3).map((entry, index) => ({
-              sermon_id: `yt-home-${index}`,
-              title: entry.querySelector("title")?.textContent || "JMC KITUI Sermon",
-              speaker: entry.querySelector("author > name")?.textContent || "JMC KITUI",
-              video_url: entry.querySelector("link")?.getAttribute("href") || "https://www.youtube.com/@JMCKITUI",
-              created_at: entry.querySelector("published")?.textContent || new Date().toISOString()
-            }));
-            setLatestSermons(ytSermons);
-            return;
-          }
+        if (allSermons.length > 0) {
+          setLatestSermons(allSermons.slice(0, 3));
+          return;
         }
-      } catch (ytErr) {
-        console.error("Error fetching from YouTube fallback:", ytErr);
+      } catch (dbErr) {
+        console.error("Database fallback failed:", dbErr);
       }
 
       // Hard fallback: show the most recent known sermon when everything else fails
@@ -347,49 +370,59 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { id: 1, title: "Walking in Faith", excerpt: "Discover what it means to truly trust God in every season of life and let faith guide your steps.", date: "February 8, 2026", author: "Bishop Elijah Mutua", image: faithImage, category: "Faith" },
-              { id: 2, title: "The Power of Prayer", excerpt: "Unlock the transformative power of consistent prayer and communion with God in your daily walk.", date: "February 5, 2026", author: "Pastor Bernard Nderitu", image: prayerImage, category: "Prayer" },
-              { id: 3, title: "Living in Purpose", excerpt: "God has a unique calling for your life. Learn how to discover and walk in your divine purpose.", date: "February 1, 2026", author: "Pastor Josphat Musee", image: purposeImage, category: "Purpose" },
-            ].map((post, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                <Card
-                  className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group cursor-pointer bg-white dark:bg-slate-900 dark:border-slate-800 border-0 shadow-lg"
-                  onClick={() => navigate(`/devotionals/${post.id}`)}
+            {devotionsLoading ? (
+              [1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 dark:bg-slate-800 rounded-lg h-48 mb-4" />
+                  <div className="h-5 bg-gray-200 dark:bg-slate-800 rounded w-3/4 mb-2" />
+                  <div className="h-4 bg-gray-200 dark:bg-slate-800 rounded w-1/2" />
+                </div>
+              ))
+            ) : latestDevotions.length === 0 ? (
+              <div className="col-span-full text-center py-10">
+                <p className="text-gray-500">No devotionals available yet.</p>
+              </div>
+            ) : (
+              latestDevotions.map((post, i) => (
+                <motion.div
+                  key={post.id || i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-white dark:bg-slate-800 text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold shadow-sm transition-colors">
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3 transition-colors">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        <span>{post.date}</span>
+                  <Card
+                    className="overflow-hidden h-full hover:shadow-2xl transition-all duration-300 group cursor-pointer bg-white dark:bg-slate-900 dark:border-slate-800 border-0 shadow-lg"
+                    onClick={() => navigate(`/devotionals/${post.id}`)}
+                  >
+                    <div className="relative h-48 overflow-hidden">
+                      <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-white dark:bg-slate-800 text-gray-800 dark:text-white px-3 py-1 rounded-full text-sm font-semibold shadow-sm transition-colors">
+                          {post.category}
+                        </span>
                       </div>
                     </div>
-                    <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 transition-colors">{post.excerpt}</p>
-                    <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 transition-colors">
-                      <span className="text-sm text-gray-700 dark:text-gray-400 font-medium transition-colors">{post.author}</span>
-                      <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm inline-flex items-center gap-1 transition-colors">Read More →</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3 transition-colors">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-4 h-4" />
+                          <span>{formatDate(post.date)}</span>
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-bold mb-3 text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        {post.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 transition-colors">{post.excerpt}</p>
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-slate-800 transition-colors">
+                        <span className="text-sm text-gray-700 dark:text-gray-400 font-medium transition-colors">{post.author}</span>
+                        <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm inline-flex items-center gap-1 transition-colors">Read More →</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))
+            )}
           </div>
 
           <motion.div

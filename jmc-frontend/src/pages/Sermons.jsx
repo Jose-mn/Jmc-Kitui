@@ -29,10 +29,10 @@ export default function Sermons() {
       setError(null);
     } catch (err) {
       console.error("Error fetching sermons:", err);
-      // Try fetching from YouTube RSS fallback
+      // Try fetching from YouTube RSS via backend proxy
       try {
-        const ytUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC9sbvr5FmX9fu1VIShXMeYA';
-        const ytRes = await fetch(`https://corsproxy.io/?url=${encodeURIComponent(ytUrl)}`);
+        const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+        const ytRes = await fetch(`${apiUrl}/api/youtube/latest`);
         if (ytRes.ok) {
           const ytText = await ytRes.text();
           const parser = new DOMParser();

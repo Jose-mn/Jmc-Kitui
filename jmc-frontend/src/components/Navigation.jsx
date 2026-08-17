@@ -12,10 +12,10 @@ export default function Navigation() {
   const { theme, setTheme } = useTheme();
 
   const ministries = [
-    { name: "Youth Ministry", path: "/ministries/youth" },
-    { name: "Choir Ministry", path: "/ministries/choir" },
-    { name: "Ushers Ministry", path: "/ministries/ushers" },
-    { name: "Media Team", path: "/ministries/media" },
+    { name: "Ladies Department", path: "/departments/ladies" },
+    { name: "Men's Department", path: "/departments/men" },
+    { name: "Youth Department", path: "/departments/youth" },
+    { name: "Sunday School Department", path: "/departments/sundayschool" },
   ];
 
   const closeMenu = () => {
@@ -56,7 +56,7 @@ export default function Navigation() {
             {/* Desktop Dropdown */}
             <div className="relative group">
               <button className="flex items-center gap-1 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-purple-400 transition">
-                MINISTRIES
+                DEPARTMENTS
                 <ChevronDown size={16} />
               </button>
 
@@ -64,7 +64,7 @@ export default function Navigation() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 mt-3 w-56 bg-white dark:bg-slate-800 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all p-2 z-50 border border-slate-100 dark:border-slate-700"
+                className="absolute left-0 mt-3 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all p-2 z-50 border border-slate-100 dark:border-slate-700"
               >
                 {ministries.map((item) => (
                   <Link
@@ -205,13 +205,13 @@ export default function Navigation() {
                   EVENTS
                 </Link>
 
-                {/* Mobile Ministries Dropdown */}
+                {/* Mobile Departments Dropdown */}
                 <div>
                   <button
                     onClick={() => setIsMinistriesOpen(!isMinistriesOpen)}
                     className="flex items-center justify-between w-full py-2 text-slate-700 dark:text-slate-300 hover:text-purple-700 dark:hover:text-purple-400 font-medium transition"
                   >
-                    MINISTRIES
+                    DEPARTMENTS
                     <ChevronDown
                       size={16}
                       className={`transform transition-transform ${isMinistriesOpen ? 'rotate-180' : ''}`}

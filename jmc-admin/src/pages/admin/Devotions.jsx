@@ -155,7 +155,7 @@ export default function Devotions() {
           <p className="text-gray-600">No devotions yet.</p>
         ) : (
           devotions.map((devotion) => (
-            <Card key={devotion.id} className="rounded-xl shadow-md">
+            <Card key={devotion.devotion_id || devotion.id} className="rounded-xl shadow-md">
               <CardContent className="p-6">
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
@@ -170,14 +170,14 @@ export default function Devotions() {
                   </div>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => handleDelete(devotion.id)}
+                        onClick={() => handleDelete(devotion.devotion_id || devotion.id)}
                         className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
                       >
                         Delete
                       </button>
                       <button
                         onClick={() => {
-                          setEditingId(devotion.id);
+                          setEditingId(devotion.devotion_id || devotion.id);
                           setForm({
                             title: devotion.title,
                             scripture: devotion.scripture || "",

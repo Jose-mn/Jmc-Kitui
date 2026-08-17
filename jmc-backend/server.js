@@ -17,9 +17,27 @@ console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "✅" : "❌");
 
 const app = express();
 
-app.use(cors({
-  origin: "https://jmckitui.davericgamers.co.ke"
-}));
+const allowedOrigins = [
+  "http://localhost:5173",   // frontend dev
+  "http://localhost:5174",   // admin dev
+  "https://jmckitui.davericgamers.co.ke", // production frontend
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve uploads folder statically

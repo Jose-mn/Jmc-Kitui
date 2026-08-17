@@ -1,0 +1,11 @@
+{
+  "name": "jmc-kitui-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix jmc-backend && npm install --prefix jmc-frontend && npm install --prefix jmc-admin",
+    "build:frontend": "npm run build --prefix jmc-frontend",
+    "build:admin": "npm run build --prefix jmc-admin",
+    "build:all": "npm run build:frontend && npm run build:admin"
+  }
+}

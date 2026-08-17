@@ -18,7 +18,7 @@ export default function Devotionals() {
         if (res.ok) {
           const data = await res.json();
           const mappedData = data.map(dev => ({
-            id: dev.id,
+            id: dev.devotion_id || dev.id,
             title: dev.title,
             scripture: dev.scripture || "N/A",
             excerpt: dev.content ? dev.content.substring(0, 150) + "..." : "",
