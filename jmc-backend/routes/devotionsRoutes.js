@@ -66,7 +66,7 @@ router.get("/:id", async (req, res) => {
 // ✅ UPDATE: Modify a devotion (Protected)
 router.put("/:id", async (req, res) => {
   const { id } = req.params;
-  const { title, scripture, content } = req.body;
+  const { title, scripture, content, image_url } = req.body;
 
   if (!title || !content) {
     return res.status(400).json({ error: "Title and content are required" });
@@ -74,8 +74,8 @@ router.put("/:id", async (req, res) => {
 
   try {
     await pool.execute(
-      `UPDATE devotions SET title = ?, scripture = ?, content = ? WHERE devotion_id = ?`,
-      [title, scripture, content, id]
+      `UPDATE devotions SET title = ?, scripture = ?, content = ?, image_url = ? WHERE devotion_id = ?`,
+      [title, scripture, content, image_url || null, id]
     );
     res.json({ message: "Devotion updated successfully" });
   } catch (err) {

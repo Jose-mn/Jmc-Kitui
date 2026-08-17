@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import image1 from "../assets/3323.jpeg";
+import image1 from "../assets/Slider1.JPG";
+import image2 from "../assets/slider2.JPG";
+import image3 from "../assets/slider3.JPG";
+import image4 from "../assets/slider5.JPG";
 
 export default function ImageCarousel({ images = [] }) {
   const [current, setCurrent] = useState(0);
@@ -10,9 +13,9 @@ export default function ImageCarousel({ images = [] }) {
   // Default images if none provided
   const carouselImages = images.length > 0 ? images : [
     { id: 1, src: image1, label: "Church Service" },
-    { id: 2, src: image1, label: "Worship & Praise" },
-    { id: 3, src: image1, label: "Community Outreach" },
-    { id: 4, src: image1, label: "Youth Ministry" },
+    { id: 2, src: image2, label: "Worship & Praise" },
+    { id: 3, src: image3, label: "Community Outreach" },
+    { id: 4, src: image4, label: "Sunday Worship" },
   ];
   useEffect(() => {
     if (!autoPlay) return;

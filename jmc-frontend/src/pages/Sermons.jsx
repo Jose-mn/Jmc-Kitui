@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { PlayCircle, Calendar, User, Search } from "lucide-react";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import AudioSermonsSection from "@/components/AudioSermonsSection";
 
 export default function Sermons() {
   const [sermons, setSermons] = useState([]);
@@ -278,6 +279,9 @@ export default function Sermons() {
           )}
         </div>
       </section>
+
+      {/* AUDIO SERMONS TELEGRAM SECTION */}
+      <AudioSermonsSection title="Latest Audio Sermons" subtitle="Stream and download full audio messages directly on Telegram" />
 
       <Footer />
     </div>

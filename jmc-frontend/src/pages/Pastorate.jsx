@@ -6,7 +6,11 @@ import { Quote, Mail, Phone, User } from "lucide-react";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
 
-import bishopElijah from "../assets/leadership/Bishop Elijah 1.png";
+import bishopElijah from "../assets/leadership/bishop-elijah.jpg";
+import revRuth from "../assets/leadership/rev-ruth.jpg";
+import elderJoseph from "../assets/leadership/Men's PST.JPG";
+import deaconessGrace from "../assets/leadership/Ladies PST.JPG";
+import youthPST from "../assets/leadership/YOUTH PST.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -17,7 +21,7 @@ const leaders = [
   {
     id: 1,
     name: "Bishop Elijah Mutua",
-    title: "Lead Pastor & Founder",
+    title: "Senior Pastor",
     image: bishopElijah,
     gradient: "bg-purple-800",
     message: "It is my joy to welcome you to Jesus Manifestation Church — a place where heaven meets earth. Our mandate is simple: to reveal Jesus Christ in His fullness. Whether through the Word, worship, or genuine fellowship, everything we do is anchored in Him. I believe God has a specific purpose for your life, and JMC is a place where that purpose is discovered and nurtured. Come, and let us grow together in the grace of our Lord Jesus Christ.",
@@ -26,9 +30,8 @@ const leaders = [
   },
   {
     id: 2,
-    name: "Reverend Ruth Mutua",
-    title: "Co-Pastor",
-    image: null,
+    name: "Pastor Ruth Mutua",
+    image: revRuth,
     gradient: "bg-purple-700",
     message: "Welcome to our family! At JMC Kitui, we believe that every person who walks through our doors carries a God-given destiny. My passion is to see families restored, women empowered, and the next generation raised in the fear of God. You are not here by accident — God has orchestrated this moment for you. I pray that as you journey with us, you will experience the transforming love of Jesus in every area of your life.",
     scripture: '"She is clothed with strength and dignity, and she laughs without fear of the future." — Proverbs 31:25',
@@ -36,9 +39,9 @@ const leaders = [
   },
   {
     id: 3,
-    name: "Elder Joseph Mwangi",
+    name: "Pastor Jacob Munene",
     title: "Men's Department Leader",
-    image: null,
+    image: elderJoseph,
     gradient: "bg-purple-600",
     message: "The Men's Department is committed to raising strong, faith-filled leaders who serve their families and communities with wisdom, moral integrity, and deep conviction. We stand on the Word of God to support one another in our spiritual walks.",
     scripture: '"As iron sharpens iron, so one man sharpens another." — Proverbs 27:17',
@@ -46,9 +49,9 @@ const leaders = [
   },
   {
     id: 4,
-    name: "Deaconess Grace Ndunge",
+    name: "Pastor Ruth Samuel",
     title: "Women's Department Leader",
-    image: null,
+    image: deaconessGrace,
     gradient: "bg-purple-700",
     message: "The Ladies Department exists to create a nurturing space where women can grow spiritually, build a sisterhood of prayer, and rise into their God-given identity. Together we stand and serve with grace.",
     scripture: '"Many women do noble things, but you surpass them all." — Proverbs 31:29',
@@ -56,9 +59,9 @@ const leaders = [
   },
   {
     id: 5,
-    name: "Pastor Samuel Kioko",
+    name: "Mercy Kaari Tom",
     title: "Youth Department Leader",
-    image: null,
+    image: youthPST,
     gradient: "bg-purple-600",
     message: "Our youth department raises a bold, unashamed generation grounded in the Word. We welcome all young people to find community, learn, and grow in their faith walk.",
     scripture: '"Don\'t let anyone look down on you because you are young." — 1 Timothy 4:12',
@@ -66,7 +69,7 @@ const leaders = [
   },
   {
     id: 6,
-    name: "Minister Esther Kavata",
+    name: "Alice John",
     title: "Sunday School Department Leader",
     image: null,
     gradient: "bg-purple-800",

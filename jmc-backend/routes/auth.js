@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    console.log("✅ Login successful for:", user.email);
+    console.log("Login successful for:", user.email);
     return res.json({
       message: "Login successful",
       token,

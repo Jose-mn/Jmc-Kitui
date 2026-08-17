@@ -152,7 +152,7 @@ const statements = [
 ];
 
 async function runMigration() {
-  console.log("🚀 Running migration...\n");
+  console.log("Running migration...\n");
   let success = 0;
   let failed = 0;
 
@@ -160,20 +160,20 @@ async function runMigration() {
     const name = sql.trim().split("\n")[0].substring(0, 70);
     try {
       await pool.query(sql);
-      console.log(`✅ OK: ${name}`);
+      console.log(`OK: ${name}`);
       success++;
     } catch (err) {
       if (err.code === "ER_TABLE_EXISTS_ERROR" || err.code === "ER_DUP_FIELDNAME") {
-        console.log(`⚠️  Already exists (skipped): ${name}`);
+        console.log(`Already exists (skipped): ${name}`);
         success++;
       } else {
-        console.error(`❌ FAILED: ${name}\n   Error: ${err.message}`);
+        console.error(`FAILED: ${name}\n   Error: ${err.message}`);
         failed++;
       }
     }
   }
 
-  console.log(`\n✔ Migration complete — ${success} OK, ${failed} failed.`);
+  console.log(`\nMigration complete — ${success} OK, ${failed} failed.`);
   process.exit(failed > 0 ? 1 : 0);
 }
 

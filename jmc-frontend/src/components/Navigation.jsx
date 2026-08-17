@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "../assets/logo.png";
 import { ChevronDown, Menu, X, Moon, Sun } from "lucide-react";
@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "./ThemeContext";
 
 export default function Navigation() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isMinistriesOpen, setIsMinistriesOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -131,7 +132,7 @@ export default function Navigation() {
               whileTap={{ scale: 0.95 }}
             >
               <Button
-                onClick={() => window.location.href = '/give'}
+                onClick={() => navigate('/give')}
                 className="bg-purple-700 hover:bg-purple-800 text-white px-3 py-2 font-semibold text-sm"
               >
                 GIVE
@@ -262,7 +263,7 @@ export default function Navigation() {
                   </Button>
                   <Button
                     onClick={() => {
-                      window.location.href = '/give';
+                      navigate('/give');
                       closeMenu();
                     }}
                     className="w-full bg-purple-700 hover:bg-purple-800 text-white font-semibold"

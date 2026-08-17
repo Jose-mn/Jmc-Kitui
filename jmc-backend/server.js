@@ -13,23 +13,26 @@ import youtubeRoutes from "./routes/youtubeRoutes.js";
 
 dotenv.config();
 
-console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "✅" : "❌");
+console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "yes" : "no");
 
 const app = express();
 
 const allowedOrigins = [
-  "http://localhost:5173",   // frontend dev
-  "http://localhost:5174",   // admin dev
-  "https://jmckitui.davericgamers.co.ke", // production frontend
-];
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:3000",
+  "https://jmckitui.davericgamers.co.ke",
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+  process.env.CLIENT_ORIGIN,
+].filter(Boolean);
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // allow requests with no origin (mobile apps, curl, server-to-server)
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== "production") {
       callback(null, true);
     } else {
-      callback(new Error("Not allowed by CORS"));
+      callback(null, true);
     }
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

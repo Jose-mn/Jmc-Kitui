@@ -11,9 +11,11 @@ export default function Devotions() {
     title: "",
     scripture: "",
     content: "",
+    image_url: "",
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export default function Devotions() {
         } else {
           setDevotions([data.devotion || { ...form }, ...devotions]);
         }
-        setForm({ title: "", scripture: "", content: "" });
+        setForm({ title: "", scripture: "", content: "", image_url: "" });
       } else {
         console.error("Devotion error:", data);
         setError(data.error || "Failed to submit devotion");
@@ -70,6 +72,27 @@ export default function Devotions() {
       setError("Connection error. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingImage(true);
+    setError("");
+    try {
+      const res = await api.upload.upload(file);
+      const data = await res.json();
+      if (res.ok) {
+        setForm((prev) => ({ ...prev, image_url: data.imageUrl }));
+      } else {
+        setError(data.error || "Failed to upload image");
+      }
+    } catch (err) {
+      console.error("Image upload error:", err);
+      setError("Failed to upload image due to connection error.");
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -125,9 +148,38 @@ export default function Devotions() {
               setForm({ ...form, content: e.target.value })
             }
           />
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-semibold text-gray-700">Devotion Image</label>
+            <div className="flex items-center gap-4">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploadingImage}
+                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-purple-50 file:text-purple-700 hover:file:bg-purple-100"
+              />
+              {uploadingImage && <span className="text-sm text-gray-500">Uploading image...</span>}
+            </div>
+            {form.image_url && (
+              <div className="mt-2 relative w-32 h-20 rounded-md overflow-hidden border border-gray-200">
+                <img
+                  src={form.image_url.startsWith("http") ? form.image_url : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}${form.image_url}`}
+                  alt="Devotion"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => setForm({ ...form, image_url: "" })}
+                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 text-xs hover:bg-red-700"
+                >
+                  X
+                </button>
+              </div>
+            )}
+          </div>
           <Button
             onClick={handleSubmit}
-            disabled={loading}
+            disabled={loading || uploadingImage}
             className="bg-jmcPrimary hover:bg-jmcPrimary/90 disabled:opacity-50"
           >
             {loading ? (editingId ? "Updating..." : "Publishing...") : (editingId ? "Update Devotion" : "Publish Devotion")}
@@ -137,7 +189,7 @@ export default function Devotions() {
               type="button"
               onClick={() => {
                 setEditingId(null);
-                setForm({ title: "", scripture: "", content: "" });
+                setForm({ title: "", scripture: "", content: "", image_url: "" });
               }}
               className="ml-4 text-sm text-gray-600 hover:underline"
             >
@@ -182,6 +234,7 @@ export default function Devotions() {
                             title: devotion.title,
                             scripture: devotion.scripture || "",
                             content: devotion.content,
+                            image_url: devotion.image_url || "",
                           });
                         }}
                         className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 text-sm"

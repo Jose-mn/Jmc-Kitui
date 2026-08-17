@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 // if the server rejects the request due to bad token, clear state
 const handleAuthError = (response) => {
   if (response.status === 403) {
-    console.log("🔓 Invalid token detected - clearing auth");
+    console.log("Invalid token detected - clearing auth");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.href = "/login";

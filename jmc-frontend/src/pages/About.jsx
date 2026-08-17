@@ -5,10 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Target, Eye, Heart, Users, Award, BookOpen, Globe, Sparkles } from "lucide-react";
 import defaultLeaderImage from "../assets/leadership/bishop-elijah.jpg";
-import bishopElijah from "../assets/leadership/Bishop Elijah 1.png";
-// The Reverend Ruth image isn't checked into the repo yet. Use a default placeholder until
-// the correct file is added to `src/assets/leadership` (e.g. rev-ruth.jpg).
-const revRuth = defaultLeaderImage; // <-- update this import when the actual picture is available
+import bishopElijah from "../assets/leadership/bishop-elijah.jpg";
+import revRuth from "../assets/leadership/rev-ruth.jpg";
 
 import bannerImage from "../assets/banner.webp";
 import visionImage from "../assets/Vision.jpg";

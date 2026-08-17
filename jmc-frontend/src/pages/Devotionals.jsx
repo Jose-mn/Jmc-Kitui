@@ -4,6 +4,7 @@ import { Calendar, User, BookOpen } from "lucide-react";
 import { motion } from "framer-motion";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import AudioSermonsSection from "../components/AudioSermonsSection";
 
 export default function Devotionals() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -148,6 +149,12 @@ export default function Devotionals() {
           )}
         </div>
       </div>
+
+      {/* AUDIO DEVOTIONS TELEGRAM SECTION */}
+      <AudioSermonsSection
+        title="Audio Devotions & Sermons"
+        subtitle="Listen to daily audio devotions, spiritual teachings, and uplifting podcasts on Telegram"
+      />
 
       {/* FOOTER - This should appear at the bottom */}
       <Footer />

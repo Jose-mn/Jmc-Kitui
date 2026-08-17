@@ -461,10 +461,17 @@ export default function Events() {
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <Button className="bg-white text-purple-900 hover:bg-gray-100 px-8 md:px-10 py-3 md:py-4 font-bold text-base md:text-lg shadow-2xl w-full sm:w-auto">
+            <Button
+              onClick={() => navigate('/contact')}
+              className="bg-white text-purple-900 hover:bg-gray-100 px-8 md:px-10 py-3 md:py-4 font-bold text-base md:text-lg shadow-2xl w-full sm:w-auto"
+            >
               Subscribe to Updates
             </Button>
-            <Button variant="outline" className="border-2 border-white text-white hover:bg-white/10 px-8 md:px-10 py-3 md:py-4 font-bold text-base md:text-lg w-full sm:w-auto">
+            <Button
+              onClick={() => window.scrollTo({ top: 400, behavior: 'smooth' })}
+              variant="outline"
+              className="border-2 border-white text-white hover:bg-white/10 px-8 md:px-10 py-3 md:py-4 font-bold text-base md:text-lg w-full sm:w-auto"
+            >
               View Calendar
             </Button>
           </motion.div>
