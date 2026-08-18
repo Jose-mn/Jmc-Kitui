@@ -31,7 +31,7 @@ export default function Footer() {
             <a href="https://www.youtube.com/@JMCKITUI" target="_blank" rel="noreferrer" aria-label="YouTube" className="w-10 h-10 bg-white/10 flex items-center justify-center rounded hover:bg-white/20 transition">
               <Play className="w-5 h-5 text-white" />
             </a>
-            <a href="https://www.instagram.com/jmc_kitui/" aria-label="Instagram" target="_blank" rel="noreferrer" className="w-10 h-10 bg-white/10 flex items-center justify-center rounded hover:bg-white/20 transition">
+            <a href="https://www.instagram.com/_bishopelijahmutua1?igsh=bzVkcmFhejBuYzdr" aria-label="Instagram" target="_blank" rel="noreferrer" className="w-10 h-10 bg-white/10 flex items-center justify-center rounded hover:bg-white/20 transition">
               <Instagram className="w-5 h-5 text-white" />
             </a>
           </div>

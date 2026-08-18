@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Church, PlayCircle, HeartHandshake, Quote, User } from "lucide-react";
+import { Calendar, Church, PlayCircle, HeartHandshake, Quote, User, Tv, Bell, CheckCircle, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import ImageCarousel from "@/components/ImageCarousel";
@@ -11,6 +11,7 @@ import faithImage from "../assets/devotionals/faith.jpeg";
 import prayerImage from "../assets/devotionals/prayer.jpeg";
 import purposeImage from "../assets/devotionals/purpose.jpeg";
 import pastorateImage from "../assets/Pastorate.jpeg";
+import manifestationTvLogo from "../assets/manifestation-tv.png";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ export default function Home() {
   const [sermonsLoading, setSermonsLoading] = useState(true);
   const [latestDevotions, setLatestDevotions] = useState([]);
   const [devotionsLoading, setDevotionsLoading] = useState(true);
+  const [showTvModal, setShowTvModal] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
 
   useEffect(() => {
     fetchLatestSermons();
@@ -186,18 +189,32 @@ export default function Home() {
             <p className="text-base text-gray-600 dark:text-gray-400 leading-relaxed transition-colors duration-300">
               Join us as we worship, grow in faith, and engage in meaningful ministry. There's a place for you here.
             </p>
-            <div className="flex gap-4 pt-4">
+            <div className="flex flex-wrap gap-4 pt-4 items-center">
               <Button
                 onClick={() => navigate('/about')}
-                className="bg-purple-700 hover:bg-purple-800 text-white px-8 py-3 font-semibold text-lg"
+                className="bg-purple-700 hover:bg-purple-800 text-white px-7 py-3 font-semibold text-base"
               >
                 EXPLORE
               </Button>
               <Button
                 onClick={() => window.open('https://www.youtube.com/@JMCKITUI', '_blank')}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 font-semibold text-lg"
+                className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 font-semibold text-base"
               >
                 WATCH LIVE
+              </Button>
+              <Button
+                onClick={() => setShowTvModal(true)}
+                className="bg-slate-950 hover:bg-slate-900 text-white px-6 py-3 font-semibold text-base rounded-lg border border-amber-400/50 shadow-md flex items-center gap-2"
+              >
+                <img
+                  src={manifestationTvLogo}
+                  alt="Manifestation TV"
+                  className="w-5 h-5 object-contain rounded"
+                />
+                <span>MANIFESTATION TV</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-amber-400 text-slate-950 tracking-wider animate-pulse">
+                  Coming Soon
+                </span>
               </Button>
             </div>
           </motion.div>
@@ -633,6 +650,93 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      {/* MANIFESTATION TV COMING SOON MODAL */}
+      <AnimatePresence>
+        {showTvModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-lg bg-slate-950 border border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-2xl text-center text-white overflow-hidden"
+            >
+              {/* Background Glow */}
+              <div className="absolute -top-24 -left-24 w-60 h-60 bg-purple-600/30 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-24 -right-24 w-60 h-60 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+
+              {/* Close Button */}
+              <button
+                onClick={() => {
+                  setShowTvModal(false);
+                  setSubscribed(false);
+                }}
+                className="absolute top-4 right-4 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+                aria-label="Close modal"
+              >
+                <X size={20} />
+              </button>
+
+              {/* Manifestation TV Logo */}
+              <div className="w-48 sm:w-56 mx-auto mb-4 rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black">
+                <img
+                  src={manifestationTvLogo}
+                  alt="Manifestation TV Logo"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+
+              {/* Coming Soon Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-widest mb-3 shadow-lg">
+                <Tv className="w-3.5 h-3.5" />
+                <span>Broadcasting Coming Soon</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-black text-white mb-2">
+                Manifestation TV
+              </h3>
+
+              <p className="text-amber-400 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-4">
+                Christ Centered | Truth Driven | Impacting Lives
+              </p>
+
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+                We are launching a 24/7 dedicated Christian television station bringing life-transforming gospel teachings, dynamic praise and worship, and kingdom ministry straight to your home and screens.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                {subscribed ? (
+                  <div className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-emerald-600 text-white font-bold text-sm">
+                    <CheckCircle className="w-4 h-4" />
+                    <span>You'll be notified upon launch!</span>
+                  </div>
+                ) : (
+                  <Button
+                    onClick={() => setSubscribed(true)}
+                    className="bg-amber-400 hover:bg-amber-300 text-slate-950 px-6 py-3 font-bold text-sm rounded-full shadow-lg flex items-center justify-center gap-2"
+                  >
+                    <Bell className="w-4 h-4" />
+                    <span>Notify Me When Live</span>
+                  </Button>
+                )}
+
+                <Button
+                  onClick={() => {
+                    setShowTvModal(false);
+                    window.open('https://www.youtube.com/@JMCKITUI', '_blank');
+                  }}
+                  variant="outline"
+                  className="border-purple-400/40 text-purple-200 hover:bg-purple-900/40 px-6 py-3 font-semibold text-sm rounded-full"
+                >
+                  Watch Online Stream
+                </Button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </div>

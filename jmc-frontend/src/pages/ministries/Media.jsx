@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import mediaImg from "../../assets/leadership/mediaPST.jpeg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -166,19 +167,32 @@ export default function Media() {
               </div>
             </motion.div>
 
-            {/* Image Placeholder */}
+            {/* Media Team Leader Image */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
               variants={fadeUp}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative rounded-2xl overflow-hidden shadow-2xl"
+              className="relative rounded-2xl overflow-hidden shadow-2xl bg-slate-900 border border-purple-500/30"
             >
-              <div className="w-full h-80 md:h-96 bg-purple-600 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <Camera className="w-24 h-24 text-white/40 mx-auto mb-4" />
-                  <p className="text-white/70 font-semibold text-lg">Media Team Image</p>
+              <div className="relative aspect-[4/5] w-full overflow-hidden">
+                <img
+                  src={mediaImg}
+                  alt="Media Department Leader"
+                  className="w-full h-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+                <div className="absolute bottom-0 inset-x-0 p-6 text-white">
+                  <span className="text-xs uppercase tracking-widest text-amber-300 font-bold block mb-1">
+                    Department Leader
+                  </span>
+                  <h3 className="text-xl font-bold text-white mb-0.5">
+                    Media Team Pastor
+                  </h3>
+                  <p className="text-xs text-purple-200">
+                    Jesus Manifestation Church Kitui
+                  </p>
                 </div>
               </div>
             </motion.div>

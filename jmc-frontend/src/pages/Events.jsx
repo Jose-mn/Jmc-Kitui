@@ -15,8 +15,8 @@ import {
   Baby,
   Sparkles
 } from "lucide-react";
-import Navigation from "../components/Navigation";
-import Footer from "../components/Footer";
+import Navigation from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
 // Fallback image if event has no image_url
 import defaultEventImage from "../assets/events/sunday-worship.jpg";

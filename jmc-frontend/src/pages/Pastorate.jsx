@@ -11,6 +11,8 @@ import revRuth from "../assets/leadership/rev-ruth.jpg";
 import elderJoseph from "../assets/leadership/Men's PST.JPG";
 import deaconessGrace from "../assets/leadership/Ladies PST.JPG";
 import youthPST from "../assets/leadership/YOUTH PST.jpg";
+import couplesPST from "../assets/leadership/couplesPST.jpeg";
+import mediaPST from "../assets/leadership/mediaPST.jpeg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -31,6 +33,7 @@ const leaders = [
   {
     id: 2,
     name: "Pastor Ruth Mutua",
+    title: "Co-Pastor",
     image: revRuth,
     gradient: "bg-purple-700",
     message: "Welcome to our family! At JMC Kitui, we believe that every person who walks through our doors carries a God-given destiny. My passion is to see families restored, women empowered, and the next generation raised in the fear of God. You are not here by accident — God has orchestrated this moment for you. I pray that as you journey with us, you will experience the transforming love of Jesus in every area of your life.",
@@ -69,6 +72,26 @@ const leaders = [
   },
   {
     id: 6,
+    name: "Nichlas Nzamba",
+    title: "Couples Department Leader",
+    image: couplesPST,
+    gradient: "bg-purple-800",
+    message: "Building Christ-centered marriages, strong families, and lifelong covenant bonds through worship, fellowship, and Biblical guidance.",
+    scripture: '"Therefore what God has joined together, let no one separate." — Matthew 19:6',
+    contact: {}
+  },
+  {
+    id: 7,
+    name: "Justin Kinyua",
+    title: "Media Team Department Leader",
+    image: mediaPST,
+    gradient: "bg-purple-700",
+    message: "Managing audio, video, photography, livestreams, and digital communication platforms to ensure the gospel reaches beyond church walls with technical and creative excellence.",
+    scripture: '"Publish His glorious deeds among the nations. Tell everyone about the amazing things He does." — Psalm 96:3',
+    contact: {}
+  },
+  {
+    id: 8,
     name: "Alice John",
     title: "Sunday School Department Leader",
     image: null,
@@ -239,15 +262,13 @@ export default function Pastorate() {
                   </div>
                 </CardContent>
 
-                {/* Image Side - placeholder */}
-                <div className="relative min-h-[450px] md:min-h-[560px] overflow-hidden bg-purple-700 flex items-center justify-center order-1 md:order-2">
-                  <div className="text-center p-8">
-                    <div className="w-44 h-44 md:w-52 md:h-52 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mx-auto mb-6 border-2 border-white/20">
-                      <User className="w-24 h-24 md:w-28 md:h-28 text-white/30" />
-                    </div>
-                    <p className="text-white/40 text-sm font-medium tracking-widest uppercase">Photo Coming Soon</p>
-                  </div>
-                  <div className="absolute inset-0 bg-purple-900/60" />
+                {/* Image Side */}
+                <div className="relative min-h-[450px] md:min-h-[560px] overflow-hidden bg-slate-900 order-1 md:order-2">
+                  <img
+                    src={leaders[1].image}
+                    alt={leaders[1].name}
+                    className="w-full h-full object-cover object-top absolute inset-0"
+                  />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="h-px flex-1 bg-purple-400/60" />

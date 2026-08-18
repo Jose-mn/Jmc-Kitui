@@ -13,6 +13,7 @@ import Ladies from "./pages/ministries/Ladies";
 import Men from "./pages/ministries/Men";
 import Youth from "./pages/ministries/Youth";
 import SundaySchool from "./pages/ministries/SundaySchool";
+import Couples from "./pages/ministries/Couples";
 import Login from "./pages/admin/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRouter from "./routes/AdminRouter";
@@ -39,6 +40,7 @@ function App() {
         <Route path="/departments/men" element={<Men />} />
         <Route path="/departments/youth" element={<Youth />} />
         <Route path="/departments/sundayschool" element={<SundaySchool />} />
+        <Route path="/departments/couples" element={<Couples />} />
 
         <Route path="/contact" element={<Contact />} />
 

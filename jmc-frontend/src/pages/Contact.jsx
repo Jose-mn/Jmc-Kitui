@@ -4,8 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useState } from "react";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 export default function Contacts() {
   const [name, setName] = useState("");
