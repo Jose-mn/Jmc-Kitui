@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import ladiesPstImg from "../../assets/leadership/Ladies PST.JPG";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,27 +16,27 @@ export default function Ladies() {
   const navigate = useNavigate();
   const activities = [
     {
-      icon: Sparkles,
-      title: "Worship & Prayer Meetings",
-      description: "Encouraging fellowship sessions where women unite to seek God's presence, pray for families, and uplift one another.",
+      icon: Heart,
+      title: "Ladies' Fellowship & Prayer",
+      description: "Regular gatherings for heartfelt prayer, mutual support, and sharing God's grace in every season of life.",
       color: "bg-purple-600"
     },
     {
       icon: BookOpen,
-      title: "Bible Studies",
-      description: "Exploring Scripture together, applying God's wisdom to marriage, parenting, careers, and spiritual growth.",
+      title: "Word & Character Studies",
+      description: "Interactive Bible studies focusing on virtuous living, family building, and walking gracefully in Christ.",
       color: "bg-purple-700"
     },
     {
       icon: Coffee,
-      title: "Fellowship & Mentorship",
-      description: "Building lifelong connections and mentorship between seasons of life, sharing tea, support, and guidance.",
+      title: "Sisterhood & Mentorship",
+      description: "Building strong bonds across generations, where women guide, encourage, and uplift one another.",
       color: "bg-purple-500"
     },
     {
-      icon: Target,
-      title: "Empowerment & Charity",
-      description: "Equipping women with life skills, supporting community outreach programs, and sharing God's love practically.",
+      icon: Sparkles,
+      title: "Compassion & Outreach",
+      description: "Extending love and practical support to widows, orphans, and less fortunate families in our community.",
       color: "bg-purple-600"
     }
   ];
@@ -43,8 +44,8 @@ export default function Ladies() {
   const events = [
     {
       title: "Monthly Women's Fellowship",
-      time: "First Saturday 2:00 PM - 5:00 PM",
-      description: "Join us for our main monthly gathering filled with worship, testimonies, and practical teachings"
+      time: "Third Saturday 9:00 AM - 12:00 PM",
+      description: "Gather with sisters for worship, prayer, and an empowering message tailored for women"
     },
     {
       title: "Weekly Prayer Altar",
@@ -64,15 +65,16 @@ export default function Ladies() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&auto=format&fit=crop)',
+          backgroundImage: `url(${ladiesPstImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         <div className="absolute inset-0 opacity-10">
           <motion.div

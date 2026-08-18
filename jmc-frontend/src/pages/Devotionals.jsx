@@ -24,8 +24,9 @@ export default function Devotionals() {
             scripture: dev.scripture || "N/A",
             excerpt: dev.content ? dev.content.substring(0, 150) + "..." : "",
             date: dev.created_at,
-            author: "JMC Kitui",
-            image: dev.image_url ? `${apiUrl}${dev.image_url}` : "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80",
+            image: dev.image_url
+              ? (dev.image_url.startsWith("http") ? dev.image_url : `${apiUrl}${dev.image_url.startsWith("/") ? "" : "/"}${dev.image_url}`)
+              : "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80",
           }));
           setDevotionals(mappedData);
         }

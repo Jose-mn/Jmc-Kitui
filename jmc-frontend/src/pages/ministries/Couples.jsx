@@ -65,15 +65,16 @@ export default function Couples() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
           backgroundImage: `url(${couplesImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         <div className="absolute inset-0 opacity-10">
           <motion.div

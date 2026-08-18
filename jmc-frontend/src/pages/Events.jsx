@@ -20,11 +20,13 @@ import Footer from "@/components/Footer";
 
 // Fallback image if event has no image_url
 import defaultEventImage from "../assets/events/sunday-worship.jpg";
+import weeklyScheduleFlyer from "../assets/events/weekly-schedule-flyer.png";
 
 export default function Events() {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState("all");
   const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [showFlyerModal, setShowFlyerModal] = useState(false);
 
   const categories = [
     { id: "all", name: "All Events", icon: Calendar },
@@ -37,28 +39,28 @@ export default function Events() {
 
   const scheduleOverrides = [
     {
-      id: "prayer-tuesday",
-      title: "Midweek Prayer (Tuesday)",
+      id: "morning-watch",
+      title: "Morning Watch",
       category: "prayer",
-      date: "",
-      time: "5:30 PM - 7:00 PM",
-      location: "JMC Kitui",
-      description: "Join us every Tuesday for a powerful time of prayer, worship, and intercession.",
-      image: defaultEventImage,
-      featured: false,
+      date: "Daily Service",
+      time: "6:00 AM - 7:00 AM",
+      location: "Jesus Manifestation Church Kitui",
+      description: "Start your morning with intense prayer, worship, and spiritual alignment led by Senior Pastor Bishop Elijah Mutua.",
+      image: weeklyScheduleFlyer,
+      featured: true,
       attendees: "Open to all",
-      color: "bg-purple-600"
+      color: "bg-amber-500"
     },
     {
-      id: "prayer-thursday",
-      title: "Midweek Prayer (Thursday)",
-      category: "prayer",
-      date: "",
-      time: "5:30 PM - 7:00 PM",
-      location: "JMC Kitui",
-      description: "Thursday prayer meeting to seek God and stand in faith for our community.",
-      image: defaultEventImage,
-      featured: false,
+      id: "midweek-service",
+      title: "Midweek Service (Tuesday & Thursday)",
+      category: "teaching",
+      date: "Every Tuesday & Thursday",
+      time: "5:30 PM - 7:15 PM",
+      location: "Jesus Manifestation Church Kitui",
+      description: "Join Senior Pastor Bishop Elijah Mutua every Tuesday and Thursday evening for transformative Word, teaching, and divine power.",
+      image: weeklyScheduleFlyer,
+      featured: true,
       attendees: "Open to all",
       color: "bg-purple-700"
     },
@@ -66,10 +68,10 @@ export default function Events() {
       id: "kesha-first-last-friday",
       title: "Kesha Gathering",
       category: "worship",
-      date: "",
+      date: "1st & Last Friday of Month",
       time: "7:00 PM - 9:00 PM",
-      location: "JMC Kitui",
-      description: "Every first and last Friday of the month: Kesha worship to encounter God.",
+      location: "Jesus Manifestation Church Kitui",
+      description: "Every first and last Friday of the month: Night vigil worship to encounter God's raw presence and power.",
       image: defaultEventImage,
       featured: false,
       attendees: "Open to all",
@@ -95,10 +97,9 @@ export default function Events() {
               category: catOptions[ev.id % catOptions.length],
               date: ev.event_date,
               time: "TBA",
-              location: ev.location || "JMC Kitui",
-              description: ev.description || "Join us for this wonderful event.",
-              image: ev.image_url ? `${apiUrl}${ev.image_url}` : defaultEventImage,
-              featured: ev.id % 3 === 0,
+              image: ev.image_url
+                ? (ev.image_url.startsWith("http") ? ev.image_url : `${apiUrl}${ev.image_url.startsWith("/") ? "" : "/"}${ev.image_url}`)
+                : defaultEventImage,
               attendees: "100+",
               color: colorOptions[ev.id % colorOptions.length]
             };
@@ -212,6 +213,171 @@ export default function Events() {
           </motion.div>
         </div>
       </section>
+
+      {/* WEEKLY SERVICES & THEME FLYER SHOWCASE */}
+      <section className="py-12 md:py-16 px-4 md:px-6 bg-gradient-to-b from-purple-950 via-slate-900 to-slate-950 text-white border-b border-purple-900/40">
+        <div className="max-w-7xl mx-auto">
+          {/* 2026 Theme Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-8 p-4 md:p-6 rounded-2xl bg-purple-900/60 border border-purple-500/30 backdrop-blur-md text-center shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-4"
+          >
+            <div className="flex items-center gap-3 text-left">
+              <span className="px-3 py-1 bg-amber-500 text-slate-950 font-black rounded-lg text-xs tracking-widest uppercase">
+                Theme 2026
+              </span>
+              <div>
+                <h3 className="text-lg md:text-xl font-bold text-white tracking-wide">
+                  2026: OUR YEAR OF LOOKING UNTO JESUS
+                </h3>
+                <p className="text-xs md:text-sm text-purple-200">
+                  Jesus Manifestation Church Kitui • Senior Pastor Bishop Elijah Mutua
+                </p>
+              </div>
+            </div>
+
+            <Button
+              onClick={() => setShowFlyerModal(true)}
+              className="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs md:text-sm px-5 py-2.5 rounded-xl shadow-lg transition-transform hover:scale-105"
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              View Official Flyer
+            </Button>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            {/* Flyer Image Card */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="lg:col-span-5 relative group cursor-pointer"
+              onClick={() => setShowFlyerModal(true)}
+            >
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-purple-500/40 bg-slate-900 transition-transform group-hover:scale-[1.02]">
+                <img
+                  src={weeklyScheduleFlyer}
+                  alt="JMC Kitui Weekly Services Flyer"
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white">
+                  <span className="text-xs font-semibold uppercase tracking-wider bg-purple-600/80 px-3 py-1 rounded-full backdrop-blur-sm">
+                    Tap to expand
+                  </span>
+                  <span className="text-xs text-amber-300 font-medium">
+                    Official Schedule
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Service Details Cards */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="lg:col-span-7 space-y-6"
+            >
+              <div>
+                <span className="text-amber-400 font-bold uppercase tracking-widest text-xs block mb-1">
+                  Weekly Program
+                </span>
+                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+                  Regular Church Services
+                </h2>
+                <p className="text-purple-200 text-sm md:text-base leading-relaxed">
+                  Join Senior Pastor Bishop Elijah Mutua at Jesus Manifestation Church for power-packed morning watch sessions and midweek teaching services.
+                </p>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Morning Watch Card */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-amber-500/30 hover:border-amber-400/60 transition-all shadow-xl">
+                  <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 mb-4 border border-amber-500/30">
+                    <Clock className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1">
+                    Daily Service
+                  </span>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    MORNING WATCH
+                  </h3>
+                  <div className="space-y-1.5 text-xs text-gray-300">
+                    <p className="font-semibold text-amber-200 text-sm">
+                      6:00 AM - 7:00 AM
+                    </p>
+                    <p className="flex items-center gap-1.5 text-gray-400">
+                      <MapPin className="w-3.5 h-3.5 text-purple-400" />
+                      Jesus Manifestation Church
+                    </p>
+                    <p className="flex items-center gap-1.5 text-gray-400">
+                      <Users className="w-3.5 h-3.5 text-purple-400" />
+                      Bishop Elijah Mutua (Senior Pastor)
+                    </p>
+                  </div>
+                </div>
+
+                {/* Midweek Service Card */}
+                <div className="p-6 rounded-2xl bg-slate-900/90 border border-purple-500/30 hover:border-purple-400/60 transition-all shadow-xl">
+                  <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 mb-4 border border-purple-500/30">
+                    <Calendar className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold text-purple-400 uppercase tracking-wider block mb-1">
+                    Tuesday & Thursday
+                  </span>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    MIDWEEK SERVICE
+                  </h3>
+                  <div className="space-y-1.5 text-xs text-gray-300">
+                    <p className="font-semibold text-purple-200 text-sm">
+                      5:30 PM - 7:15 PM
+                    </p>
+                    <p className="flex items-center gap-1.5 text-gray-400">
+                      <MapPin className="w-3.5 h-3.5 text-purple-400" />
+                      Jesus Manifestation Church
+                    </p>
+                    <p className="flex items-center gap-1.5 text-gray-400">
+                      <Users className="w-3.5 h-3.5 text-purple-400" />
+                      Bishop Elijah Mutua (Senior Pastor)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FLYER FULL-SCREEN LIGHTBOX MODAL */}
+      {showFlyerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-4">
+          <div className="relative max-w-3xl w-full max-h-[90vh] bg-slate-900 rounded-3xl overflow-hidden border border-purple-500/30 shadow-2xl flex flex-col">
+            <div className="p-4 bg-slate-950 flex items-center justify-between border-b border-slate-800">
+              <span className="text-sm font-bold text-white">
+                JMC Kitui Official Program Schedule
+              </span>
+              <button
+                onClick={() => setShowFlyerModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-800 text-gray-300 hover:text-white hover:bg-purple-600 transition-colors flex items-center justify-center font-bold"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="p-4 overflow-y-auto flex items-center justify-center">
+              <img
+                src={weeklyScheduleFlyer}
+                alt="Full Weekly Schedule Flyer"
+                className="max-w-full h-auto rounded-2xl shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* FEATURED EVENT SECTION */}
       {featuredEvent && activeFilter === "all" && (

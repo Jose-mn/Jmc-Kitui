@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { Users, Heart, Zap, Target, Calendar, Sparkles, BookOpen, Coffee } from "lucide-react";
+import { Users, Heart, Zap, Target, Calendar, Sparkles, BookOpen, Coffee, Smile } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import sundaySchoolPstImg from "../../assets/leadership/sundaySchoolPST.JPG";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,46 +16,41 @@ export default function SundaySchool() {
   const navigate = useNavigate();
   const activities = [
     {
-      icon: Sparkles,
-      title: "Interactive Bible Lessons",
-      description: "Fun, creative, and age-appropriate classes designed to make learning God's Word exciting and memorable.",
+      icon: BookOpen,
+      title: "Bible Lessons & Stories",
+      description: "Engaging, age-appropriate Bible lessons that teach children faith, prayer, and godly values.",
       color: "bg-purple-600"
     },
     {
-      icon: BookOpen,
-      title: "Memory Verse Challenges",
-      description: "Encouraging children to hide God's Word in their hearts through engaging memory games and active learning.",
+      icon: Heart,
+      title: "Loving Care & Fellowship",
+      description: "Creating a safe, joyful environment where every child feels loved and valued in church.",
       color: "bg-purple-700"
     },
     {
-      icon: Coffee,
-      title: "Creative Arts & Crafts",
-      description: "Developing young hearts and minds through hands-on crafts, drama, and bible story illustrations.",
+      icon: Smile,
+      title: "Creative Arts & Songs",
+      description: "Praise songs, memory verse games, and creative crafts that make learning God's Word fun.",
       color: "bg-purple-500"
     },
     {
-      icon: Target,
-      title: "Kids Praise & Worship",
-      description: "Teaching children how to praise and worship God with their whole hearts through active songs and actions.",
+      icon: Sparkles,
+      title: "VBS & Annual Children's Day",
+      description: "Exciting Vacation Bible School programs and annual children's presentations.",
       color: "bg-purple-600"
     }
   ];
 
   const events = [
     {
-      title: "Weekly Sunday School",
-      time: "Sundays 9:00 AM - 10:30 AM",
-      description: "Our main weekly gathering running alongside the main service, divided into age-appropriate classes"
+      title: "Sunday Children's Church",
+      time: "Sundays 10:00 AM - 12:00 PM",
+      description: "Interactive Sunday school service running concurrently with main church service"
     },
     {
-      title: "VBS (Vacation Bible School)",
-      time: "School Holidays (As Announced)",
-      description: "An exciting week-long program filled with activities, scripture lessons, games, and fellowship"
-    },
-    {
-      title: "Sunday School Presentation",
-      time: "Quarterly",
-      description: "A special service presentation where children share memory verses and songs in the main sanctuary"
+      title: "Vacation Bible School (VBS)",
+      time: "School Holidays",
+      description: "A fun-filled week of Bible lessons, games, crafts, and music for kids"
     }
   ];
 
@@ -64,15 +60,16 @@ export default function SundaySchool() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1200&auto=format&fit=crop)',
+          backgroundImage: `url(${sundaySchoolPstImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         <div className="absolute inset-0 opacity-10">
           <motion.div

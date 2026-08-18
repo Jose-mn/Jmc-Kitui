@@ -41,10 +41,9 @@ export default function Home() {
             id: dev.devotion_id || dev.id,
             title: dev.title,
             excerpt: dev.content ? dev.content.substring(0, 150) + "..." : "",
-            date: dev.created_at,
-            author: "JMC Kitui",
-            image: dev.image_url ? `${apiUrl}${dev.image_url}` : faithImage,
-            category: dev.category || "Devotion"
+            image: dev.image_url
+              ? (dev.image_url.startsWith("http") ? dev.image_url : `${apiUrl}${dev.image_url.startsWith("/") ? "" : "/"}${dev.image_url}`)
+              : faithImage,
           }));
         
         if (mappedData.length > 0) {

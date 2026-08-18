@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { Music, Heart, Mic, BookOpen, Calendar, Users, Headphones, Star } from "lucide-react";
+import { Music, Heart, Mic, BookOpen, Calendar, Users, Headphones, Star, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import choirPstImg from "../../assets/leadership/choirPST.JPG";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,46 +16,46 @@ export default function Choir() {
   const navigate = useNavigate();
   const activities = [
     {
-      icon: Mic,
-      title: "Sunday Worship",
-      description: "Leading the congregation into God's presence through anointed praise and worship every Sunday service.",
+      icon: Music,
+      title: "Worship Rehearsals",
+      description: "Dedicated weekly rehearsals for vocal training, harmony, and spiritual preparation for Sunday services.",
       color: "bg-purple-600"
     },
     {
-      icon: Headphones,
-      title: "Choir Rehearsals",
-      description: "Weekly practice sessions to sharpen our musical skills and prepare spiritually for ministry through song.",
+      icon: Mic,
+      title: "Praise & Worship Leading",
+      description: "Leading the congregation into deep intimacy and energetic praise every service.",
       color: "bg-purple-700"
     },
     {
-      icon: BookOpen,
-      title: "Music Workshops",
-      description: "Training members in music theory, vocal techniques, and instrument playing to enhance worship excellence.",
+      icon: Heart,
+      title: "Choir Fellowship & Devotions",
+      description: "Building spiritual unity, corporate prayer, and encouraging one another in character and faith.",
       color: "bg-purple-500"
     },
     {
-      icon: Star,
-      title: "Special Performances",
-      description: "Ministering at conferences, weddings, community events, and special church celebrations with powerful songs.",
+      icon: Sparkles,
+      title: "Special Concerts & Albums",
+      description: "Hosting worship nights, gospel music concerts, and recording original praise songs.",
       color: "bg-purple-600"
     }
   ];
 
   const events = [
     {
-      title: "Choir Rehearsal",
-      time: "Saturdays 3:00 PM",
-      description: "Weekly rehearsal to prepare worship songs and harmonies for Sunday services"
+      title: "Weekly Choir Rehearsal",
+      time: "Saturdays 3:00 PM - 6:00 PM",
+      description: "Corporate practice and spiritual preparation for Sunday worship services"
     },
     {
-      title: "Worship Night",
-      time: "Last Friday of Month",
-      description: "A dedicated evening of praise, worship, and spiritual refreshing through music"
+      title: "Sunday Morning Praise Prep",
+      time: "Sundays 7:30 AM - 8:30 AM",
+      description: "Pre-service soundcheck and prayer before leading the congregation"
     },
     {
-      title: "Music Workshop",
-      time: "Monthly",
-      description: "Training sessions for vocal improvement and learning new worship songs"
+      title: "Night of Praise & Worship",
+      time: "Quarterly",
+      description: "An extended evening of unhindered praise, music, and divine encounter"
     }
   ];
 
@@ -64,16 +65,17 @@ export default function Choir() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=1200&auto=format&fit=crop)',
+          backgroundImage: `url(${choirPstImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">

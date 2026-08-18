@@ -65,16 +65,16 @@ export default function Media() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1200&auto=format&fit=crop)',
+          backgroundImage: `url(${mediaImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">

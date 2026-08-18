@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import fs from "fs";
 import contactRoutes from "./routes/contactRoutes.js";
 import eventsRoutes from "./routes/eventsRoutes.js";
 import devotionsRoutes from "./routes/devotionsRoutes.js";
@@ -17,11 +18,18 @@ console.log("JWT_SECRET loaded:", process.env.JWT_SECRET ? "yes" : "no");
 
 const app = express();
 
+// Ensure uploads directory exists
+const uploadDir = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:3000",
   "https://jmckitui.davericgamers.co.ke",
+  "https://admin.jmckitui.davericgamers.co.ke",
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
   process.env.CLIENT_ORIGIN,
@@ -29,11 +37,7 @@ const allowedOrigins = [
 
 const corsOptions = {
   origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== "production") {
-      callback(null, true);
-    } else {
-      callback(null, true);
-    }
+    callback(null, true);
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
@@ -44,7 +48,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // Serve uploads folder statically
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/uploads", express.static(uploadDir));
 
 app.use("/api/contact", contactRoutes);
 app.use("/api/events", eventsRoutes);

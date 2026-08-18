@@ -25,10 +25,9 @@ export default function DevotionalDetail() {
             scripture: data.scripture || "N/A",
             excerpt: data.content ? data.content.substring(0, 150) + "..." : "",
             content: data.content,
-            date: data.created_at,
-            author: "JMC Kitui",
-            image: data.image_url ? `${apiUrl}${data.image_url}` : null,
-            category: data.category || "Devotion",
+            image: data.image_url
+              ? (data.image_url.startsWith("http") ? data.image_url : `${apiUrl}${data.image_url.startsWith("/") ? "" : "/"}${data.image_url}`)
+              : null,
           });
           return;
         }

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import Navigation from "../../components/Navigation";
 import Footer from "../../components/Footer";
+import youthPstImg from "../../assets/leadership/YOUTH PST.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -15,46 +16,46 @@ export default function Youth() {
   const navigate = useNavigate();
   const activities = [
     {
-      icon: Music,
-      title: "Worship Nights",
-      description: "Powerful worship sessions where young people encounter God's presence through music and prayer.",
+      icon: Zap,
+      title: "Youth Worship Nights",
+      description: "High-energy praise, intimate worship, and relevant preaching tailored for teens and young adults.",
       color: "bg-purple-600"
     },
     {
       icon: BookOpen,
-      title: "Bible Study",
-      description: "Interactive sessions diving deep into God's Word, relevant to the challenges young people face today.",
+      title: "Youth Bible Study & Discussions",
+      description: "Real conversations about faith, identity, relationships, career, and navigating modern culture from a biblical perspective.",
       color: "bg-purple-700"
     },
     {
-      icon: Coffee,
-      title: "Fellowship & Hangouts",
-      description: "Building genuine friendships and community through fun activities, game nights, and social gatherings.",
+      icon: Users,
+      title: "Small Groups & Mentorship",
+      description: "Connect with peers and mentors who walk alongside you, supporting your spiritual growth and personal development.",
       color: "bg-purple-500"
     },
     {
-      icon: Target,
-      title: "Leadership Training",
-      description: "Equipping young leaders with skills to serve in church and make an impact in their communities.",
+      icon: Heart,
+      title: "Outreach & Community Service",
+      description: "Putting faith into action through community projects, school ministry, and evangelism.",
       color: "bg-purple-600"
     }
   ];
 
   const events = [
     {
-      title: "Friday Night Worship",
-      time: "7:00 PM - 9:00 PM",
-      description: "Join us every Friday for an evening of powerful worship and fellowship"
+      title: "Weekly Youth Service",
+      time: "Saturdays 4:00 PM - 6:30 PM",
+      description: "Our main weekly gathering featuring passionate worship, engaging messages, and vibrant fellowship"
     },
     {
       title: "Youth Bible Study",
-      time: "Saturdays 4:00 PM",
-      description: "Deep dive into Scripture with discussions relevant to young people"
+      time: "Fridays 6:00 PM - 7:30 PM",
+      description: "Interactive study sessions breaking down Scripture and discussing life application"
     },
     {
-      title: "Monthly Outreach",
-      time: "Last Saturday",
-      description: "Serving our community and sharing God's love through action"
+      title: "Annual Youth Conference",
+      time: "August (Annually)",
+      description: "A three-day conference bringing together youth from across the region for spiritual transformation"
     }
   ];
 
@@ -64,16 +65,16 @@ export default function Youth() {
 
       {/* HERO SECTION WITH BACKGROUND IMAGE */}
       <section
-        className="relative pt-32 md:pt-40 pb-40 md:pb-52 px-4 md:px-6 overflow-hidden min-h-[80vh] md:min-h-[85vh] flex items-center"
+        className="relative pt-32 md:pt-40 pb-36 md:pb-48 px-4 md:px-6 overflow-hidden min-h-[75vh] md:min-h-[85vh] flex items-center justify-center bg-slate-950"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=1200&auto=format&fit=crop)',
+          backgroundImage: `url(${youthPstImg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center top',
-          backgroundAttachment: 'fixed'
+          backgroundRepeat: 'no-repeat'
         }}
       >
-        {/* More Transparent Overlay - No Blue Tint */}
-        <div className="absolute inset-0 bg-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-950 via-slate-950/80 to-purple-950/80" />
+        <div className="absolute inset-0 bg-slate-950/40 backdrop-blur-[1px]" />
 
         {/* Animated Background Elements */}
         <div className="absolute inset-0 opacity-10">
